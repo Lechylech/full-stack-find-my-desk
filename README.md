@@ -1,4 +1,4 @@
-# Hackathon 1 — Starting Template
+# Find My Desk Hackathon — Starting Template
 
 Welcome to the starting template for Hackathon 1. This repo contains everything you need to get your team up and running.
 
