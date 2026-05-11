@@ -1,7 +1,7 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
-
+http://localhost:5176/
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
@@ -15,3 +15,17 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Simulated auto-release with demo-compressed timers (30s idle → 15s wait → 10s countdown).
 - Per-user privacy toggle and lightweight `/manage` page with force-release.
 - Mocked team-nearby suggestions panel using same-team/lab/platform proximity.
+- **Profile page (`/profile`)**: shows the current user's role/team/lab/platform/location and lets them tick desk-booking preferences (Dual monitor, Near window, Quiet zone, Height adjustable / DSE). Saved preferences feed into the team-nearby suggestion fallback score.
+- **`PATCH /api/users/:id/preferences`** endpoint that validates input against the canonical preference keys (`dual-monitor`, `near-window`, `quiet-area`, `standing-desk`) and silently drops unknown keys. Preferences are stored in server memory and reset on server restart, consistent with the existing privacy/admin flags.
+- Server now reloads `data/desks.json` on every `GET /api/desks` request so regenerating the file takes effect on the next page refresh without a restart.
+
+### Changed
+- **One desk per user per time slot.** `POST /api/bookings` now rejects a request when the same user already has an active or booked overlap on that date. Error references the conflicting booking id so the UI can offer "cancel and rebook" later.
+- **Booking window for standard users capped at 14 days.** `POST /api/bookings` rejects dates more than 14 days ahead for non-admin users; admins are exempt. The booking page date picker is also capped (`max` attribute) for non-admins and shows an inline "up to 14 days ahead" hint.
+- **Manage page is admin-only.** The `Manage` nav link is hidden for non-admin users, and visiting `/manage` directly as a standard user renders an "Admins only" panel instead of the bookings table. Note: this is courtesy gating in the UI — there's no real auth in the MVP, so a determined user could still hit the underlying API. Real enforcement belongs at the API layer alongside a real auth provider.
+- Reduced desk marker size (14 → 10 px) and lowered opacity so dots overlay the desk icons on the floor plan more legibly. Hover scales them up for click affordance.
+- Desk generator rewritten to use explicit per-pod centres (`cx`, `cy`, `rows`, `cols`) rather than zone bounding boxes, so re-aligning a cluster only requires editing one pod entry. Pod centres still need a calibration pass to fully line up with the desk icons on the PNG — tracked as ongoing.
+
+### Notes
+- Booking persistence is to `data/bookings.json` (gitignored).
+- Preferences and privacy flags live only in server memory; restart wipes them. Booked desks survive a restart.

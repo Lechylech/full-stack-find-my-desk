@@ -162,16 +162,17 @@ input, select {
 }
 .desk-marker {
   position: absolute;
-  width: 14px;
-  height: 14px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  border: 2px solid white;
+  border: 1.5px solid white;
   transform: translate(-50%, -50%);
   cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.4);
   transition: transform 0.1s ease;
+  opacity: 0.9;
 }
-.desk-marker:hover { transform: translate(-50%, -50%) scale(1.3); z-index: 10; }
+.desk-marker:hover { transform: translate(-50%, -50%) scale(1.6); z-index: 10; opacity: 1; }
 .desk-marker.available { background: var(--available); }
 .desk-marker.booked { background: var(--booked); }
 .desk-marker.active { background: var(--active); }

@@ -18,7 +18,10 @@ function readJson(path) {
 }
 
 const users = readJson(USERS_PATH);
-const desks = readJson(DESKS_PATH);
+// Desks are re-read on each desks request so regenerating desks.json
+// during a session takes effect on next page refresh — no server restart needed.
+let desks = readJson(DESKS_PATH);
+function reloadDesks() { desks = readJson(DESKS_PATH); }
 
 // User privacy + admin flags live in-memory only (not persisted to users.json)
 const userPrefs = new Map(users.map((u) => [u.id, { privacy: false, admin: false }]));
@@ -36,6 +39,9 @@ function persistBookings() {
   writeFileSync(BOOKINGS_PATH, JSON.stringify(bookings, null, 2));
 }
 
+// Canonical preference keys exposed to the UI.
+const PREF_KEYS = ['dual-monitor', 'near-window', 'quiet-area', 'standing-desk'];
+
 function userPublic(u) {
   const prefs = userPrefs.get(u.id) || { privacy: false, admin: false };
   return {
@@ -49,6 +55,7 @@ function userPublic(u) {
     lab: u.lab || null,
     privacy: prefs.privacy,
     admin: prefs.admin,
+    deskPreferences: Array.isArray(u.deskPreferences) ? u.deskPreferences : [],
   };
 }
 
@@ -104,6 +111,15 @@ app.patch('/api/users/:id/privacy', (req, res) => {
   res.json({ id: req.params.id, privacy: prefs.privacy });
 });
 
+app.patch('/api/users/:id/preferences', (req, res) => {
+  const u = users.find((x) => x.id === req.params.id);
+  if (!u) return res.status(404).json({ error: 'User not found' });
+  const incoming = Array.isArray(req.body?.deskPreferences) ? req.body.deskPreferences : [];
+  const cleaned = incoming.filter((k) => PREF_KEYS.includes(k));
+  u.deskPreferences = cleaned;
+  res.json({ id: u.id, deskPreferences: cleaned });
+});
+
 // ---------- Current user (simulated auth) ----------
 app.get('/api/me', (_req, res) => {
   const u = users.find((x) => x.id === currentUserId);
@@ -120,6 +136,7 @@ app.post('/api/me', (req, res) => {
 
 // ---------- Desks ----------
 app.get('/api/desks', (req, res) => {
+  reloadDesks();
   const date = req.query.date || new Date().toISOString().slice(0, 10);
   const viewerId = req.query.viewerId || currentUserId;
   res.json(desks.map((d) => deskWithStatus(d, date, viewerId)));
@@ -134,6 +151,14 @@ app.get('/api/bookings', (req, res) => {
   res.json(result);
 });
 
+const MAX_ADVANCE_DAYS = 14;
+
+function daysBetween(fromIso, toIso) {
+  const a = new Date(fromIso + 'T00:00:00');
+  const b = new Date(toIso + 'T00:00:00');
+  return Math.round((b - a) / 86_400_000);
+}
+
 app.post('/api/bookings', (req, res) => {
   const { deskId, userId, date, startHour, endHour } = req.body || {};
   if (!deskId || !userId || !date) return res.status(400).json({ error: 'deskId, userId, date are required' });
@@ -147,14 +172,43 @@ app.post('/api/bookings', (req, res) => {
   const user = users.find((u) => u.id === userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
 
-  const overlap = bookings.find((b) =>
+  // Booking window: standard users limited to 14 days ahead; admins exempt.
+  const prefs = userPrefs.get(userId) || { admin: false };
+  if (!prefs.admin) {
+    const today = new Date().toISOString().slice(0, 10);
+    const ahead = daysBetween(today, date);
+    if (ahead > MAX_ADVANCE_DAYS) {
+      return res.status(400).json({ error: `Standard users can only book up to ${MAX_ADVANCE_DAYS} days in advance.` });
+    }
+    if (ahead < 0) {
+      return res.status(400).json({ error: 'Cannot book in the past.' });
+    }
+  }
+
+  // One occupant per desk per time slot.
+  const deskOverlap = bookings.find((b) =>
     b.deskId === deskId &&
     b.date === date &&
     b.status !== 'cancelled' &&
     b.status !== 'released' &&
     !(eh <= b.startHour || sh >= b.endHour)
   );
-  if (overlap) return res.status(409).json({ error: 'Desk already booked for that slot', conflictingBookingId: overlap.id });
+  if (deskOverlap) return res.status(409).json({ error: 'Desk already booked for that slot', conflictingBookingId: deskOverlap.id });
+
+  // One desk per user per time slot.
+  const userOverlap = bookings.find((b) =>
+    b.userId === userId &&
+    b.date === date &&
+    b.status !== 'cancelled' &&
+    b.status !== 'released' &&
+    !(eh <= b.startHour || sh >= b.endHour)
+  );
+  if (userOverlap) {
+    return res.status(409).json({
+      error: 'You already have a booking that overlaps this time slot. Cancel it before booking another desk.',
+      conflictingBookingId: userOverlap.id,
+    });
+  }
 
   const booking = {
     id: randomUUID(),
