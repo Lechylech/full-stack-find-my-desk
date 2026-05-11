@@ -1,0 +1,38 @@
+Based on the discussions in the recordings, your team is aiming to build a desk-booking application for a "Microsoft shop" that combines a traditional interactive interface with an AI agent. The initial focus is on creating a **skeleton framework** as a web app that can eventually be packaged as a Teams app.
+
+Here is a suggested "mega-prompt" you can use for an initial app in Claude Code, incorporating the specific requirements mentioned in your meeting:
+
+***
+
+### **Suggested Claude Code Prompt**
+
+**Context:**
+Act as a senior full-stack engineer. We are building a desk-booking application for our team called "Full Stack Phone on My Desk". We are a Microsoft shop, so the app should be designed with future Teams integration and Single Sign-On in mind.
+
+**Core Task:**
+Create a skeleton framework for a web application that manages desk bookings. The initial version should include:
+
+1.  **Data Source:** Use and expand the existing `users.json` file in the repo. It currently includes Employee ID, Team, Role, and Line Manager. Generate mock data for 100 additional users to simulate a realistic office environment.
+2.  **Interactive Floor Plan:** Create a visual, point-and-click floor plan component. Users should be able to see which desks are active, booked, or available.
+3.  **Booking Logic:**
+    *   **Manual Booking:** Point and click on the map.
+    *   **Agent Booking:** A chat interface where an AI agent can process natural language requests like "Book me and my team a desk next Friday".
+    *   **Team Awareness:** Use the line manager and collaborator data (simulating Microsoft Graph) to suggest bookings near teammates.
+4.  **Desk Attributes:** Desks should have metadata such as "Dual Monitor," "Near Window," "Quiet Zone," and "Height Adjustable/DSE".
+5.  **Smart Features (Simulation):**
+    *   **Auto-Release:** Implement logic to release a desk if a user is "away" for more than 2 hours (simulating ThousandEyes/access point data).
+    *   **Privacy:** Include a preference setting for users to hide their booking visibility from others.
+6.  **Architecture:** Build this as a responsive web front-end (e.g., React) that can run within a WebView2 container for future Teams deployment.
+
+**Instructions for Claude:**
+*   Start by setting up the project structure and the expanded JSON database.
+*   Provide a basic interactive SVG or canvas-based floor plan.
+*   **Crucial:** Once you have the 80% plan ready, **ask me a series of follow-up questions** to fill in the gaps before you generate the final code.
+
+***
+
+### **Why this prompt works (per the sources):**
+*   **The "Skeleton" Approach:** Your team specifically discussed getting a skeleton framework together first rather than "boiling the ocean".
+*   **Collaborator Data:** It leverages the idea of using Graph API logic (even if mocked initially) to help teams sit together, which was a major discussion point.
+*   **Interactive vs. Agent:** It satisfies the requirement to have "both methods" (traditional UI and AI agent) to suit different user preferences.
+*   **Avoiding "Burn":** By asking Claude to stop and ask questions at the 80% mark, you avoid burning through your Claude credits on an incorrect interpretation of the plan.
