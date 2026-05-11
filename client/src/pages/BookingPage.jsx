@@ -18,6 +18,9 @@ export default function BookingPage({ me }) {
   const [suggestions, setSuggestions] = useState([]);
   const [selectedDesk, setSelectedDesk] = useState(null);
   const [bookingError, setBookingError] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [positionOverrides, setPositionOverrides] = useState({});
+  const [saveError, setSaveError] = useState(null);
 
   const refresh = useCallback(async () => {
     const [d, b, s] = await Promise.all([
@@ -66,6 +69,29 @@ export default function BookingPage({ me }) {
     await refresh();
   }
 
+  function handleDeskMoved(id, pos) {
+    setPositionOverrides((prev) => ({ ...prev, [id]: pos }));
+  }
+
+  async function savePositions() {
+    setSaveError(null);
+    try {
+      const updates = Object.entries(positionOverrides).map(([id, pos]) => ({ id, ...pos }));
+      await api.savePositions(me.id, updates);
+      setPositionOverrides({});
+      setEditMode(false);
+      await refresh();
+    } catch (e) {
+      setSaveError(e.message);
+    }
+  }
+
+  function cancelEdit() {
+    setPositionOverrides({});
+    setEditMode(false);
+    setSaveError(null);
+  }
+
   return (
     <main className="main">
       <section className="panel">
@@ -86,16 +112,47 @@ export default function BookingPage({ me }) {
             <span><span className="legend-dot dot-booked"/>Booked</span>
             <span><span className="legend-dot dot-active"/>Active</span>
           </div>
+          {me.admin && !editMode && (
+            <button onClick={() => setEditMode(true)} style={{ marginLeft: 'auto' }}>
+              Edit desk positions
+            </button>
+          )}
         </div>
+
+        {editMode && (
+          <div className="edit-mode-bar">
+            <span>
+              Drag desks to reposition.
+              {Object.keys(positionOverrides).length > 0 && (
+                <strong> {Object.keys(positionOverrides).length} desk{Object.keys(positionOverrides).length > 1 ? 's' : ''} moved.</strong>
+              )}
+            </span>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              {saveError && <span className="error">{saveError}</span>}
+              <button onClick={cancelEdit}>Cancel</button>
+              <button
+                className="primary"
+                onClick={savePositions}
+                disabled={Object.keys(positionOverrides).length === 0}
+              >
+                Save positions
+              </button>
+            </div>
+          </div>
+        )}
+
         <FloorPlan
           floor={floor}
           desks={floorDesks}
           onPick={(desk) => {
-            if (desk.state !== 'available') return;
+            if (editMode || desk.state !== 'available') return;
             setSelectedDesk(desk);
             setBookingError(null);
           }}
           selectedId={selectedDesk?.id}
+          editMode={editMode}
+          positionOverrides={positionOverrides}
+          onDeskMoved={handleDeskMoved}
         />
       </section>
 

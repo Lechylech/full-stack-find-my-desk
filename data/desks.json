@@ -198,7 +198,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.6,
+    "x": 0.68,
     "y": 0.08,
     "attributes": {
       "dualMonitor": true,
@@ -214,7 +214,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.635,
+    "x": 0.715,
     "y": 0.08,
     "attributes": {
       "dualMonitor": false,
@@ -230,7 +230,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.67,
+    "x": 0.75,
     "y": 0.08,
     "attributes": {
       "dualMonitor": true,
@@ -246,7 +246,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.6,
+    "x": 0.68,
     "y": 0.125,
     "attributes": {
       "dualMonitor": false,
@@ -262,7 +262,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.635,
+    "x": 0.715,
     "y": 0.125,
     "attributes": {
       "dualMonitor": true,
@@ -278,7 +278,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.67,
+    "x": 0.75,
     "y": 0.125,
     "attributes": {
       "dualMonitor": false,
@@ -294,7 +294,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.735,
+    "x": 0.795,
     "y": 0.08,
     "attributes": {
       "dualMonitor": true,
@@ -310,7 +310,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.77,
+    "x": 0.83,
     "y": 0.08,
     "attributes": {
       "dualMonitor": false,
@@ -326,7 +326,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.805,
+    "x": 0.865,
     "y": 0.08,
     "attributes": {
       "dualMonitor": true,
@@ -342,7 +342,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.735,
+    "x": 0.795,
     "y": 0.125,
     "attributes": {
       "dualMonitor": false,
@@ -358,7 +358,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.77,
+    "x": 0.83,
     "y": 0.125,
     "attributes": {
       "dualMonitor": true,
@@ -374,7 +374,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.805,
+    "x": 0.865,
     "y": 0.125,
     "attributes": {
       "dualMonitor": false,
@@ -390,7 +390,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.87,
+    "x": 0.91,
     "y": 0.08,
     "attributes": {
       "dualMonitor": true,
@@ -406,7 +406,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.905,
+    "x": 0.945,
     "y": 0.08,
     "attributes": {
       "dualMonitor": false,
@@ -422,7 +422,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.94,
+    "x": 0.98,
     "y": 0.08,
     "attributes": {
       "dualMonitor": true,
@@ -438,7 +438,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.87,
+    "x": 0.91,
     "y": 0.125,
     "attributes": {
       "dualMonitor": false,
@@ -454,7 +454,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.905,
+    "x": 0.945,
     "y": 0.125,
     "attributes": {
       "dualMonitor": true,
@@ -470,7 +470,7 @@
     "zone": "Security",
     "platform": "Cyber Security",
     "hotDesk": false,
-    "x": 0.94,
+    "x": 0.98,
     "y": 0.125,
     "attributes": {
       "dualMonitor": false,
@@ -678,7 +678,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.6,
+    "x": 0.68,
     "y": 0.38,
     "attributes": {
       "dualMonitor": true,
@@ -694,7 +694,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.635,
+    "x": 0.715,
     "y": 0.38,
     "attributes": {
       "dualMonitor": false,
@@ -710,7 +710,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.67,
+    "x": 0.75,
     "y": 0.38,
     "attributes": {
       "dualMonitor": true,
@@ -726,7 +726,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.6,
+    "x": 0.68,
     "y": 0.425,
     "attributes": {
       "dualMonitor": false,
@@ -742,7 +742,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.635,
+    "x": 0.715,
     "y": 0.425,
     "attributes": {
       "dualMonitor": true,
@@ -758,7 +758,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.67,
+    "x": 0.75,
     "y": 0.425,
     "attributes": {
       "dualMonitor": false,
@@ -774,7 +774,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.735,
+    "x": 0.795,
     "y": 0.38,
     "attributes": {
       "dualMonitor": true,
@@ -790,7 +790,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.77,
+    "x": 0.83,
     "y": 0.38,
     "attributes": {
       "dualMonitor": false,
@@ -806,7 +806,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.805,
+    "x": 0.865,
     "y": 0.38,
     "attributes": {
       "dualMonitor": true,
@@ -822,7 +822,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.735,
+    "x": 0.795,
     "y": 0.425,
     "attributes": {
       "dualMonitor": false,
@@ -838,7 +838,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.77,
+    "x": 0.83,
     "y": 0.425,
     "attributes": {
       "dualMonitor": true,
@@ -854,7 +854,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.805,
+    "x": 0.865,
     "y": 0.425,
     "attributes": {
       "dualMonitor": false,
@@ -870,7 +870,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.87,
+    "x": 0.91,
     "y": 0.38,
     "attributes": {
       "dualMonitor": true,
@@ -886,7 +886,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.905,
+    "x": 0.945,
     "y": 0.38,
     "attributes": {
       "dualMonitor": false,
@@ -902,7 +902,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.94,
+    "x": 0.98,
     "y": 0.38,
     "attributes": {
       "dualMonitor": true,
@@ -918,7 +918,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.87,
+    "x": 0.91,
     "y": 0.425,
     "attributes": {
       "dualMonitor": false,
@@ -934,7 +934,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.905,
+    "x": 0.945,
     "y": 0.425,
     "attributes": {
       "dualMonitor": true,
@@ -950,7 +950,7 @@
     "zone": "Support",
     "platform": "Operations",
     "hotDesk": false,
-    "x": 0.94,
+    "x": 0.98,
     "y": 0.425,
     "attributes": {
       "dualMonitor": false,
@@ -1414,7 +1414,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.6,
+    "x": 0.68,
     "y": 0.08,
     "attributes": {
       "dualMonitor": true,
@@ -1430,7 +1430,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.635,
+    "x": 0.715,
     "y": 0.08,
     "attributes": {
       "dualMonitor": false,
@@ -1446,7 +1446,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.67,
+    "x": 0.75,
     "y": 0.08,
     "attributes": {
       "dualMonitor": true,
@@ -1462,7 +1462,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.6,
+    "x": 0.68,
     "y": 0.125,
     "attributes": {
       "dualMonitor": false,
@@ -1478,7 +1478,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.635,
+    "x": 0.715,
     "y": 0.125,
     "attributes": {
       "dualMonitor": true,
@@ -1494,7 +1494,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.67,
+    "x": 0.75,
     "y": 0.125,
     "attributes": {
       "dualMonitor": false,
@@ -1510,7 +1510,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.735,
+    "x": 0.795,
     "y": 0.08,
     "attributes": {
       "dualMonitor": true,
@@ -1526,7 +1526,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.77,
+    "x": 0.83,
     "y": 0.08,
     "attributes": {
       "dualMonitor": false,
@@ -1542,7 +1542,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.805,
+    "x": 0.865,
     "y": 0.08,
     "attributes": {
       "dualMonitor": true,
@@ -1558,7 +1558,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.735,
+    "x": 0.795,
     "y": 0.125,
     "attributes": {
       "dualMonitor": false,
@@ -1574,7 +1574,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.77,
+    "x": 0.83,
     "y": 0.125,
     "attributes": {
       "dualMonitor": true,
@@ -1590,7 +1590,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.805,
+    "x": 0.865,
     "y": 0.125,
     "attributes": {
       "dualMonitor": false,
@@ -1606,7 +1606,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.87,
+    "x": 0.91,
     "y": 0.08,
     "attributes": {
       "dualMonitor": true,
@@ -1622,7 +1622,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.905,
+    "x": 0.945,
     "y": 0.08,
     "attributes": {
       "dualMonitor": false,
@@ -1638,7 +1638,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.94,
+    "x": 0.98,
     "y": 0.08,
     "attributes": {
       "dualMonitor": true,
@@ -1654,7 +1654,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.87,
+    "x": 0.91,
     "y": 0.125,
     "attributes": {
       "dualMonitor": false,
@@ -1670,7 +1670,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.905,
+    "x": 0.945,
     "y": 0.125,
     "attributes": {
       "dualMonitor": true,
@@ -1686,7 +1686,7 @@
     "zone": "North-East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.94,
+    "x": 0.98,
     "y": 0.125,
     "attributes": {
       "dualMonitor": false,
@@ -1894,7 +1894,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.6,
+    "x": 0.68,
     "y": 0.4,
     "attributes": {
       "dualMonitor": true,
@@ -1910,7 +1910,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.635,
+    "x": 0.715,
     "y": 0.4,
     "attributes": {
       "dualMonitor": false,
@@ -1926,7 +1926,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.67,
+    "x": 0.75,
     "y": 0.4,
     "attributes": {
       "dualMonitor": true,
@@ -1942,7 +1942,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.6,
+    "x": 0.68,
     "y": 0.445,
     "attributes": {
       "dualMonitor": false,
@@ -1958,7 +1958,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.635,
+    "x": 0.715,
     "y": 0.445,
     "attributes": {
       "dualMonitor": true,
@@ -1974,7 +1974,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.67,
+    "x": 0.75,
     "y": 0.445,
     "attributes": {
       "dualMonitor": false,
@@ -1990,7 +1990,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.735,
+    "x": 0.795,
     "y": 0.4,
     "attributes": {
       "dualMonitor": true,
@@ -2006,7 +2006,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.77,
+    "x": 0.83,
     "y": 0.4,
     "attributes": {
       "dualMonitor": false,
@@ -2022,7 +2022,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.805,
+    "x": 0.865,
     "y": 0.4,
     "attributes": {
       "dualMonitor": true,
@@ -2038,7 +2038,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.735,
+    "x": 0.795,
     "y": 0.445,
     "attributes": {
       "dualMonitor": false,
@@ -2054,7 +2054,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.77,
+    "x": 0.83,
     "y": 0.445,
     "attributes": {
       "dualMonitor": true,
@@ -2070,7 +2070,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.805,
+    "x": 0.865,
     "y": 0.445,
     "attributes": {
       "dualMonitor": false,
@@ -2086,7 +2086,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.87,
+    "x": 0.91,
     "y": 0.4,
     "attributes": {
       "dualMonitor": true,
@@ -2102,7 +2102,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.905,
+    "x": 0.945,
     "y": 0.4,
     "attributes": {
       "dualMonitor": false,
@@ -2118,7 +2118,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.94,
+    "x": 0.98,
     "y": 0.4,
     "attributes": {
       "dualMonitor": true,
@@ -2134,7 +2134,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.87,
+    "x": 0.91,
     "y": 0.445,
     "attributes": {
       "dualMonitor": false,
@@ -2150,7 +2150,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.905,
+    "x": 0.945,
     "y": 0.445,
     "attributes": {
       "dualMonitor": true,
@@ -2166,7 +2166,7 @@
     "zone": "East Pods",
     "platform": "Data",
     "hotDesk": false,
-    "x": 0.94,
+    "x": 0.98,
     "y": 0.445,
     "attributes": {
       "dualMonitor": false,
@@ -2310,7 +2310,7 @@
     "zone": "South-East Pods",
     "platform": "Product",
     "hotDesk": false,
-    "x": 0.6,
+    "x": 0.68,
     "y": 0.74,
     "attributes": {
       "dualMonitor": true,
@@ -2326,7 +2326,7 @@
     "zone": "South-East Pods",
     "platform": "Product",
     "hotDesk": false,
-    "x": 0.635,
+    "x": 0.715,
     "y": 0.74,
     "attributes": {
       "dualMonitor": false,
@@ -2342,7 +2342,7 @@
     "zone": "South-East Pods",
     "platform": "Product",
     "hotDesk": false,
-    "x": 0.6,
+    "x": 0.68,
     "y": 0.785,
     "attributes": {
       "dualMonitor": true,
@@ -2358,7 +2358,7 @@
     "zone": "South-East Pods",
     "platform": "Product",
     "hotDesk": false,
-    "x": 0.635,
+    "x": 0.715,
     "y": 0.785,
     "attributes": {
       "dualMonitor": false,
@@ -2374,7 +2374,7 @@
     "zone": "South-East Pods",
     "platform": "Product",
     "hotDesk": false,
-    "x": 0.7,
+    "x": 0.76,
     "y": 0.74,
     "attributes": {
       "dualMonitor": true,
@@ -2390,7 +2390,7 @@
     "zone": "South-East Pods",
     "platform": "Product",
     "hotDesk": false,
-    "x": 0.735,
+    "x": 0.795,
     "y": 0.74,
     "attributes": {
       "dualMonitor": false,
@@ -2406,7 +2406,7 @@
     "zone": "South-East Pods",
     "platform": "Product",
     "hotDesk": false,
-    "x": 0.7,
+    "x": 0.76,
     "y": 0.785,
     "attributes": {
       "dualMonitor": true,
@@ -2422,7 +2422,7 @@
     "zone": "South-East Pods",
     "platform": "Product",
     "hotDesk": false,
-    "x": 0.735,
+    "x": 0.795,
     "y": 0.785,
     "attributes": {
       "dualMonitor": false,
@@ -2438,7 +2438,7 @@
     "zone": "South-East Pods",
     "platform": "Product",
     "hotDesk": false,
-    "x": 0.8,
+    "x": 0.84,
     "y": 0.74,
     "attributes": {
       "dualMonitor": true,
@@ -2454,7 +2454,7 @@
     "zone": "South-East Pods",
     "platform": "Product",
     "hotDesk": false,
-    "x": 0.835,
+    "x": 0.875,
     "y": 0.74,
     "attributes": {
       "dualMonitor": false,
@@ -2470,7 +2470,7 @@
     "zone": "South-East Pods",
     "platform": "Product",
     "hotDesk": false,
-    "x": 0.8,
+    "x": 0.84,
     "y": 0.785,
     "attributes": {
       "dualMonitor": true,
@@ -2486,7 +2486,7 @@
     "zone": "South-East Pods",
     "platform": "Product",
     "hotDesk": false,
-    "x": 0.835,
+    "x": 0.875,
     "y": 0.785,
     "attributes": {
       "dualMonitor": false,

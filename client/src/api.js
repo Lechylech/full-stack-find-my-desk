@@ -30,4 +30,6 @@ export const api = {
   release: (id) => request(`/bookings/${id}/release`, { method: 'POST' }),
   cancel: (id) => request(`/bookings/${id}`, { method: 'DELETE' }),
   getSuggestions: (userId, date) => request(`/suggestions?userId=${userId}&date=${date}`),
+  savePositions: (userId, updates) => request('/desks/positions', { method: 'PATCH', body: JSON.stringify({ userId, updates }) }),
+  sendReminder: (userId, date) => request('/reminders/send', { method: 'POST', body: JSON.stringify({ userId, date }) }),
 };

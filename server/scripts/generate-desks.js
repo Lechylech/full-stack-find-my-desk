@@ -21,10 +21,10 @@ const POD_GAP_X = 0.03;
 const groundZones = [
   // Top row
   { zone: 'Windows',         platform: 'Engineering',    pods: gridPods(0.04, 0.08, 2, 2, 3, POD_GAP_X, DX, DY), nearWindow: true },
-  { zone: 'Security',        platform: 'Cyber Security', pods: gridPods(0.60, 0.08, 3, 2, 3, POD_GAP_X, DX, DY), nearWindow: true },
+  { zone: 'Security',        platform: 'Cyber Security', pods: gridPods(0.68, 0.08, 3, 2, 3, 0.01, DX, DY), nearWindow: true },
   // Middle row (left/right of meeting rooms)
   { zone: 'Virtualisation',  platform: 'Engineering',    pods: gridPods(0.04, 0.38, 2, 2, 3, POD_GAP_X, DX, DY), quietZone: true },
-  { zone: 'Support',         platform: 'Operations',     pods: gridPods(0.60, 0.38, 3, 2, 3, POD_GAP_X, DX, DY) },
+  { zone: 'Support',         platform: 'Operations',     pods: gridPods(0.68, 0.38, 3, 2, 3, 0.01, DX, DY) },
   // Bottom row
   { zone: 'Breakout',        platform: 'Shared',         pods: gridPods(0.18, 0.78, 2, 2, 2, POD_GAP_X, DX, DY), hotDesk: true },
   { zone: 'Reception Pods',  platform: 'Shared',         pods: gridPods(0.62, 0.78, 2, 2, 2, POD_GAP_X, DX, DY) },
@@ -32,11 +32,11 @@ const groundZones = [
 
 const firstZones = [
   { zone: 'North-West Pods', platform: 'Engineering',    pods: gridPods(0.04, 0.08, 2, 2, 3, POD_GAP_X, DX, DY), nearWindow: true },
-  { zone: 'North-East Pods', platform: 'Data',           pods: gridPods(0.60, 0.08, 3, 2, 3, POD_GAP_X, DX, DY), nearWindow: true },
+  { zone: 'North-East Pods', platform: 'Data',           pods: gridPods(0.68, 0.08, 3, 2, 3, 0.01, DX, DY), nearWindow: true },
   { zone: 'West Pods',       platform: 'Engineering',    pods: gridPods(0.04, 0.40, 2, 2, 3, POD_GAP_X, DX, DY), quietZone: true },
-  { zone: 'East Pods',       platform: 'Data',           pods: gridPods(0.60, 0.40, 3, 2, 3, POD_GAP_X, DX, DY) },
+  { zone: 'East Pods',       platform: 'Data',           pods: gridPods(0.68, 0.40, 3, 2, 3, 0.01, DX, DY) },
   { zone: 'South-West Pods', platform: 'Product',        pods: gridPods(0.04, 0.74, 2, 2, 2, POD_GAP_X, DX, DY) },
-  { zone: 'South-East Pods', platform: 'Product',        pods: gridPods(0.60, 0.74, 3, 2, 2, POD_GAP_X, DX, DY) },
+  { zone: 'South-East Pods', platform: 'Product',        pods: gridPods(0.68, 0.74, 3, 2, 2, 0.01, DX, DY) },
 ];
 
 function gridPods(x0, y0, pods, rows, cols, podGapX, dx, dy) {
