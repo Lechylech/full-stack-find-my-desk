@@ -1,0 +1,37 @@
+Next steps 
+
+- Fix force release capability for standard user
+- Book multiple desks
+- Limited the forward bookings for standard users
+- Don't limit admin bookings
+- User preferences on a profile
+
+- Test plan and executed for v1
+- Fix PNG and co-ordinates image 
+
+- Preferences to include accessibility  
+- Highlight team members
+- Table view as well Map booking
+- Teams integration as an autoboot
+- Delegate booking on behalf of someone else.
+- Permission model for delegation (team member/line manager).
+- No-desk fallback suggestions (hot desk areas).
+- Meeting room booking fallback when team desks unavailable.
+- AI/agent booking via chat prompts.
+- Office-specific recommendations when user is unfamiliar with location.
+- Database for audit etc..
+- Preference-based smart suggestions (historical booking patterns).
+- Auto-release based on away/presence simulation.Presence signal simulation concepts (monitor/AP/Bluetooth/Intune).
+- Admin needs to config these settings - Multi-step re-prompt flow before desk release (90 + 20 + 10 min pattern).
+- Prompt for user alerts for self bumping in teams
+- Management/admin backend for occupancy insights.
+- Usage analytics (booked vs actually used).
+- Responsive UI compatible with WebView2 for future Teams app packaging.
+- Ask follow-up questions at ~80% plan before final build.
+- Provide architecture rationale (why language/platform choice aligns with Microsoft/Teams).
+
+
+
+
+
+
