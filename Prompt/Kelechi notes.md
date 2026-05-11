@@ -1,0 +1,12 @@
+- Architecture: add to JSON file platform, lab, team - the JSON is basically our database for now
+- Architecture/UI: auto desk suggestion once you land on the app, then it blocks out people booking that desk for a period of time whilst you look at it
+- Functionality: delegate who can access to book desks on your behalf (people in your team or your line manager)
+- Functionality: AI agent as a pop up for example to ask questions for booking in an office you don’t typically work in, where would it recommend?
+- Judging: we get points for explaining why we chose what language/platform to use e.g. Teams/Microsoft as Microsoft House, user experience within Teams app
+- Architecture: How do we know if the user it at the desk so we can auto check in: connecting to a monitor, access point connection e.g. thousand eyes, Bluetooth wayfinding, Intune managed personal device
+- Functionality: if you’ve been away from the desk for more than 1:30 prompt asking if they’re still there, if they haven’t responded after 20 mins send another prompt and say the desk will be bumped, they have 10 mins to respond. This ensures if a desk isn’t used for 120 mins it is available for use
+- UI: booking a desk for a specific amount of time instead of the whole day
+- Functionality: add meeting room booking in case team can get desks
+- Functionality: have a management backend to visualise previous and current usage e.g. booked vs used desks, 
+- Functionality: show potential available hot desks areas if no bookable desks are available
+- Intelligence: for auto booking magic, system needs to pick desk preferences do they typically book e.g., the floor do they typically sit on, dual monitors, close to window
