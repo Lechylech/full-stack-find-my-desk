@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(node *)",
+      "Bash(npm install *)",
+      "Bash(PORT=4001 timeout 5 node src/index.js)",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:4000/api/health)",
+      "Bash(curl -sI http://localhost:5176/)",
+      "Bash(curl -s http://localhost:5176/api/health)"
+    ]
+  }
+}

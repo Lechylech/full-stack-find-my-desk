@@ -1,0 +1,17 @@
+{
+  "name": "find-my-desk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Desk-booking MVP for a Microsoft-first team. Skeleton for future Teams embedding.",
+  "scripts": {
+    "dev": "concurrently -k -n server,client -c blue,magenta \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client",
+    "build": "npm run build --prefix client"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}

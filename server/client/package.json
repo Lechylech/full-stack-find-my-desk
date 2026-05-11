@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "find-my-desk-server": "file:.."
+  }
+}

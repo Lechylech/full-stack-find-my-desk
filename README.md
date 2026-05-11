@@ -1,44 +1,111 @@
-# Find My Desk Hackathon — Starting Template
+# Find My Desk — MVP
 
-Welcome to the starting template for Hackathon 1. This repo contains everything you need to get your team up and running.
+Desk-booking skeleton for a Microsoft-first team. React + Vite frontend, Express backend, JSON-file persistence. Built to demonstrate the core booking journey end-to-end, with mocked services in place of real Teams / Graph / sensor integrations.
 
-## Getting Started
+## Stack
 
-**Fork this repository** and rename it to your team name. That will be your team's working repo for the duration of the hackathon.
+- **Frontend:** React 18 + Vite + react-router (`client/`)
+- **Backend:** Node + Express (`server/`)
+- **Data:** `data/users.json` (150 mock users) + `data/desks.json` (156 desks across 2 floors) + `data/bookings.json` (created at runtime, gitignored)
+- **Floor plans:** PNGs in `floorplans/`, served by Vite at `/ground.png` and `/first.png`
 
-See [CLAUDE_CODE_SETUP.md](./CLAUDE_CODE_SETUP.md) for installation instructions.
+## Setup
 
----
+```bash
+npm install
+npm install --prefix server
+npm install --prefix client
+```
 
-## Helpful Docs
+Or in one shot:
 
-We're building with **Claude Code** — Anthropic's AI coding assistant.
+```bash
+npm run install:all
+```
 
-- [How Claude Code Works](https://code.claude.com/docs/en/how-claude-code-works)
-- [Claude Code Best Practices](https://code.claude.com/docs/en/best-practices)
-- [Claude Code Common Workflows](https://code.claude.com/docs/en/common-workflows)
-- [Choosing a Model](https://platform.claude.com/docs/en/about-claude/models/choosing-a-model)
+## Run
 
-### Prompting Claude
+```bash
+npm run dev
+```
 
-- [Prompting Guidelines](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview)
+This starts:
+- Server on http://localhost:4000
+- Vite dev server on http://localhost:5173 (proxies `/api/*` to the server)
 
-### Tokens and Limits
+Open http://localhost:5173 in a browser.
 
-Tokens are the units the API uses to measure text — roughly 1 token per ~4 characters of English. Every request and response costs tokens, so prompt length, context window size, and response verbosity all add up quickly. To stay within budget: keep system prompts lean, truncate or summarize long conversation histories rather than passing them wholesale, and set `max_tokens` to the minimum needed for each call.
+To run them separately:
 
-- [Model Costs](https://platform.claude.com/docs/en/about-claude/pricing)
+```bash
+npm run dev:server
+npm run dev:client
+```
 
----
+## Features
 
-## Provided Data
+### Booking flow
+1. Pick a date (defaults to today) and floor (Ground / First).
+2. Click an available (green) desk on the floor plan.
+3. Choose start/end hours (minimum 1 hour, maximum whole day, 7–22 range).
+4. Confirm. Desk turns yellow ("booked"). Check in to turn it blue ("active").
 
-Some dummy data has been provided to help foster ideas or assist in your solution design. The data contains two office floorplans and an employee directory. **You are not required to use any of it**, and using or ignoring it will not affect scoring. You are free to mutate the data in any way you wish.
+### Simulated auto-release
+Once you're checked in (active), the demo timer kicks off:
+- **30s idle** → first "still here?" prompt
+- **15s no response** → second prompt with **10s countdown**
+- **No confirmation** → desk auto-released back to available
 
-### Floorplans
+Real-world timings would be 90/20/10 minutes; compressed for live demos. Constants live in `client/src/components/AutoReleaseManager.jsx`.
 
-Office layout images are in the `floorplans/` directory: `ground.png` and `first.png`.
+### Team-nearby suggestions
+For the chosen date, the side panel surfaces up to 3 available desks closest (by floor + coordinates) to a teammate who has already booked that day. "Teammate" means same `team`, `lab`, or `platform`. If no teammates are booked yet, falls back to top desks matching your `deskPreferences`.
 
-### Employee Directory
+### Privacy toggle
+In the header. When enabled, other non-admin users see your booking as "Private booking" with the user hidden. Admins (first three users in `users.json`) always see full info.
 
-`data/users.json` contains 50 fictional bank employee records. Each record includes details such as name, job title, department, and contact information — enough to simulate a realistic internal directory. 
+### Current-user simulator
+Top-right dropdown switches the active user — no real auth in MVP. Setting persists to localStorage.
+
+### Manage page
+`/manage` lists every booking for the chosen date with a force-release action, plus occupancy summary cards per floor. Lightweight admin view, intentionally placeholder.
+
+## Backend API
+
+| Method | Path                              | Notes                                                   |
+|--------|-----------------------------------|---------------------------------------------------------|
+| GET    | `/api/health`                     | Sanity check + counts                                   |
+| GET    | `/api/users`                      | All users (public projection)                           |
+| GET    | `/api/users/:id`                  | One user                                                |
+| PATCH  | `/api/users/:id/privacy`          | `{ privacy: bool }`                                     |
+| GET    | `/api/me`                         | Current simulated user                                  |
+| POST   | `/api/me`                         | `{ id }` — switch user                                  |
+| GET    | `/api/desks?date=YYYY-MM-DD`      | Desks + computed state for the date                     |
+| GET    | `/api/bookings?date=&userId=`     | Filtered bookings                                       |
+| POST   | `/api/bookings`                   | Create booking                                          |
+| POST   | `/api/bookings/:id/checkin`       | Mark active                                             |
+| POST   | `/api/bookings/:id/release`       | Release                                                 |
+| DELETE | `/api/bookings/:id`               | Cancel                                                  |
+| GET    | `/api/suggestions?userId=&date=`  | Team-nearby suggestions                                 |
+
+## Regenerating desks.json
+
+```bash
+node server/scripts/generate-desks.js
+```
+
+Desk positions are normalised (0..1) over each floor PNG. Edit the zone tables at the top of that script to change layout, attribute mix, or pod size.
+
+## Out of scope (per the MVP prompt)
+
+- Real Microsoft Teams packaging / store deployment
+- Real Microsoft Graph integration
+- Real telemetry (ThousandEyes / Bluetooth / Intune / monitor events)
+- Full enterprise admin suite, analytics pipeline, advanced approval workflows
+- AI agent orchestration beyond the mocked nearby-suggestion logic
+
+## Notes
+
+- Admins are the first three records in `users.json`. They can see private bookings and have access to "Force release" in the Manage view.
+- Privacy and admin flags are kept in server memory (intentionally not persisted to `users.json` so the seed data stays clean). Restarting the server resets them.
+- The data folder is intentionally left at 150 users — even though the MVP prompt asks for 100 more, that ask was overridden during scoping.

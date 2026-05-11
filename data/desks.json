@@ -1,0 +1,2498 @@
+[
+  {
+    "id": "G-001",
+    "label": "G001",
+    "floor": "ground",
+    "zone": "Windows",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.04,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": true,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-002",
+    "label": "G002",
+    "floor": "ground",
+    "zone": "Windows",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.075,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-003",
+    "label": "G003",
+    "floor": "ground",
+    "zone": "Windows",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.11,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-004",
+    "label": "G004",
+    "floor": "ground",
+    "zone": "Windows",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.04,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-005",
+    "label": "G005",
+    "floor": "ground",
+    "zone": "Windows",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.075,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-006",
+    "label": "G006",
+    "floor": "ground",
+    "zone": "Windows",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.11,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": true,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-007",
+    "label": "G007",
+    "floor": "ground",
+    "zone": "Windows",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.175,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-008",
+    "label": "G008",
+    "floor": "ground",
+    "zone": "Windows",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.21,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-009",
+    "label": "G009",
+    "floor": "ground",
+    "zone": "Windows",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.245,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-010",
+    "label": "G010",
+    "floor": "ground",
+    "zone": "Windows",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.175,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-011",
+    "label": "G011",
+    "floor": "ground",
+    "zone": "Windows",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.21,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-012",
+    "label": "G012",
+    "floor": "ground",
+    "zone": "Windows",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.245,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-013",
+    "label": "G013",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.6,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": true,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-014",
+    "label": "G014",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.635,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-015",
+    "label": "G015",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.67,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-016",
+    "label": "G016",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.6,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-017",
+    "label": "G017",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.635,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-018",
+    "label": "G018",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.67,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": true,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-019",
+    "label": "G019",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.735,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-020",
+    "label": "G020",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.77,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-021",
+    "label": "G021",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.805,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-022",
+    "label": "G022",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.735,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-023",
+    "label": "G023",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.77,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-024",
+    "label": "G024",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.805,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-025",
+    "label": "G025",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.87,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-026",
+    "label": "G026",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.905,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-027",
+    "label": "G027",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.94,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-028",
+    "label": "G028",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.87,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-029",
+    "label": "G029",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.905,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-030",
+    "label": "G030",
+    "floor": "ground",
+    "zone": "Security",
+    "platform": "Cyber Security",
+    "hotDesk": false,
+    "x": 0.94,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-031",
+    "label": "G031",
+    "floor": "ground",
+    "zone": "Virtualisation",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.04,
+    "y": 0.38,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-032",
+    "label": "G032",
+    "floor": "ground",
+    "zone": "Virtualisation",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.075,
+    "y": 0.38,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-033",
+    "label": "G033",
+    "floor": "ground",
+    "zone": "Virtualisation",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.11,
+    "y": 0.38,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-034",
+    "label": "G034",
+    "floor": "ground",
+    "zone": "Virtualisation",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.04,
+    "y": 0.425,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-035",
+    "label": "G035",
+    "floor": "ground",
+    "zone": "Virtualisation",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.075,
+    "y": 0.425,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-036",
+    "label": "G036",
+    "floor": "ground",
+    "zone": "Virtualisation",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.11,
+    "y": 0.425,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-037",
+    "label": "G037",
+    "floor": "ground",
+    "zone": "Virtualisation",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.175,
+    "y": 0.38,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-038",
+    "label": "G038",
+    "floor": "ground",
+    "zone": "Virtualisation",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.21,
+    "y": 0.38,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-039",
+    "label": "G039",
+    "floor": "ground",
+    "zone": "Virtualisation",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.245,
+    "y": 0.38,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-040",
+    "label": "G040",
+    "floor": "ground",
+    "zone": "Virtualisation",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.175,
+    "y": 0.425,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-041",
+    "label": "G041",
+    "floor": "ground",
+    "zone": "Virtualisation",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.21,
+    "y": 0.425,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-042",
+    "label": "G042",
+    "floor": "ground",
+    "zone": "Virtualisation",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.245,
+    "y": 0.425,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-043",
+    "label": "G043",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.6,
+    "y": 0.38,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-044",
+    "label": "G044",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.635,
+    "y": 0.38,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-045",
+    "label": "G045",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.67,
+    "y": 0.38,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-046",
+    "label": "G046",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.6,
+    "y": 0.425,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-047",
+    "label": "G047",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.635,
+    "y": 0.425,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-048",
+    "label": "G048",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.67,
+    "y": 0.425,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-049",
+    "label": "G049",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.735,
+    "y": 0.38,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-050",
+    "label": "G050",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.77,
+    "y": 0.38,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-051",
+    "label": "G051",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.805,
+    "y": 0.38,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-052",
+    "label": "G052",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.735,
+    "y": 0.425,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-053",
+    "label": "G053",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.77,
+    "y": 0.425,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-054",
+    "label": "G054",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.805,
+    "y": 0.425,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-055",
+    "label": "G055",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.87,
+    "y": 0.38,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-056",
+    "label": "G056",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.905,
+    "y": 0.38,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-057",
+    "label": "G057",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.94,
+    "y": 0.38,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-058",
+    "label": "G058",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.87,
+    "y": 0.425,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-059",
+    "label": "G059",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.905,
+    "y": 0.425,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-060",
+    "label": "G060",
+    "floor": "ground",
+    "zone": "Support",
+    "platform": "Operations",
+    "hotDesk": false,
+    "x": 0.94,
+    "y": 0.425,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-061",
+    "label": "G061",
+    "floor": "ground",
+    "zone": "Breakout",
+    "platform": "Shared",
+    "hotDesk": true,
+    "x": 0.18,
+    "y": 0.78,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-062",
+    "label": "G062",
+    "floor": "ground",
+    "zone": "Breakout",
+    "platform": "Shared",
+    "hotDesk": true,
+    "x": 0.215,
+    "y": 0.78,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-063",
+    "label": "G063",
+    "floor": "ground",
+    "zone": "Breakout",
+    "platform": "Shared",
+    "hotDesk": true,
+    "x": 0.18,
+    "y": 0.825,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-064",
+    "label": "G064",
+    "floor": "ground",
+    "zone": "Breakout",
+    "platform": "Shared",
+    "hotDesk": true,
+    "x": 0.215,
+    "y": 0.825,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-065",
+    "label": "G065",
+    "floor": "ground",
+    "zone": "Breakout",
+    "platform": "Shared",
+    "hotDesk": true,
+    "x": 0.28,
+    "y": 0.78,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-066",
+    "label": "G066",
+    "floor": "ground",
+    "zone": "Breakout",
+    "platform": "Shared",
+    "hotDesk": true,
+    "x": 0.315,
+    "y": 0.78,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-067",
+    "label": "G067",
+    "floor": "ground",
+    "zone": "Breakout",
+    "platform": "Shared",
+    "hotDesk": true,
+    "x": 0.28,
+    "y": 0.825,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-068",
+    "label": "G068",
+    "floor": "ground",
+    "zone": "Breakout",
+    "platform": "Shared",
+    "hotDesk": true,
+    "x": 0.315,
+    "y": 0.825,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-069",
+    "label": "G069",
+    "floor": "ground",
+    "zone": "Reception Pods",
+    "platform": "Shared",
+    "hotDesk": false,
+    "x": 0.62,
+    "y": 0.78,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-070",
+    "label": "G070",
+    "floor": "ground",
+    "zone": "Reception Pods",
+    "platform": "Shared",
+    "hotDesk": false,
+    "x": 0.655,
+    "y": 0.78,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-071",
+    "label": "G071",
+    "floor": "ground",
+    "zone": "Reception Pods",
+    "platform": "Shared",
+    "hotDesk": false,
+    "x": 0.62,
+    "y": 0.825,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-072",
+    "label": "G072",
+    "floor": "ground",
+    "zone": "Reception Pods",
+    "platform": "Shared",
+    "hotDesk": false,
+    "x": 0.655,
+    "y": 0.825,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-073",
+    "label": "G073",
+    "floor": "ground",
+    "zone": "Reception Pods",
+    "platform": "Shared",
+    "hotDesk": false,
+    "x": 0.72,
+    "y": 0.78,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-074",
+    "label": "G074",
+    "floor": "ground",
+    "zone": "Reception Pods",
+    "platform": "Shared",
+    "hotDesk": false,
+    "x": 0.755,
+    "y": 0.78,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "G-075",
+    "label": "G075",
+    "floor": "ground",
+    "zone": "Reception Pods",
+    "platform": "Shared",
+    "hotDesk": false,
+    "x": 0.72,
+    "y": 0.825,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-076",
+    "label": "G076",
+    "floor": "ground",
+    "zone": "Reception Pods",
+    "platform": "Shared",
+    "hotDesk": false,
+    "x": 0.755,
+    "y": 0.825,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-001",
+    "label": "F001",
+    "floor": "first",
+    "zone": "North-West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.04,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": true,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-002",
+    "label": "F002",
+    "floor": "first",
+    "zone": "North-West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.075,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-003",
+    "label": "F003",
+    "floor": "first",
+    "zone": "North-West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.11,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-004",
+    "label": "F004",
+    "floor": "first",
+    "zone": "North-West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.04,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-005",
+    "label": "F005",
+    "floor": "first",
+    "zone": "North-West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.075,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-006",
+    "label": "F006",
+    "floor": "first",
+    "zone": "North-West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.11,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": true,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-007",
+    "label": "F007",
+    "floor": "first",
+    "zone": "North-West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.175,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-008",
+    "label": "F008",
+    "floor": "first",
+    "zone": "North-West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.21,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-009",
+    "label": "F009",
+    "floor": "first",
+    "zone": "North-West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.245,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-010",
+    "label": "F010",
+    "floor": "first",
+    "zone": "North-West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.175,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-011",
+    "label": "F011",
+    "floor": "first",
+    "zone": "North-West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.21,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-012",
+    "label": "F012",
+    "floor": "first",
+    "zone": "North-West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.245,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-013",
+    "label": "F013",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.6,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": true,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-014",
+    "label": "F014",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.635,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-015",
+    "label": "F015",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.67,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-016",
+    "label": "F016",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.6,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-017",
+    "label": "F017",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.635,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-018",
+    "label": "F018",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.67,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": true,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-019",
+    "label": "F019",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.735,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-020",
+    "label": "F020",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.77,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-021",
+    "label": "F021",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.805,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": true,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-022",
+    "label": "F022",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.735,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-023",
+    "label": "F023",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.77,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-024",
+    "label": "F024",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.805,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-025",
+    "label": "F025",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.87,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-026",
+    "label": "F026",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.905,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-027",
+    "label": "F027",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.94,
+    "y": 0.08,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-028",
+    "label": "F028",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.87,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-029",
+    "label": "F029",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.905,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-030",
+    "label": "F030",
+    "floor": "first",
+    "zone": "North-East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.94,
+    "y": 0.125,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-031",
+    "label": "F031",
+    "floor": "first",
+    "zone": "West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.04,
+    "y": 0.4,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-032",
+    "label": "F032",
+    "floor": "first",
+    "zone": "West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.075,
+    "y": 0.4,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-033",
+    "label": "F033",
+    "floor": "first",
+    "zone": "West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.11,
+    "y": 0.4,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-034",
+    "label": "F034",
+    "floor": "first",
+    "zone": "West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.04,
+    "y": 0.445,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-035",
+    "label": "F035",
+    "floor": "first",
+    "zone": "West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.075,
+    "y": 0.445,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-036",
+    "label": "F036",
+    "floor": "first",
+    "zone": "West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.11,
+    "y": 0.445,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-037",
+    "label": "F037",
+    "floor": "first",
+    "zone": "West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.175,
+    "y": 0.4,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-038",
+    "label": "F038",
+    "floor": "first",
+    "zone": "West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.21,
+    "y": 0.4,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-039",
+    "label": "F039",
+    "floor": "first",
+    "zone": "West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.245,
+    "y": 0.4,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-040",
+    "label": "F040",
+    "floor": "first",
+    "zone": "West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.175,
+    "y": 0.445,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-041",
+    "label": "F041",
+    "floor": "first",
+    "zone": "West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.21,
+    "y": 0.445,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-042",
+    "label": "F042",
+    "floor": "first",
+    "zone": "West Pods",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.245,
+    "y": 0.445,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-043",
+    "label": "F043",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.6,
+    "y": 0.4,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-044",
+    "label": "F044",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.635,
+    "y": 0.4,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-045",
+    "label": "F045",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.67,
+    "y": 0.4,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-046",
+    "label": "F046",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.6,
+    "y": 0.445,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-047",
+    "label": "F047",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.635,
+    "y": 0.445,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-048",
+    "label": "F048",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.67,
+    "y": 0.445,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-049",
+    "label": "F049",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.735,
+    "y": 0.4,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-050",
+    "label": "F050",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.77,
+    "y": 0.4,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-051",
+    "label": "F051",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.805,
+    "y": 0.4,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-052",
+    "label": "F052",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.735,
+    "y": 0.445,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-053",
+    "label": "F053",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.77,
+    "y": 0.445,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-054",
+    "label": "F054",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.805,
+    "y": 0.445,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-055",
+    "label": "F055",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.87,
+    "y": 0.4,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-056",
+    "label": "F056",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.905,
+    "y": 0.4,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-057",
+    "label": "F057",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.94,
+    "y": 0.4,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-058",
+    "label": "F058",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.87,
+    "y": 0.445,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-059",
+    "label": "F059",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.905,
+    "y": 0.445,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-060",
+    "label": "F060",
+    "floor": "first",
+    "zone": "East Pods",
+    "platform": "Data",
+    "hotDesk": false,
+    "x": 0.94,
+    "y": 0.445,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-061",
+    "label": "F061",
+    "floor": "first",
+    "zone": "South-West Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.04,
+    "y": 0.74,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-062",
+    "label": "F062",
+    "floor": "first",
+    "zone": "South-West Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.075,
+    "y": 0.74,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-063",
+    "label": "F063",
+    "floor": "first",
+    "zone": "South-West Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.04,
+    "y": 0.785,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-064",
+    "label": "F064",
+    "floor": "first",
+    "zone": "South-West Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.075,
+    "y": 0.785,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-065",
+    "label": "F065",
+    "floor": "first",
+    "zone": "South-West Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.14,
+    "y": 0.74,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-066",
+    "label": "F066",
+    "floor": "first",
+    "zone": "South-West Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.175,
+    "y": 0.74,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-067",
+    "label": "F067",
+    "floor": "first",
+    "zone": "South-West Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.14,
+    "y": 0.785,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-068",
+    "label": "F068",
+    "floor": "first",
+    "zone": "South-West Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.175,
+    "y": 0.785,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-069",
+    "label": "F069",
+    "floor": "first",
+    "zone": "South-East Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.6,
+    "y": 0.74,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-070",
+    "label": "F070",
+    "floor": "first",
+    "zone": "South-East Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.635,
+    "y": 0.74,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-071",
+    "label": "F071",
+    "floor": "first",
+    "zone": "South-East Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.6,
+    "y": 0.785,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-072",
+    "label": "F072",
+    "floor": "first",
+    "zone": "South-East Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.635,
+    "y": 0.785,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-073",
+    "label": "F073",
+    "floor": "first",
+    "zone": "South-East Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.7,
+    "y": 0.74,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-074",
+    "label": "F074",
+    "floor": "first",
+    "zone": "South-East Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.735,
+    "y": 0.74,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-075",
+    "label": "F075",
+    "floor": "first",
+    "zone": "South-East Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.7,
+    "y": 0.785,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-076",
+    "label": "F076",
+    "floor": "first",
+    "zone": "South-East Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.735,
+    "y": 0.785,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-077",
+    "label": "F077",
+    "floor": "first",
+    "zone": "South-East Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.8,
+    "y": 0.74,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-078",
+    "label": "F078",
+    "floor": "first",
+    "zone": "South-East Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.835,
+    "y": 0.74,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "F-079",
+    "label": "F079",
+    "floor": "first",
+    "zone": "South-East Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.8,
+    "y": 0.785,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": false
+    }
+  },
+  {
+    "id": "F-080",
+    "label": "F080",
+    "floor": "first",
+    "zone": "South-East Pods",
+    "platform": "Product",
+    "hotDesk": false,
+    "x": 0.835,
+    "y": 0.785,
+    "attributes": {
+      "dualMonitor": false,
+      "nearWindow": false,
+      "quietZone": false,
+      "heightAdjustable": false
+    }
+  }
+]
