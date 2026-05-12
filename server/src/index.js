@@ -51,6 +51,16 @@ adminTargets.forEach((u) => { userPrefs.get(u.id).admin = true; });
 // Current user is a simple in-memory pointer the frontend can change.
 let currentUserId = users[0].id;
 
+// One-time migration: strip 'intune' from any persisted presenceSignals
+// config so saved-state matches the new default. Re-running is a no-op.
+{
+  const saved = configDb.get('presenceSignals', null);
+  if (saved && typeof saved === 'object' && 'intune' in saved) {
+    const { intune, ...rest } = saved;
+    configDb.set('presenceSignals', rest, 'system');
+  }
+}
+
 // Booking auto-release policy (admin-configurable; persisted via config table).
 const DEFAULT_AUTO_RELEASE = { warn1Min: 90, warn2Min: 20, autoReleaseMin: 10 };
 function getAutoReleasePolicy() {
@@ -140,7 +150,7 @@ app.patch('/api/users/:id/privacy', (req, res) => {
   res.json({ id: req.params.id, privacy: prefs.privacy });
 });
 
-const ACCESSIBILITY_KEYS = ['wheelchair', 'ergonomic-chair', 'large-display', 'low-light', 'sit-stand', 'hearing-loop'];
+const ACCESSIBILITY_KEYS = ['wheelchair', 'ergonomic-chair', 'large-display', 'low-light', 'hearing-loop'];
 
 app.patch('/api/users/:id/preferences', (req, res) => {
   const u = users.find((x) => x.id === req.params.id);
@@ -331,6 +341,70 @@ app.post('/api/bookings', (req, res) => {
   };
   const saved = bookingsDb.insert(booking, effectiveActorId);
   res.status(201).json(saved);
+});
+
+app.post('/api/bookings/bulk', (req, res) => {
+  const { actorId, userIds, date, startHour, endHour } = req.body || {};
+  if (!actorId || !date || !Array.isArray(userIds) || userIds.length === 0) {
+    return res.status(400).json({ error: 'actorId, date, and a non-empty userIds array are required' });
+  }
+  const sh = Number.isFinite(startHour) ? startHour : 9;
+  const eh = Number.isFinite(endHour) ? endHour : 17;
+  if (eh - sh < 1 || sh < 0 || eh > 24) return res.status(400).json({ error: 'Hours must span >= 1 and stay in 0-24' });
+
+  reloadDesks();
+  const dayActive = bookingsDb.activeByDate(date);
+  const takenDeskIds = new Set(dayActive.filter((b) => !(eh <= b.startHour || sh >= b.endHour)).map((b) => b.deskId));
+  const usersWithSlot = new Set(dayActive.filter((b) => !(eh <= b.startHour || sh >= b.endHour)).map((b) => b.userId));
+
+  const results = [];
+  // Process in order so deterministic; reserve desks as we go.
+  for (const targetId of userIds) {
+    const target = users.find((u) => u.id === targetId);
+    if (!target) { results.push({ userId: targetId, status: 'error', error: 'Unknown user' }); continue; }
+    if (!canDelegate(actorId, targetId)) {
+      results.push({ userId: targetId, status: 'error', fullName: target.fullName, error: 'Not permitted to book on behalf of this user' });
+      continue;
+    }
+    if (usersWithSlot.has(targetId)) {
+      results.push({ userId: targetId, status: 'error', fullName: target.fullName, error: 'User already has a booking in this slot' });
+      continue;
+    }
+
+    // Pick the best-scoring desk that's still available.
+    const prefs = target.deskPreferences || [];
+    const accessibility = Array.isArray(target.accessibilityNeeds) ? target.accessibilityNeeds : (target.accessibilityNeeds ? [target.accessibilityNeeds] : []);
+    const candidates = desks
+      .filter((d) => !takenDeskIds.has(d.id))
+      .map((d) => ({ d, score: scoreByPrefs(d, prefs, accessibility) }))
+      .sort((a, b) => b.score - a.score);
+    if (candidates.length === 0) {
+      results.push({ userId: targetId, status: 'error', fullName: target.fullName, error: 'No desk available in this slot' });
+      continue;
+    }
+    const desk = candidates[0].d;
+
+    const booking = {
+      id: randomUUID(),
+      deskId: desk.id,
+      userId: target.id,
+      date,
+      startHour: sh,
+      endHour: eh,
+      status: 'booked',
+      createdAt: new Date().toISOString(),
+      checkedInAt: null,
+      releasedAt: null,
+      delegatedBy: actorId !== target.id ? actorId : null,
+    };
+    const saved = bookingsDb.insert(booking, actorId);
+    takenDeskIds.add(desk.id);
+    usersWithSlot.add(target.id);
+    results.push({ userId: targetId, status: 'success', fullName: target.fullName, bookingId: saved.id, deskId: desk.id, deskLabel: desk.label, zone: desk.zone, floor: desk.floor });
+  }
+
+  const successCount = results.filter((r) => r.status === 'success').length;
+  res.status(201).json({ requested: userIds.length, succeeded: successCount, results });
 });
 
 app.post('/api/bookings/:id/checkin', (req, res) => {
@@ -536,12 +610,13 @@ function buildInsights(fromIso, toIsoExclusive) {
   const ghosts = inRange.filter((b) => b.status !== 'cancelled' && b.checkedInAt == null && b.status === 'released').length;
   const ghostRatio = totalBookings ? Math.round((ghosts / totalBookings) * 1000) / 10 : 0;
 
-  // Occupancy by zone (active + booked counted)
+  // Occupancy by zone — count every booking that wasn't cancelled, including
+  // released ones (they reflect historical desk usage even when auto-released).
   reloadDesks();
   const deskById = new Map(desks.map((d) => [d.id, d]));
   const zoneCounts = new Map();
   for (const b of inRange) {
-    if (b.status === 'cancelled' || b.status === 'released') continue;
+    if (b.status === 'cancelled') continue;
     const d = deskById.get(b.deskId);
     if (!d) continue;
     const key = `${d.floor}::${d.zone}`;
@@ -552,10 +627,10 @@ function buildInsights(fromIso, toIsoExclusive) {
     return { floor, zone, bookings: n };
   }).sort((a, b) => b.bookings - a.bookings);
 
-  // Peak hours
+  // Peak hours — same: include released so historical hour-of-day patterns show.
   const hourCounts = new Array(24).fill(0);
   for (const b of inRange) {
-    if (b.status === 'cancelled' || b.status === 'released') continue;
+    if (b.status === 'cancelled') continue;
     for (let h = b.startHour; h < b.endHour; h++) hourCounts[h] += 1;
   }
   const peakHours = hourCounts.map((n, h) => ({ hour: h, count: n })).filter((r) => r.count > 0);
@@ -639,7 +714,7 @@ app.get('/api/config', (req, res) => {
   res.json({
     autoRelease: getAutoReleasePolicy(),
     hotDeskFallbackThreshold: getHotDeskFallbackThreshold(),
-    presenceSignals: configDb.get('presenceSignals', { monitor: true, ap: true, bluetooth: false, intune: false }),
+    presenceSignals: configDb.get('presenceSignals', { monitor: true, ap: true, bluetooth: false }),
   });
 });
 

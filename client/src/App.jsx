@@ -5,6 +5,7 @@ import BookingPage from './pages/BookingPage.jsx';
 import ManagePage from './pages/ManagePage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 import InsightsPage from './pages/InsightsPage.jsx';
+import MyTeamPage from './pages/MyTeamPage.jsx';
 import SentientPage from './pages/sentient/SentientPage.jsx';
 
 export default function App() {
@@ -76,6 +77,7 @@ export default function App() {
           }
         />
         <Route path="/profile" element={me ? <ProfilePage me={me} onSaved={refreshMe} /> : <Loading />} />
+        <Route path="/my-team" element={me ? <MyTeamPage me={me} /> : <Loading />} />
         <Route path="/sentient" element={<SentientPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
@@ -121,6 +123,7 @@ function Header({ me, users, onChangeUser, onTogglePrivacy }) {
       <nav>
         <NavLink to="/" className={location.pathname === '/' ? 'active' : ''}>Book</NavLink>
         <NavLink to="/profile" className={location.pathname === '/profile' ? 'active' : ''}>Profile</NavLink>
+        <NavLink to="/my-team" className={location.pathname === '/my-team' ? 'active' : ''}>My Team</NavLink>
         {me?.admin && (
           <NavLink to="/manage" className={location.pathname === '/manage' ? 'active' : ''}>Manage</NavLink>
         )}

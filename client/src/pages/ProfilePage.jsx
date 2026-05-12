@@ -20,7 +20,6 @@ const ACCESSIBILITY_OPTIONS = [
   { key: 'ergonomic-chair', label: 'Ergonomic chair',       help: 'Desk reservation includes an ergonomic / DSE-assessed chair.' },
   { key: 'large-display',   label: 'Large display',         help: 'Larger or higher-DPI monitor for low-vision needs.' },
   { key: 'low-light',       label: 'Low-light area',        help: 'Lower-lit zones away from harsh overhead lighting.' },
-  { key: 'sit-stand',       label: 'Sit-stand desk',        help: 'Height-adjustable required (not just preferred).' },
   { key: 'hearing-loop',    label: 'Hearing loop',          help: 'Hearing-loop coverage required.' },
 ];
 

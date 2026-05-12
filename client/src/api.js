@@ -28,6 +28,7 @@ export const api = {
     return request(`/bookings${params.toString() ? `?${params}` : ''}`);
   },
   createBooking: (payload) => request('/bookings', { method: 'POST', body: JSON.stringify(payload) }),
+  bulkBook: (payload) => request('/bookings/bulk', { method: 'POST', body: JSON.stringify(payload) }),
   checkIn: (id, actorId) => request(`/bookings/${id}/checkin`, { method: 'POST', body: JSON.stringify({ actorId }) }),
   release: (id, actorId) => request(`/bookings/${id}/release`, { method: 'POST', body: JSON.stringify({ actorId }) }),
   cancel: (id, actorId) => request(`/bookings/${id}${actorId ? `?actorId=${actorId}` : ''}`, { method: 'DELETE' }),

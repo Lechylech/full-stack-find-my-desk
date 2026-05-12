@@ -859,6 +859,30 @@ select option { background: var(--panel); color: var(--text); }
 /* v1.x fast-follower features                                         */
 /* ------------------------------------------------------------------ */
 
+/* Bulk book list */
+.bulk-report-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 6px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.bulk-report-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.bulk-report-row:hover { border-color: var(--primary); }
+.bulk-report-row.selected { border-color: var(--primary); background: rgba(0,196,176,0.06); }
+
 /* Theme picker cards */
 .theme-cards { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
 .theme-card {
