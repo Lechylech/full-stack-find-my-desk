@@ -1,0 +1,19 @@
+{
+  "ground": {
+    "g-windows":        { "quality": "excellent", "mbps": 940, "jitterMs": 1.2, "packetLossPct": 0.0,  "label": "AP-G-01 — strong signal" },
+    "g-security":       { "quality": "good",      "mbps": 620, "jitterMs": 2.8, "packetLossPct": 0.1,  "label": "AP-G-02 — stable" },
+    "g-virtualisation": { "quality": "excellent", "mbps": 880, "jitterMs": 1.5, "packetLossPct": 0.0,  "label": "AP-G-03 — strong signal" },
+    "g-support":        { "quality": "fair",      "mbps": 240, "jitterMs": 8.4, "packetLossPct": 0.6,  "label": "AP-G-04 — congested" },
+    "g-breakout":       { "quality": "good",      "mbps": 540, "jitterMs": 3.6, "packetLossPct": 0.2,  "label": "AP-G-05 — stable" },
+    "g-reception":      { "quality": "fair",      "mbps": 180, "jitterMs": 12.1,"packetLossPct": 1.1,  "label": "AP-G-06 — patchy" },
+    "g-lobby":          { "quality": "good",      "mbps": 480, "jitterMs": 4.1, "packetLossPct": 0.2,  "label": "AP-G-07 — guest VLAN" }
+  },
+  "first": {
+    "f-nw": { "quality": "excellent", "mbps": 920, "jitterMs": 1.1, "packetLossPct": 0.0, "label": "AP-F-01 — strong signal" },
+    "f-ne": { "quality": "excellent", "mbps": 905, "jitterMs": 1.3, "packetLossPct": 0.0, "label": "AP-F-02 — strong signal" },
+    "f-w":  { "quality": "good",      "mbps": 660, "jitterMs": 3.2, "packetLossPct": 0.1, "label": "AP-F-03 — stable" },
+    "f-e":  { "quality": "fair",      "mbps": 220, "jitterMs": 9.6, "packetLossPct": 0.8, "label": "AP-F-04 — degraded uplink (ThousandEyes alert)" },
+    "f-sw": { "quality": "good",      "mbps": 580, "jitterMs": 3.9, "packetLossPct": 0.2, "label": "AP-F-05 — stable" },
+    "f-se": { "quality": "good",      "mbps": 560, "jitterMs": 4.1, "packetLossPct": 0.3, "label": "AP-F-06 — stable" }
+  }
+}

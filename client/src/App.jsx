@@ -3,6 +3,7 @@ import { Routes, Route, NavLink, useLocation } from 'react-router-dom';
 import { api } from './api.js';
 import BookingPage from './pages/BookingPage.jsx';
 import ManagePage from './pages/ManagePage.jsx';
+import SentientPage from './pages/sentient/SentientPage.jsx';
 
 export default function App() {
   const [me, setMe] = useState(null);
@@ -57,6 +58,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={me ? <BookingPage me={me} /> : <div className="main"><div className="panel">Loading…</div></div>} />
         <Route path="/manage" element={me ? <ManagePage me={me} /> : <div className="main"><div className="panel">Loading…</div></div>} />
+        <Route path="/sentient" element={<SentientPage />} />
       </Routes>
     </div>
   );
@@ -70,6 +72,7 @@ function Header({ me, users, onChangeUser, onTogglePrivacy }) {
       <nav>
         <NavLink to="/" className={location.pathname === '/' ? 'active' : ''}>Book</NavLink>
         <NavLink to="/manage" className={location.pathname === '/manage' ? 'active' : ''}>Manage</NavLink>
+        <NavLink to="/sentient" className={location.pathname === '/sentient' ? 'active sentient-link' : 'sentient-link'}>Sentient ✦</NavLink>
       </nav>
       <div className="spacer" />
       {me && (

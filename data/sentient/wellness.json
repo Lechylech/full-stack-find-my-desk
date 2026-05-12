@@ -1,0 +1,80 @@
+{
+  "tickMinutes": 60,
+  "schedule": {
+    "09:00": {
+      "g-windows":        { "co2": 540, "tempC": 21.2, "humidity": 44, "air": "good" },
+      "g-security":       { "co2": 610, "tempC": 21.8, "humidity": 46, "air": "good" },
+      "g-virtualisation": { "co2": 520, "tempC": 21.0, "humidity": 43, "air": "good" },
+      "g-support":        { "co2": 580, "tempC": 22.0, "humidity": 47, "air": "good" },
+      "g-breakout":       { "co2": 600, "tempC": 21.5, "humidity": 45, "air": "good" },
+      "g-reception":      { "co2": 560, "tempC": 21.4, "humidity": 44, "air": "good" },
+      "g-lobby":          { "co2": 520, "tempC": 21.0, "humidity": 43, "air": "good" },
+      "f-nw":             { "co2": 540, "tempC": 21.2, "humidity": 44, "air": "good" },
+      "f-ne":             { "co2": 560, "tempC": 21.4, "humidity": 45, "air": "good" },
+      "f-w":              { "co2": 530, "tempC": 21.1, "humidity": 43, "air": "good" },
+      "f-e":              { "co2": 570, "tempC": 21.5, "humidity": 46, "air": "good" },
+      "f-sw":             { "co2": 540, "tempC": 21.2, "humidity": 44, "air": "good" },
+      "f-se":             { "co2": 550, "tempC": 21.3, "humidity": 44, "air": "good" }
+    },
+    "11:00": {
+      "g-windows":        { "co2": 720, "tempC": 22.1, "humidity": 48, "air": "good" },
+      "g-security":       { "co2": 890, "tempC": 23.0, "humidity": 51, "air": "fair" },
+      "g-virtualisation": { "co2": 680, "tempC": 21.8, "humidity": 46, "air": "good" },
+      "g-support":        { "co2": 910, "tempC": 23.4, "humidity": 52, "air": "fair" },
+      "g-breakout":       { "co2": 750, "tempC": 22.0, "humidity": 49, "air": "good" },
+      "g-reception":      { "co2": 700, "tempC": 21.9, "humidity": 47, "air": "good" },
+      "g-lobby":          { "co2": 660, "tempC": 21.6, "humidity": 46, "air": "good" },
+      "f-nw":             { "co2": 720, "tempC": 22.0, "humidity": 48, "air": "good" },
+      "f-ne":             { "co2": 780, "tempC": 22.4, "humidity": 49, "air": "good" },
+      "f-w":              { "co2": 700, "tempC": 21.8, "humidity": 47, "air": "good" },
+      "f-e":              { "co2": 860, "tempC": 22.9, "humidity": 50, "air": "fair" },
+      "f-sw":             { "co2": 710, "tempC": 22.0, "humidity": 48, "air": "good" },
+      "f-se":             { "co2": 740, "tempC": 22.2, "humidity": 48, "air": "good" }
+    },
+    "13:00": {
+      "g-windows":        { "co2": 620, "tempC": 21.6, "humidity": 46, "air": "good" },
+      "g-security":       { "co2": 700, "tempC": 22.4, "humidity": 48, "air": "good" },
+      "g-virtualisation": { "co2": 600, "tempC": 21.4, "humidity": 45, "air": "good" },
+      "g-support":        { "co2": 740, "tempC": 22.6, "humidity": 49, "air": "good" },
+      "g-breakout":       { "co2": 820, "tempC": 22.4, "humidity": 51, "air": "fair" },
+      "g-reception":      { "co2": 640, "tempC": 21.5, "humidity": 45, "air": "good" },
+      "g-lobby":          { "co2": 600, "tempC": 21.4, "humidity": 45, "air": "good" },
+      "f-nw":             { "co2": 620, "tempC": 21.6, "humidity": 46, "air": "good" },
+      "f-ne":             { "co2": 660, "tempC": 21.8, "humidity": 47, "air": "good" },
+      "f-w":              { "co2": 600, "tempC": 21.5, "humidity": 45, "air": "good" },
+      "f-e":              { "co2": 720, "tempC": 22.2, "humidity": 48, "air": "good" },
+      "f-sw":             { "co2": 610, "tempC": 21.5, "humidity": 45, "air": "good" },
+      "f-se":             { "co2": 640, "tempC": 21.7, "humidity": 46, "air": "good" }
+    },
+    "15:00": {
+      "g-windows":        { "co2": 760, "tempC": 22.4, "humidity": 49, "air": "good" },
+      "g-security":       { "co2": 940, "tempC": 23.6, "humidity": 53, "air": "poor" },
+      "g-virtualisation": { "co2": 720, "tempC": 22.0, "humidity": 47, "air": "good" },
+      "g-support":        { "co2": 1020,"tempC": 23.8, "humidity": 54, "air": "poor" },
+      "g-breakout":       { "co2": 780, "tempC": 22.2, "humidity": 49, "air": "good" },
+      "g-reception":      { "co2": 720, "tempC": 22.0, "humidity": 47, "air": "good" },
+      "g-lobby":          { "co2": 680, "tempC": 21.8, "humidity": 46, "air": "good" },
+      "f-nw":             { "co2": 760, "tempC": 22.4, "humidity": 49, "air": "good" },
+      "f-ne":             { "co2": 820, "tempC": 22.8, "humidity": 50, "air": "fair" },
+      "f-w":              { "co2": 740, "tempC": 22.2, "humidity": 48, "air": "good" },
+      "f-e":              { "co2": 920, "tempC": 23.4, "humidity": 52, "air": "poor" },
+      "f-sw":             { "co2": 740, "tempC": 22.2, "humidity": 48, "air": "good" },
+      "f-se":             { "co2": 780, "tempC": 22.4, "humidity": 49, "air": "good" }
+    },
+    "17:00": {
+      "g-windows":        { "co2": 600, "tempC": 21.6, "humidity": 45, "air": "good" },
+      "g-security":       { "co2": 640, "tempC": 21.8, "humidity": 46, "air": "good" },
+      "g-virtualisation": { "co2": 580, "tempC": 21.4, "humidity": 44, "air": "good" },
+      "g-support":        { "co2": 660, "tempC": 22.0, "humidity": 46, "air": "good" },
+      "g-breakout":       { "co2": 600, "tempC": 21.4, "humidity": 44, "air": "good" },
+      "g-reception":      { "co2": 580, "tempC": 21.4, "humidity": 44, "air": "good" },
+      "g-lobby":          { "co2": 540, "tempC": 21.0, "humidity": 43, "air": "good" },
+      "f-nw":             { "co2": 600, "tempC": 21.6, "humidity": 45, "air": "good" },
+      "f-ne":             { "co2": 620, "tempC": 21.6, "humidity": 45, "air": "good" },
+      "f-w":              { "co2": 580, "tempC": 21.4, "humidity": 44, "air": "good" },
+      "f-e":              { "co2": 660, "tempC": 21.8, "humidity": 46, "air": "good" },
+      "f-sw":             { "co2": 580, "tempC": 21.4, "humidity": 44, "air": "good" },
+      "f-se":             { "co2": 600, "tempC": 21.6, "humidity": 45, "air": "good" }
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "name": "weekday-default",
+  "label": "Typical weekday (Tue)",
+  "description": "Cisco Spaces / Meraki WiFi-derived presence over a normal Tuesday. Includes two ghost bookings, one degraded uplink (ThousandEyes), and afternoon air-quality dip.",
+  "steps": [
+    {
+      "t": "08:00",
+      "label": "Doors open",
+      "zoneOccupancy": {
+        "ground": { "g-windows": 0.05, "g-security": 0.10, "g-virtualisation": 0.05, "g-support": 0.10, "g-breakout": 0.05, "g-reception": 0.10, "g-lobby": 0.40 },
+        "first":  { "f-nw": 0.05, "f-ne": 0.05, "f-w": 0.05, "f-e": 0.05, "f-sw": 0.05, "f-se": 0.05 }
+      },
+      "presentDeskIds": ["G-005", "G-049", "F-031"],
+      "events": [
+        { "id": "e08-1", "severity": "info", "title": "Lobby entry detected", "body": "Mira Patel just badged in. Her team (Engineering) is forecast for Windows zone." }
+      ]
+    },
+    {
+      "t": "09:00",
+      "label": "Morning warm-up",
+      "zoneOccupancy": {
+        "ground": { "g-windows": 0.35, "g-security": 0.40, "g-virtualisation": 0.30, "g-support": 0.45, "g-breakout": 0.10, "g-reception": 0.20, "g-lobby": 0.20 },
+        "first":  { "f-nw": 0.35, "f-ne": 0.30, "f-w": 0.30, "f-e": 0.35, "f-sw": 0.20, "f-se": 0.25 }
+      },
+      "presentDeskIds": ["G-001", "G-005", "G-013", "G-019", "G-025", "G-037", "G-049", "G-067", "F-002", "F-019", "F-025", "F-031", "F-049", "F-055"],
+      "events": [
+        { "id": "e09-1", "severity": "info",    "title": "Welcome back", "body": "Your team is in the Windows neighbourhood today — 4 colleagues already at their desks." },
+        { "id": "e09-2", "severity": "warning", "title": "Network alert (ThousandEyes)", "body": "First-floor East Pods uplink degraded. Avoid video calls in f-e until ~10:00." }
+      ]
+    },
+    {
+      "t": "11:00",
+      "label": "Late morning peak",
+      "zoneOccupancy": {
+        "ground": { "g-windows": 0.65, "g-security": 0.75, "g-virtualisation": 0.55, "g-support": 0.80, "g-breakout": 0.45, "g-reception": 0.40, "g-lobby": 0.15 },
+        "first":  { "f-nw": 0.70, "f-ne": 0.65, "f-w": 0.60, "f-e": 0.50, "f-sw": 0.55, "f-se": 0.55 }
+      },
+      "presentDeskIds": ["G-001", "G-005", "G-009", "G-013", "G-019", "G-025", "G-037", "G-049", "G-067", "F-002", "F-007", "F-019", "F-025", "F-031", "F-040", "F-049", "F-055"],
+      "events": [
+        { "id": "e11-1", "severity": "warning", "title": "Ghost booking detected", "body": "G-031 booked by Daniel Reyes but no presence sensed for 90 min. Auto-release in 10 min unless overridden." },
+        { "id": "e11-2", "severity": "warning", "title": "Ghost booking detected", "body": "F-013 booked by Sara Bennett but no presence sensed for 90 min. Auto-release in 10 min unless overridden." },
+        { "id": "e11-3", "severity": "info",    "title": "Quiet zone tip", "body": "Virtualisation is at 55% — still has 5 quiet-zone desks free." }
+      ]
+    },
+    {
+      "t": "13:00",
+      "label": "Lunch dip",
+      "zoneOccupancy": {
+        "ground": { "g-windows": 0.40, "g-security": 0.45, "g-virtualisation": 0.30, "g-support": 0.50, "g-breakout": 0.75, "g-reception": 0.35, "g-lobby": 0.30 },
+        "first":  { "f-nw": 0.40, "f-ne": 0.35, "f-w": 0.30, "f-e": 0.35, "f-sw": 0.35, "f-se": 0.35 }
+      },
+      "presentDeskIds": ["G-001", "G-013", "G-019", "G-037", "G-049", "G-067", "F-002", "F-007", "F-019", "F-031", "F-040", "F-049", "F-055"],
+      "events": [
+        { "id": "e13-1", "severity": "info", "title": "Ghost-booking auto-released", "body": "G-055 released (Nick Holloway, no presence past end of slot)." },
+        { "id": "e13-2", "severity": "info", "title": "Breakout busy", "body": "Breakout zone occupancy 75% — try Reception Pods for a quieter lunch spot." }
+      ]
+    },
+    {
+      "t": "15:00",
+      "label": "Afternoon peak",
+      "zoneOccupancy": {
+        "ground": { "g-windows": 0.70, "g-security": 0.85, "g-virtualisation": 0.60, "g-support": 0.90, "g-breakout": 0.40, "g-reception": 0.50, "g-lobby": 0.10 },
+        "first":  { "f-nw": 0.75, "f-ne": 0.80, "f-w": 0.65, "f-e": 0.70, "f-sw": 0.65, "f-se": 0.70 }
+      },
+      "presentDeskIds": ["G-001", "G-005", "G-009", "G-013", "G-019", "G-037", "G-049", "G-067", "F-002", "F-007", "F-019", "F-025", "F-031", "F-040", "F-049", "F-055"],
+      "events": [
+        { "id": "e15-1", "severity": "warning", "title": "Air quality dipping", "body": "Support zone CO₂ at 1020 ppm — facilities pinged to increase HVAC." },
+        { "id": "e15-2", "severity": "info",    "title": "Network restored", "body": "First-floor East Pods uplink back to good. Safe for video again." }
+      ]
+    },
+    {
+      "t": "16:00",
+      "label": "Wind down",
+      "zoneOccupancy": {
+        "ground": { "g-windows": 0.55, "g-security": 0.65, "g-virtualisation": 0.40, "g-support": 0.70, "g-breakout": 0.25, "g-reception": 0.35, "g-lobby": 0.20 },
+        "first":  { "f-nw": 0.60, "f-ne": 0.60, "f-w": 0.45, "f-e": 0.50, "f-sw": 0.45, "f-se": 0.50 }
+      },
+      "presentDeskIds": ["G-001", "G-005", "G-013", "G-019", "G-037", "G-049", "G-067", "F-002", "F-007", "F-019", "F-031", "F-049", "F-055"],
+      "events": []
+    },
+    {
+      "t": "18:00",
+      "label": "End of day",
+      "zoneOccupancy": {
+        "ground": { "g-windows": 0.05, "g-security": 0.10, "g-virtualisation": 0.05, "g-support": 0.10, "g-breakout": 0.05, "g-reception": 0.05, "g-lobby": 0.15 },
+        "first":  { "f-nw": 0.05, "f-ne": 0.05, "f-w": 0.05, "f-e": 0.05, "f-sw": 0.05, "f-se": 0.10 }
+      },
+      "presentDeskIds": ["F-007"],
+      "events": [
+        { "id": "e18-1", "severity": "info", "title": "Quiet evening", "body": "Building 8% occupied. Last badge-out reminder sent to 3 users with active bookings." }
+      ]
+    }
+  ]
+}

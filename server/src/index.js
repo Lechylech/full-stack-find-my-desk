@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
+import { createSentientRouter } from './sentient.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = resolve(__dirname, '../../data');
@@ -271,6 +272,9 @@ function scoreByPrefs(desk, prefs) {
   if (prefs.includes('standing-desk') && desk.attributes.heightAdjustable) score++;
   return score;
 }
+
+// ---------- Sentient Workplace mockup ----------
+app.use('/api/sentient', createSentientRouter({ users }));
 
 // ---------- Health ----------
 app.get('/api/health', (_req, res) => res.json({ ok: true, users: users.length, desks: desks.length, bookings: bookings.length }));

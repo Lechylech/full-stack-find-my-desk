@@ -1,0 +1,22 @@
+[
+  { "id": "sb-001", "deskId": "G-001", "userIndex": 0,  "startHour": 9,  "endHour": 17 },
+  { "id": "sb-002", "deskId": "G-005", "userIndex": 1,  "startHour": 9,  "endHour": 17 },
+  { "id": "sb-003", "deskId": "G-009", "userIndex": 2,  "startHour": 10, "endHour": 16 },
+  { "id": "sb-004", "deskId": "G-013", "userIndex": 3,  "startHour": 9,  "endHour": 18 },
+  { "id": "sb-005", "deskId": "G-019", "userIndex": 4,  "startHour": 11, "endHour": 17 },
+  { "id": "sb-006", "deskId": "G-025", "userIndex": 5,  "startHour": 9,  "endHour": 13 },
+  { "id": "sb-007", "deskId": "G-031", "userIndex": 6,  "startHour": 9,  "endHour": 17, "ghost": true },
+  { "id": "sb-008", "deskId": "G-037", "userIndex": 7,  "startHour": 10, "endHour": 17 },
+  { "id": "sb-009", "deskId": "G-049", "userIndex": 8,  "startHour": 9,  "endHour": 17 },
+  { "id": "sb-010", "deskId": "G-055", "userIndex": 9,  "startHour": 9,  "endHour": 12, "ghost": true },
+  { "id": "sb-011", "deskId": "G-067", "userIndex": 10, "startHour": 9,  "endHour": 17 },
+  { "id": "sb-012", "deskId": "F-002", "userIndex": 11, "startHour": 9,  "endHour": 17 },
+  { "id": "sb-013", "deskId": "F-007", "userIndex": 12, "startHour": 11, "endHour": 18 },
+  { "id": "sb-014", "deskId": "F-013", "userIndex": 13, "startHour": 9,  "endHour": 17, "ghost": true },
+  { "id": "sb-015", "deskId": "F-019", "userIndex": 14, "startHour": 10, "endHour": 17 },
+  { "id": "sb-016", "deskId": "F-025", "userIndex": 15, "startHour": 9,  "endHour": 16 },
+  { "id": "sb-017", "deskId": "F-031", "userIndex": 16, "startHour": 9,  "endHour": 17 },
+  { "id": "sb-018", "deskId": "F-040", "userIndex": 17, "startHour": 9,  "endHour": 14 },
+  { "id": "sb-019", "deskId": "F-049", "userIndex": 18, "startHour": 10, "endHour": 17 },
+  { "id": "sb-020", "deskId": "F-055", "userIndex": 19, "startHour": 9,  "endHour": 17 }
+]

@@ -1,0 +1,19 @@
+{
+  "ground": [
+    { "id": "g-windows",        "label": "Windows",         "x": 0.02, "y": 0.06, "w": 0.27, "h": 0.10, "platform": "Engineering" },
+    { "id": "g-security",       "label": "Security",        "x": 0.58, "y": 0.06, "w": 0.40, "h": 0.10, "platform": "Cyber Security" },
+    { "id": "g-virtualisation", "label": "Virtualisation",  "x": 0.02, "y": 0.36, "w": 0.27, "h": 0.10, "platform": "Engineering" },
+    { "id": "g-support",        "label": "Support",         "x": 0.58, "y": 0.36, "w": 0.40, "h": 0.10, "platform": "Operations" },
+    { "id": "g-breakout",       "label": "Breakout",        "x": 0.16, "y": 0.76, "w": 0.17, "h": 0.10, "platform": "Shared" },
+    { "id": "g-reception",      "label": "Reception Pods",  "x": 0.60, "y": 0.76, "w": 0.17, "h": 0.10, "platform": "Shared" },
+    { "id": "g-lobby",          "label": "Lobby",           "x": 0.39, "y": 0.86, "w": 0.20, "h": 0.10, "platform": "Shared", "isLobby": true }
+  ],
+  "first": [
+    { "id": "f-nw", "label": "North-West Pods", "x": 0.02, "y": 0.06, "w": 0.27, "h": 0.10, "platform": "Engineering" },
+    { "id": "f-ne", "label": "North-East Pods", "x": 0.58, "y": 0.06, "w": 0.40, "h": 0.10, "platform": "Data" },
+    { "id": "f-w",  "label": "West Pods",       "x": 0.02, "y": 0.38, "w": 0.27, "h": 0.10, "platform": "Engineering" },
+    { "id": "f-e",  "label": "East Pods",       "x": 0.58, "y": 0.38, "w": 0.40, "h": 0.10, "platform": "Data" },
+    { "id": "f-sw", "label": "South-West Pods", "x": 0.02, "y": 0.72, "w": 0.18, "h": 0.10, "platform": "Product" },
+    { "id": "f-se", "label": "South-East Pods", "x": 0.58, "y": 0.72, "w": 0.28, "h": 0.10, "platform": "Product" }
+  ]
+}

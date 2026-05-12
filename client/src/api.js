@@ -30,4 +30,13 @@ export const api = {
   release: (id) => request(`/bookings/${id}/release`, { method: 'POST' }),
   cancel: (id) => request(`/bookings/${id}`, { method: 'DELETE' }),
   getSuggestions: (userId, date) => request(`/suggestions?userId=${userId}&date=${date}`),
+  sentient: {
+    getScenario: (name) => request(`/sentient/scenarios/${name}`),
+    getZones: () => request('/sentient/zones'),
+    getNetwork: () => request('/sentient/network'),
+    getWellness: () => request('/sentient/wellness'),
+    getBookings: () => request('/sentient/bookings'),
+    releaseGhost: (id) => request('/sentient/release', { method: 'POST', body: JSON.stringify({ id }) }),
+    resetReleases: () => request('/sentient/reset-releases', { method: 'POST' }),
+  },
 };
