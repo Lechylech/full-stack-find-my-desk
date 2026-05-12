@@ -8,25 +8,45 @@ const PREF_OPTIONS = [
   { key: 'standing-desk', label: 'Height adjustable / DSE', help: 'Prefer height-adjustable or DSE desks.' },
 ];
 
+const ACCESSIBILITY_OPTIONS = [
+  { key: 'wheelchair',      label: 'Wheelchair access',     help: 'Strongly prefer wheelchair-accessible desks; ramps and clear approach.' },
+  { key: 'ergonomic-chair', label: 'Ergonomic chair',       help: 'Desk reservation includes an ergonomic / DSE-assessed chair.' },
+  { key: 'large-display',   label: 'Large display',         help: 'Larger or higher-DPI monitor for low-vision needs.' },
+  { key: 'low-light',       label: 'Low-light area',        help: 'Lower-lit zones away from harsh overhead lighting.' },
+  { key: 'sit-stand',       label: 'Sit-stand desk',        help: 'Height-adjustable required (not just preferred).' },
+  { key: 'hearing-loop',    label: 'Hearing loop',          help: 'Hearing-loop coverage required.' },
+];
+
+function asArray(needs) {
+  if (Array.isArray(needs)) return needs;
+  if (typeof needs === 'string' && needs) return [needs];
+  return [];
+}
+
 export default function ProfilePage({ me, onSaved }) {
   const [selected, setSelected] = useState(me.deskPreferences || []);
+  const [needs, setNeeds] = useState(asArray(me.accessibilityNeeds));
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     setSelected(me.deskPreferences || []);
-  }, [me.id, me.deskPreferences]);
+    setNeeds(asArray(me.accessibilityNeeds));
+  }, [me.id, me.deskPreferences, me.accessibilityNeeds]);
 
-  function toggle(key) {
+  function togglePref(key) {
     setSelected((prev) => prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]);
+  }
+  function toggleNeed(key) {
+    setNeeds((prev) => prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]);
   }
 
   async function save() {
     setSaving(true);
     setError(null);
     try {
-      await api.setPreferences(me.id, selected);
+      await api.setPreferences(me.id, { deskPreferences: selected, accessibilityNeeds: needs });
       setSavedAt(new Date());
       if (onSaved) await onSaved();
     } catch (e) {
@@ -36,11 +56,15 @@ export default function ProfilePage({ me, onSaved }) {
     }
   }
 
-  const dirty = JSON.stringify([...selected].sort()) !== JSON.stringify([...(me.deskPreferences || [])].sort());
+  const sortedSel = JSON.stringify([...selected].sort());
+  const sortedNeeds = JSON.stringify([...needs].sort());
+  const baseSel = JSON.stringify([...(me.deskPreferences || [])].sort());
+  const baseNeeds = JSON.stringify([...asArray(me.accessibilityNeeds)].sort());
+  const dirty = sortedSel !== baseSel || sortedNeeds !== baseNeeds;
 
   return (
     <main className="main" style={{ gridTemplateColumns: '1fr' }}>
-      <section className="panel" style={{ maxWidth: 640 }}>
+      <section className="panel" style={{ maxWidth: 720 }}>
         <h2>Your profile</h2>
         <div className="summary-grid">
           <Stat label="Name"     value={me.fullName} />
@@ -60,7 +84,26 @@ export default function ProfilePage({ me, onSaved }) {
             <input
               type="checkbox"
               checked={selected.includes(opt.key)}
-              onChange={() => toggle(opt.key)}
+              onChange={() => togglePref(opt.key)}
+              style={{ marginTop: 3 }}
+            />
+            <div>
+              <div style={{ fontWeight: 500 }}>{opt.label}</div>
+              <div style={{ color: 'var(--muted)', fontSize: 12 }}>{opt.help}</div>
+            </div>
+          </label>
+        ))}
+
+        <h3 style={{ marginTop: 24 }}>Accessibility needs</h3>
+        <p style={{ color: 'var(--muted)', marginTop: 0, fontSize: 13 }}>
+          Accessibility needs strongly bias suggestions and are surfaced on the desk tooltip.
+        </p>
+        {ACCESSIBILITY_OPTIONS.map((opt) => (
+          <label key={opt.key} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, padding: '8px 0', borderBottom: '1px solid var(--border)' }}>
+            <input
+              type="checkbox"
+              checked={needs.includes(opt.key)}
+              onChange={() => toggleNeed(opt.key)}
               style={{ marginTop: 3 }}
             />
             <div>

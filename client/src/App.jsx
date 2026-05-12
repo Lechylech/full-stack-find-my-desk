@@ -4,6 +4,7 @@ import { api } from './api.js';
 import BookingPage from './pages/BookingPage.jsx';
 import ManagePage from './pages/ManagePage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
+import InsightsPage from './pages/InsightsPage.jsx';
 import SentientPage from './pages/sentient/SentientPage.jsx';
 
 export default function App() {
@@ -63,6 +64,14 @@ export default function App() {
           element={
             !me ? <Loading />
               : me.admin ? <ManagePage me={me} />
+              : <AccessDenied />
+          }
+        />
+        <Route
+          path="/manage/insights"
+          element={
+            !me ? <Loading />
+              : me.admin ? <InsightsPage me={me} />
               : <AccessDenied />
           }
         />

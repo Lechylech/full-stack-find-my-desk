@@ -6,6 +6,10 @@ dist/
 ~$*
 .env
 data/bookings.json
+data/findmydesk.db
+data/findmydesk.db-journal
+data/findmydesk.db-wal
+data/findmydesk.db-shm
 
 # Claude Code local/per-user settings (do not sync)
 .claude/settings.local.json

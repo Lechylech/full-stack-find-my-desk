@@ -5,12 +5,13 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
 import { createSentientRouter } from './sentient.js';
+import { bookingsDb, auditDb, delegationsDb, configDb } from './db.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = resolve(__dirname, '../../data');
 const USERS_PATH = resolve(DATA_DIR, 'users.json');
 const DESKS_PATH = resolve(DATA_DIR, 'desks.json');
-const BOOKINGS_PATH = resolve(DATA_DIR, 'bookings.json');
+const ROOMS_PATH = resolve(DATA_DIR, 'rooms.json');
 const POSITIONS_PATH = resolve(DATA_DIR, 'desk-positions.json');
 const PORT = process.env.PORT || 4000;
 
@@ -24,6 +25,10 @@ const users = readJson(USERS_PATH);
 // during a session takes effect on next page refresh — no server restart needed.
 let desks = readJson(DESKS_PATH);
 function reloadDesks() { desks = readJson(DESKS_PATH); }
+
+let rooms = existsSync(ROOMS_PATH) ? readJson(ROOMS_PATH) : [];
+// In-memory room bookings (kept simple; not persisted to SQLite this cycle).
+const roomBookings = [];
 
 // Position overrides — persisted to desk-positions.json, applied on top of desks.json
 const positionOverrides = new Map(
@@ -40,12 +45,13 @@ users.slice(0, 3).forEach((u) => { userPrefs.get(u.id).admin = true; });
 // Current user is a simple in-memory pointer the frontend can change.
 let currentUserId = users[0].id;
 
-let bookings = existsSync(BOOKINGS_PATH)
-  ? JSON.parse(readFileSync(BOOKINGS_PATH, 'utf8'))
-  : [];
-
-function persistBookings() {
-  writeFileSync(BOOKINGS_PATH, JSON.stringify(bookings, null, 2));
+// Booking auto-release policy (admin-configurable; persisted via config table).
+const DEFAULT_AUTO_RELEASE = { warn1Min: 90, warn2Min: 20, autoReleaseMin: 10 };
+function getAutoReleasePolicy() {
+  return configDb.get('autoRelease', DEFAULT_AUTO_RELEASE);
+}
+function getHotDeskFallbackThreshold() {
+  return configDb.get('hotDeskFallbackThreshold', 3);
 }
 
 // Canonical preference keys exposed to the UI.
@@ -65,12 +71,18 @@ function userPublic(u) {
     privacy: prefs.privacy,
     admin: prefs.admin,
     deskPreferences: Array.isArray(u.deskPreferences) ? u.deskPreferences : [],
+    accessibilityNeeds: Array.isArray(u.accessibilityNeeds)
+      ? u.accessibilityNeeds
+      : (typeof u.accessibilityNeeds === 'string' && u.accessibilityNeeds
+        ? [u.accessibilityNeeds]
+        : []),
+    lineManager: u.lineManager || null,
   };
 }
 
-function deskWithStatus(d, date, viewerId) {
+function deskWithStatus(d, date, viewerId, activeForDate) {
   // Compute current desk state for a given date from active bookings.
-  const todayBookings = bookings.filter((b) => b.deskId === d.id && b.date === date && b.status !== 'cancelled' && b.status !== 'released');
+  const todayBookings = activeForDate.filter((b) => b.deskId === d.id);
   const active = todayBookings.find((b) => b.status === 'active');
   const booked = todayBookings.find((b) => b.status === 'booked');
   const occupant = active || booked || null;
@@ -89,6 +101,8 @@ function deskWithStatus(d, date, viewerId) {
       userId: hideName ? null : occupant.userId,
       fullName: hideName ? 'Private booking' : (occUser?.fullName || 'Unknown'),
       team: hideName ? null : (occUser?.team || null),
+      platform: hideName ? null : (occUser?.platform || null),
+      lab: hideName ? null : (occUser?.lab || null),
       startHour: occupant.startHour,
       endHour: occupant.endHour,
       checkedIn: occupant.status === 'active',
@@ -120,13 +134,54 @@ app.patch('/api/users/:id/privacy', (req, res) => {
   res.json({ id: req.params.id, privacy: prefs.privacy });
 });
 
+const ACCESSIBILITY_KEYS = ['wheelchair', 'ergonomic-chair', 'large-display', 'low-light', 'sit-stand', 'hearing-loop'];
+
 app.patch('/api/users/:id/preferences', (req, res) => {
   const u = users.find((x) => x.id === req.params.id);
   if (!u) return res.status(404).json({ error: 'User not found' });
-  const incoming = Array.isArray(req.body?.deskPreferences) ? req.body.deskPreferences : [];
-  const cleaned = incoming.filter((k) => PREF_KEYS.includes(k));
-  u.deskPreferences = cleaned;
-  res.json({ id: u.id, deskPreferences: cleaned });
+  if (Array.isArray(req.body?.deskPreferences)) {
+    u.deskPreferences = req.body.deskPreferences.filter((k) => PREF_KEYS.includes(k));
+  }
+  if (Array.isArray(req.body?.accessibilityNeeds)) {
+    u.accessibilityNeeds = req.body.accessibilityNeeds.filter((k) => ACCESSIBILITY_KEYS.includes(k));
+  } else if (typeof req.body?.accessibilityNeeds === 'string') {
+    u.accessibilityNeeds = req.body.accessibilityNeeds;
+  }
+  res.json({
+    id: u.id,
+    deskPreferences: u.deskPreferences || [],
+    accessibilityNeeds: u.accessibilityNeeds || [],
+  });
+});
+
+app.get('/api/users/:id/delegations', (req, res) => {
+  const me = users.find((u) => u.id === req.params.id);
+  if (!me) return res.status(404).json({ error: 'User not found' });
+  const myPrefs = userPrefs.get(me.id) || { admin: false };
+
+  const targets = new Map();
+  // self
+  targets.set(me.id, { ...userPublic(me), reason: 'self' });
+  // direct reports (lookup by lineManager.email == my email)
+  if (me.email) {
+    for (const u of users) {
+      if (u.lineManager?.email?.toLowerCase() === me.email.toLowerCase()) {
+        targets.set(u.id, { ...userPublic(u), reason: 'direct-report' });
+      }
+    }
+  }
+  // admin → everyone
+  if (myPrefs.admin) {
+    for (const u of users) {
+      if (!targets.has(u.id)) targets.set(u.id, { ...userPublic(u), reason: 'admin' });
+    }
+  }
+  // explicit overrides
+  for (const o of delegationsDb.forDelegator(me.id)) {
+    const u = users.find((x) => x.id === o.on_behalf_of_id);
+    if (u && !targets.has(u.id)) targets.set(u.id, { ...userPublic(u), reason: 'override' });
+  }
+  res.json([...targets.values()]);
 });
 
 // ---------- Current user (simulated auth) ----------
@@ -148,9 +203,10 @@ app.get('/api/desks', (req, res) => {
   reloadDesks();
   const date = req.query.date || new Date().toISOString().slice(0, 10);
   const viewerId = req.query.viewerId || currentUserId;
+  const activeForDate = bookingsDb.activeByDate(date);
   res.json(desks.map((d) => {
     const override = positionOverrides.get(d.id);
-    return deskWithStatus(override ? { ...d, ...override } : d, date, viewerId);
+    return deskWithStatus(override ? { ...d, ...override } : d, date, viewerId, activeForDate);
   }));
 });
 
@@ -170,9 +226,11 @@ app.patch('/api/desks/positions', (req, res) => {
 // ---------- Bookings ----------
 app.get('/api/bookings', (req, res) => {
   const { date, userId } = req.query;
-  let result = bookings;
-  if (date) result = result.filter((b) => b.date === date);
-  if (userId) result = result.filter((b) => b.userId === userId);
+  let result;
+  if (date && userId) result = bookingsDb.byDateAndUser(date, userId);
+  else if (date) result = bookingsDb.byDate(date);
+  else if (userId) result = bookingsDb.byUser(userId);
+  else result = bookingsDb.all();
   res.json(result);
 });
 
@@ -184,8 +242,20 @@ function daysBetween(fromIso, toIso) {
   return Math.round((b - a) / 86_400_000);
 }
 
+function canDelegate(actorId, targetId) {
+  if (actorId === targetId) return true;
+  const actorPrefs = userPrefs.get(actorId);
+  if (actorPrefs?.admin) return true;
+  const target = users.find((u) => u.id === targetId);
+  if (target?.lineManager?.email) {
+    const actor = users.find((u) => u.id === actorId);
+    if (actor?.email && target.lineManager.email.toLowerCase() === actor.email.toLowerCase()) return true;
+  }
+  return delegationsDb.hasOverride(actorId, targetId);
+}
+
 app.post('/api/bookings', (req, res) => {
-  const { deskId, userId, date, startHour, endHour } = req.body || {};
+  const { deskId, userId, date, startHour, endHour, actorId } = req.body || {};
   if (!deskId || !userId || !date) return res.status(400).json({ error: 'deskId, userId, date are required' });
   const sh = Number.isFinite(startHour) ? startHour : 9;
   const eh = Number.isFinite(endHour) ? endHour : 17;
@@ -197,9 +267,20 @@ app.post('/api/bookings', (req, res) => {
   const user = users.find((u) => u.id === userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
 
+  // Delegation: if booking on behalf of someone else, actor must be permitted.
+  const effectiveActorId = actorId || userId;
+  if (effectiveActorId !== userId) {
+    const actorExists = users.find((u) => u.id === effectiveActorId);
+    if (!actorExists) return res.status(400).json({ error: 'Unknown actor id' });
+    if (!canDelegate(effectiveActorId, userId)) {
+      return res.status(403).json({ error: 'You are not permitted to book on behalf of this user.' });
+    }
+  }
+
   // Booking window: standard users limited to 14 days ahead; admins exempt.
   const prefs = userPrefs.get(userId) || { admin: false };
-  if (!prefs.admin) {
+  const actorPrefs = userPrefs.get(effectiveActorId) || { admin: false };
+  if (!prefs.admin && !actorPrefs.admin) {
     const today = new Date().toISOString().slice(0, 10);
     const ahead = daysBetween(today, date);
     if (ahead > MAX_ADVANCE_DAYS) {
@@ -210,23 +291,17 @@ app.post('/api/bookings', (req, res) => {
     }
   }
 
+  const dayActive = bookingsDb.activeByDate(date);
+
   // One occupant per desk per time slot.
-  const deskOverlap = bookings.find((b) =>
-    b.deskId === deskId &&
-    b.date === date &&
-    b.status !== 'cancelled' &&
-    b.status !== 'released' &&
-    !(eh <= b.startHour || sh >= b.endHour)
+  const deskOverlap = dayActive.find((b) =>
+    b.deskId === deskId && !(eh <= b.startHour || sh >= b.endHour)
   );
   if (deskOverlap) return res.status(409).json({ error: 'Desk already booked for that slot', conflictingBookingId: deskOverlap.id });
 
   // One desk per user per time slot.
-  const userOverlap = bookings.find((b) =>
-    b.userId === userId &&
-    b.date === date &&
-    b.status !== 'cancelled' &&
-    b.status !== 'released' &&
-    !(eh <= b.startHour || sh >= b.endHour)
+  const userOverlap = dayActive.find((b) =>
+    b.userId === userId && !(eh <= b.startHour || sh >= b.endHour)
   );
   if (userOverlap) {
     return res.status(409).json({
@@ -246,47 +321,61 @@ app.post('/api/bookings', (req, res) => {
     createdAt: new Date().toISOString(),
     checkedInAt: null,
     releasedAt: null,
+    delegatedBy: effectiveActorId !== userId ? effectiveActorId : null,
   };
-  bookings.push(booking);
-  persistBookings();
-  res.status(201).json(booking);
+  const saved = bookingsDb.insert(booking, effectiveActorId);
+  res.status(201).json(saved);
 });
 
 app.post('/api/bookings/:id/checkin', (req, res) => {
-  const b = bookings.find((x) => x.id === req.params.id);
+  const b = bookingsDb.get(req.params.id);
   if (!b) return res.status(404).json({ error: 'Booking not found' });
   if (b.status === 'released' || b.status === 'cancelled') return res.status(409).json({ error: 'Cannot check in to a released or cancelled booking' });
-  b.status = 'active';
-  b.checkedInAt = new Date().toISOString();
-  persistBookings();
-  res.json(b);
+  const actorId = req.body?.actorId || b.userId;
+  res.json(bookingsDb.checkIn(b.id, actorId));
 });
 
 app.post('/api/bookings/:id/release', (req, res) => {
-  const b = bookings.find((x) => x.id === req.params.id);
+  const b = bookingsDb.get(req.params.id);
   if (!b) return res.status(404).json({ error: 'Booking not found' });
-  b.status = 'released';
-  b.releasedAt = new Date().toISOString();
-  persistBookings();
-  res.json(b);
+  const actorId = req.body?.actorId || b.userId;
+  const forced = actorId !== b.userId;
+  res.json(bookingsDb.release(b.id, actorId, forced));
 });
 
 app.delete('/api/bookings/:id', (req, res) => {
-  const b = bookings.find((x) => x.id === req.params.id);
+  const b = bookingsDb.get(req.params.id);
   if (!b) return res.status(404).json({ error: 'Booking not found' });
-  b.status = 'cancelled';
-  persistBookings();
-  res.json(b);
+  const actorId = req.query?.actorId || b.userId;
+  res.json(bookingsDb.cancel(b.id, actorId));
 });
 
 // ---------- Suggestions ----------
+function hotDeskZoneSummary(date) {
+  reloadDesks();
+  const dayActive = bookingsDb.activeByDate(date);
+  const occupied = new Set(dayActive.map((b) => b.deskId));
+  const buckets = new Map();
+  for (const d of desks) {
+    if (!d.hotDesk) continue;
+    const key = `${d.floor}::${d.zone}`;
+    if (!buckets.has(key)) buckets.set(key, { floor: d.floor, zone: d.zone, total: 0, available: 0 });
+    const row = buckets.get(key);
+    row.total += 1;
+    if (!occupied.has(d.id)) row.available += 1;
+  }
+  return [...buckets.values()]
+    .filter((b) => b.available > 0)
+    .sort((a, b) => b.available - a.available);
+}
+
 app.get('/api/suggestions', (req, res) => {
   const { userId, date } = req.query;
   if (!userId || !date) return res.status(400).json({ error: 'userId and date are required' });
   const me = users.find((u) => u.id === userId);
   if (!me) return res.status(404).json({ error: 'User not found' });
 
-  const dayBookings = bookings.filter((b) => b.date === date && b.status !== 'cancelled' && b.status !== 'released');
+  const dayBookings = bookingsDb.activeByDate(date);
   const occupiedDeskIds = new Set(dayBookings.map((b) => b.deskId));
 
   // Teammates booked today
@@ -295,61 +384,266 @@ app.get('/api/suggestions', (req, res) => {
     .map((u) => u.id);
   const teammateBookings = dayBookings.filter((b) => teammates.includes(b.userId));
 
+  let suggestions;
   if (teammateBookings.length === 0) {
     // Fallback: just suggest 3 available desks matching preferred attributes
     const prefs = me.deskPreferences || [];
-    const available = desks
+    suggestions = desks
       .filter((d) => !occupiedDeskIds.has(d.id))
-      .map((d) => ({ desk: d, score: scoreByPrefs(d, prefs) }))
+      .map((d) => ({ desk: d, score: scoreByPrefs(d, prefs, me.accessibilityNeeds) }))
       .sort((a, b) => b.score - a.score)
       .slice(0, 3)
       .map((x) => ({ ...x.desk, reason: 'Matches your usual preferences', nearestTeammate: null }));
-    return res.json(available);
+  } else {
+    const occupiedTeammateDesks = teammateBookings
+      .map((b) => ({ booking: b, desk: desks.find((d) => d.id === b.deskId) }))
+      .filter((x) => x.desk);
+
+    suggestions = desks
+      .filter((d) => !occupiedDeskIds.has(d.id))
+      .map((d) => {
+        let best = null;
+        for (const { booking, desk: tDesk } of occupiedTeammateDesks) {
+          if (tDesk.floor !== d.floor) continue;
+          const dist = Math.hypot(tDesk.x - d.x, tDesk.y - d.y);
+          if (!best || dist < best.dist) {
+            best = { dist, teammateUserId: booking.userId, teammateDeskId: tDesk.id };
+          }
+        }
+        if (!best) return null;
+        const teammateUser = users.find((u) => u.id === best.teammateUserId);
+        return {
+          ...d,
+          reason: `Near ${teammateUser?.fullName || 'a teammate'} (${teammateUser?.team || ''})`,
+          nearestTeammate: {
+            userId: best.teammateUserId,
+            fullName: teammateUser?.fullName || null,
+            deskId: best.teammateDeskId,
+            distance: Math.round(best.dist * 1000) / 1000,
+          },
+        };
+      })
+      .filter(Boolean)
+      .sort((a, b) => a.nearestTeammate.distance - b.nearestTeammate.distance)
+      .slice(0, 3);
   }
 
-  const occupiedTeammateDesks = teammateBookings
-    .map((b) => ({ booking: b, desk: desks.find((d) => d.id === b.deskId) }))
-    .filter((x) => x.desk);
-
-  const scored = desks
-    .filter((d) => !occupiedDeskIds.has(d.id))
-    .map((d) => {
-      let best = null;
-      for (const { booking, desk: tDesk } of occupiedTeammateDesks) {
-        if (tDesk.floor !== d.floor) continue;
-        const dist = Math.hypot(tDesk.x - d.x, tDesk.y - d.y);
-        if (!best || dist < best.dist) {
-          best = { dist, teammateUserId: booking.userId, teammateDeskId: tDesk.id };
-        }
-      }
-      if (!best) return null;
-      const teammateUser = users.find((u) => u.id === best.teammateUserId);
-      return {
-        ...d,
-        reason: `Near ${teammateUser?.fullName || 'a teammate'} (${teammateUser?.team || ''})`,
-        nearestTeammate: {
-          userId: best.teammateUserId,
-          fullName: teammateUser?.fullName || null,
-          deskId: best.teammateDeskId,
-          distance: Math.round(best.dist * 1000) / 1000,
-        },
-      };
-    })
-    .filter(Boolean)
-    .sort((a, b) => a.nearestTeammate.distance - b.nearestTeammate.distance)
-    .slice(0, 3);
-
-  res.json(scored);
+  // Hot-desk fallback: when we have fewer than the threshold, attach zone summaries.
+  const threshold = getHotDeskFallbackThreshold();
+  const hotDeskFallback = suggestions.length < threshold ? hotDeskZoneSummary(date) : [];
+  res.json({ suggestions, hotDeskFallback });
 });
 
-function scoreByPrefs(desk, prefs) {
+function scoreByPrefs(desk, prefs, accessibilityNeeds) {
   let score = 0;
   if (prefs.includes('dual-monitor') && desk.attributes.dualMonitor) score++;
   if (prefs.includes('quiet-area') && desk.attributes.quietZone) score++;
   if (prefs.includes('window') && desk.attributes.nearWindow) score++;
   if (prefs.includes('standing-desk') && desk.attributes.heightAdjustable) score++;
+  if (accessibilityNeeds && accessibilityNeeds.includes('wheelchair') && desk.attributes.wheelchairAccess) score += 2;
   return score;
 }
+
+// ---------- Rooms ----------
+app.get('/api/rooms', (req, res) => {
+  const date = req.query.date || new Date().toISOString().slice(0, 10);
+  const todayRoomBookings = roomBookings.filter((b) => b.date === date && b.status !== 'cancelled');
+  res.json(rooms.map((r) => {
+    const taken = todayRoomBookings.filter((b) => b.roomId === r.id);
+    return { ...r, bookings: taken };
+  }));
+});
+
+app.post('/api/rooms/:id/book', (req, res) => {
+  const room = rooms.find((r) => r.id === req.params.id);
+  if (!room) return res.status(404).json({ error: 'Room not found' });
+  const { userId, date, startHour, endHour } = req.body || {};
+  if (!userId || !date) return res.status(400).json({ error: 'userId and date are required' });
+  const user = users.find((u) => u.id === userId);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+  const sh = Number.isFinite(startHour) ? startHour : 9;
+  const eh = Number.isFinite(endHour) ? endHour : sh + 1;
+  if (eh - sh < 1 || sh < 0 || eh > 24) return res.status(400).json({ error: 'Hours must be 0-24 and span >= 1' });
+
+  const overlap = roomBookings.find((b) =>
+    b.roomId === room.id && b.date === date && b.status !== 'cancelled' &&
+    !(eh <= b.startHour || sh >= b.endHour)
+  );
+  if (overlap) return res.status(409).json({ error: 'Room already booked for that slot' });
+
+  const booking = {
+    id: randomUUID(), roomId: room.id, userId, date,
+    startHour: sh, endHour: eh, status: 'booked', createdAt: new Date().toISOString(),
+  };
+  roomBookings.push(booking);
+  res.status(201).json(booking);
+});
+
+// ---------- Delegation admin (manage explicit overrides) ----------
+app.get('/api/admin/delegations', (req, res) => {
+  const actorId = req.query.actorId;
+  const prefs = userPrefs.get(actorId);
+  if (!prefs?.admin) return res.status(403).json({ error: 'Admin only' });
+  res.json(delegationsDb.all().map((o) => {
+    const delegator = users.find((u) => u.id === o.delegator_id);
+    const target = users.find((u) => u.id === o.on_behalf_of_id);
+    return {
+      delegatorId: o.delegator_id,
+      delegatorName: delegator?.fullName || null,
+      onBehalfOfId: o.on_behalf_of_id,
+      onBehalfOfName: target?.fullName || null,
+      grantedBy: o.granted_by,
+      grantedAt: o.granted_at,
+    };
+  }));
+});
+
+app.post('/api/admin/delegations', (req, res) => {
+  const { actorId, delegatorId, onBehalfOfId } = req.body || {};
+  const prefs = userPrefs.get(actorId);
+  if (!prefs?.admin) return res.status(403).json({ error: 'Admin only' });
+  if (!delegatorId || !onBehalfOfId) return res.status(400).json({ error: 'delegatorId and onBehalfOfId are required' });
+  if (!users.find((u) => u.id === delegatorId) || !users.find((u) => u.id === onBehalfOfId)) {
+    return res.status(404).json({ error: 'Unknown user id' });
+  }
+  delegationsDb.add(delegatorId, onBehalfOfId, actorId);
+  res.status(201).json({ delegatorId, onBehalfOfId });
+});
+
+app.delete('/api/admin/delegations', (req, res) => {
+  const { actorId, delegatorId, onBehalfOfId } = req.body || {};
+  const prefs = userPrefs.get(actorId);
+  if (!prefs?.admin) return res.status(403).json({ error: 'Admin only' });
+  delegationsDb.remove(delegatorId, onBehalfOfId);
+  res.json({ ok: true });
+});
+
+// ---------- Admin insights ----------
+function buildInsights(fromIso, toIsoExclusive) {
+  const all = bookingsDb.all();
+  const inRange = all.filter((b) => b.date >= fromIso && b.date < toIsoExclusive);
+
+  const totalBookings = inRange.length;
+  const everCheckedIn = inRange.filter((b) => b.checkedInAt != null).length;
+  const cancelled = inRange.filter((b) => b.status === 'cancelled').length;
+  const released = inRange.filter((b) => b.status === 'released').length;
+  const ghosts = inRange.filter((b) => b.status !== 'cancelled' && b.checkedInAt == null && b.status === 'released').length;
+  const ghostRatio = totalBookings ? Math.round((ghosts / totalBookings) * 1000) / 10 : 0;
+
+  // Occupancy by zone (active + booked counted)
+  reloadDesks();
+  const deskById = new Map(desks.map((d) => [d.id, d]));
+  const zoneCounts = new Map();
+  for (const b of inRange) {
+    if (b.status === 'cancelled' || b.status === 'released') continue;
+    const d = deskById.get(b.deskId);
+    if (!d) continue;
+    const key = `${d.floor}::${d.zone}`;
+    zoneCounts.set(key, (zoneCounts.get(key) || 0) + 1);
+  }
+  const occupancyByZone = [...zoneCounts.entries()].map(([k, n]) => {
+    const [floor, zone] = k.split('::');
+    return { floor, zone, bookings: n };
+  }).sort((a, b) => b.bookings - a.bookings);
+
+  // Peak hours
+  const hourCounts = new Array(24).fill(0);
+  for (const b of inRange) {
+    if (b.status === 'cancelled' || b.status === 'released') continue;
+    for (let h = b.startHour; h < b.endHour; h++) hourCounts[h] += 1;
+  }
+  const peakHours = hourCounts.map((n, h) => ({ hour: h, count: n })).filter((r) => r.count > 0);
+
+  // Hot-desk pickup rate
+  const hotDeskBookings = inRange.filter((b) => {
+    const d = deskById.get(b.deskId);
+    return d?.hotDesk;
+  });
+  const hotDeskPickupRate = totalBookings
+    ? Math.round((hotDeskBookings.length / totalBookings) * 1000) / 10
+    : 0;
+
+  // Average dwell time (checkedInAt -> releasedAt or end-of-slot)
+  let dwellMinSum = 0;
+  let dwellCount = 0;
+  for (const b of inRange) {
+    if (!b.checkedInAt) continue;
+    const start = new Date(b.checkedInAt);
+    const end = b.releasedAt
+      ? new Date(b.releasedAt)
+      : new Date(`${b.date}T${String(b.endHour).padStart(2, '0')}:00:00`);
+    const min = (end - start) / 60000;
+    if (min > 0 && min < 24 * 60) {
+      dwellMinSum += min;
+      dwellCount += 1;
+    }
+  }
+  const avgDwellMinutes = dwellCount ? Math.round(dwellMinSum / dwellCount) : 0;
+
+  return {
+    range: { from: fromIso, toExclusive: toIsoExclusive },
+    totals: { totalBookings, everCheckedIn, cancelled, released, ghosts, ghostRatioPct: ghostRatio },
+    occupancyByZone,
+    peakHours,
+    hotDesk: { bookings: hotDeskBookings.length, pickupRatePct: hotDeskPickupRate },
+    avgDwellMinutes,
+  };
+}
+
+app.get('/api/admin/insights', (req, res) => {
+  const actorId = req.query.actorId;
+  const prefs = userPrefs.get(actorId);
+  if (!prefs?.admin) return res.status(403).json({ error: 'Admin only' });
+  const from = req.query.from || new Date(Date.now() - 30 * 86_400_000).toISOString().slice(0, 10);
+  const to = req.query.to || new Date(Date.now() + 14 * 86_400_000).toISOString().slice(0, 10);
+  res.json(buildInsights(from, to));
+});
+
+app.get('/api/admin/insights/csv', (req, res) => {
+  const actorId = req.query.actorId;
+  const prefs = userPrefs.get(actorId);
+  if (!prefs?.admin) return res.status(403).send('Admin only');
+  const from = req.query.from || new Date(Date.now() - 30 * 86_400_000).toISOString().slice(0, 10);
+  const to = req.query.to || new Date(Date.now() + 14 * 86_400_000).toISOString().slice(0, 10);
+  const all = bookingsDb.all().filter((b) => b.date >= from && b.date < to);
+  const rows = [['booking_id', 'date', 'desk_id', 'user_id', 'start_hour', 'end_hour', 'status', 'created_at', 'checked_in_at', 'released_at', 'delegated_by']];
+  for (const b of all) {
+    rows.push([
+      b.id, b.date, b.deskId, b.userId, b.startHour, b.endHour, b.status,
+      b.createdAt, b.checkedInAt || '', b.releasedAt || '', b.delegatedBy || '',
+    ]);
+  }
+  res.setHeader('Content-Type', 'text/csv');
+  res.setHeader('Content-Disposition', `attachment; filename="insights-${from}-to-${to}.csv"`);
+  res.send(rows.map((r) => r.map((c) => String(c).includes(',') ? `"${c}"` : c).join(',')).join('\n'));
+});
+
+app.get('/api/admin/audit/:bookingId', (req, res) => {
+  const actorId = req.query.actorId;
+  const prefs = userPrefs.get(actorId);
+  if (!prefs?.admin) return res.status(403).json({ error: 'Admin only' });
+  res.json(auditDb.byBooking(req.params.bookingId));
+});
+
+// ---------- Admin config ----------
+app.get('/api/config', (req, res) => {
+  const actorId = req.query.actorId;
+  const prefs = userPrefs.get(actorId);
+  if (!prefs?.admin) return res.status(403).json({ error: 'Admin only' });
+  res.json({
+    autoRelease: getAutoReleasePolicy(),
+    hotDeskFallbackThreshold: getHotDeskFallbackThreshold(),
+    presenceSignals: configDb.get('presenceSignals', { monitor: true, ap: true, bluetooth: false, intune: false }),
+  });
+});
+
+app.patch('/api/config/:key', (req, res) => {
+  const { actorId, value } = req.body || {};
+  const prefs = userPrefs.get(actorId);
+  if (!prefs?.admin) return res.status(403).json({ error: 'Admin only' });
+  configDb.set(req.params.key, value, actorId);
+  res.json({ key: req.params.key, value });
+});
 
 // ---------- Sentient Workplace mockup ----------
 app.use('/api/sentient', createSentientRouter({ users }));
@@ -364,11 +658,7 @@ app.post('/api/reminders/send', async (req, res) => {
   const webhookUrl = process.env.TEAMS_WEBHOOK_URL;
   if (!webhookUrl) return res.status(503).json({ error: 'TEAMS_WEBHOOK_URL is not set. Add it to your .env file.' });
 
-  const bookedUserIds = new Set(
-    bookings
-      .filter((b) => b.date === date && b.status !== 'cancelled' && b.status !== 'released')
-      .map((b) => b.userId)
-  );
+  const bookedUserIds = new Set(bookingsDb.activeByDate(date).map((b) => b.userId));
   const bookedCount = bookedUserIds.size;
   const unbookedCount = users.length - bookedCount;
 
@@ -424,7 +714,7 @@ app.post('/api/reminders/send', async (req, res) => {
 });
 
 // ---------- Health ----------
-app.get('/api/health', (_req, res) => res.json({ ok: true, users: users.length, desks: desks.length, bookings: bookings.length }));
+app.get('/api/health', (_req, res) => res.json({ ok: true, users: users.length, desks: desks.length, bookings: bookingsDb.count() }));
 
 app.listen(PORT, () => {
   console.log(`Spacio server listening on http://localhost:${PORT}`);

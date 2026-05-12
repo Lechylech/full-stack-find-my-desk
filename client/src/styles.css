@@ -793,3 +793,82 @@ select option { background: var(--panel); color: var(--text); }
 .muted { color: var(--muted); }
 .small { font-size: 12px; }
 .error-panel { color: var(--danger); }
+
+/* ------------------------------------------------------------------ */
+/* v1.x fast-follower features                                         */
+/* ------------------------------------------------------------------ */
+
+/* Map / Table view tabs */
+.view-tabs { display: inline-flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.view-tabs button { background: transparent; border: 0; padding: 6px 12px; color: var(--muted); border-radius: 0; }
+.view-tabs button.active { background: var(--primary); color: #04161e; font-weight: 600; }
+
+/* Team highlight toggle */
+.team-highlight-toggle { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+
+/* Teammate ring on map */
+:root { --teammate-ring: #3b9eff; }
+.desk-marker.teammate-ring::after {
+  content: '';
+  position: absolute; inset: -4px;
+  border: 2px solid var(--teammate-ring);
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 0 2px rgba(59,158,255,0.18);
+}
+.desk-marker.accessible::before {
+  content: '♿';
+  position: absolute; top: -10px; right: -10px;
+  font-size: 9px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 14px; height: 14px;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.desk-marker.hot-desk { box-shadow: 0 0 0 2px rgba(244,183,64,0.35); }
+.legend-dot.dot-teammate { background: var(--teammate-ring); }
+
+/* Suggestions hot-zone fallback */
+.hot-pill { color: var(--warning); }
+.hot-zone-row {
+  display: flex; justify-content: space-between; align-items: center;
+  text-align: left;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: var(--text);
+  cursor: pointer;
+}
+.hot-zone-row:hover { border-color: var(--warning); }
+.hot-zone-count { color: var(--warning); font-weight: 600; font-size: 12px; }
+
+/* Desk table */
+.desk-table-wrap { display: flex; flex-direction: column; gap: 10px; }
+.desk-table-controls { display: flex; gap: 8px; align-items: center; padding: 4px 0; flex-wrap: wrap; }
+.desk-table-controls input[type="search"] { flex: 1; min-width: 220px; padding: 6px 10px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 6px; color: var(--text); }
+.desk-table-scroll { max-height: 580px; overflow: auto; border: 1px solid var(--border); border-radius: 6px; }
+.desk-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.desk-table th { position: sticky; top: 0; background: var(--header-bg); color: var(--muted); text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); font-weight: 500; }
+.desk-table th.sortable { cursor: pointer; }
+.desk-table th.sortable:hover { color: var(--text); }
+.desk-table td { padding: 6px 10px; border-bottom: 1px solid var(--border); }
+.desk-table tr.active td { background: rgba(0,196,176,0.05); }
+.desk-table tr.booked td { background: rgba(244,183,64,0.04); }
+.attr-cell span { display: inline-block; padding: 1px 4px; margin-right: 4px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; font-size: 10px; }
+.state-pill { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 11px; }
+.state-pill.available { background: rgba(0,196,176,0.15); color: var(--available); }
+.state-pill.booked    { background: rgba(244,183,64,0.15); color: var(--booked); }
+.state-pill.active    { background: rgba(59,158,255,0.15); color: var(--active); }
+
+/* Insights page */
+.btn-link { display: inline-flex; gap: 6px; align-items: center; padding: 6px 12px; background: var(--panel); border: 1px solid var(--border); border-radius: 6px; color: var(--text); }
+.btn-link:hover { text-decoration: none; border-color: var(--primary); }
+.bar-wrap { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; height: 10px; overflow: hidden; }
+.bar { background: var(--primary); height: 100%; }
+.hour-bars { display: flex; gap: 4px; align-items: flex-end; height: 140px; margin-top: 12px; }
+.hour-bar { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; }
+.hour-bar-fill { width: 100%; background: linear-gradient(180deg, var(--primary), var(--active)); border-radius: 3px 3px 0 0; min-height: 2px; }
+.hour-bar-label { font-size: 10px; color: var(--muted); }

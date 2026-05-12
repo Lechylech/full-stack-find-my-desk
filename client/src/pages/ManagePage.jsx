@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { api } from '../api.js';
 
 function todayIso() {
@@ -41,14 +42,25 @@ export default function ManagePage({ me }) {
   };
 
   async function forceRelease(id) {
-    await api.release(id);
+    await api.release(id, me.id);
     await refresh();
   }
 
   return (
     <main className="main" style={{ gridTemplateColumns: '1fr' }}>
       {me.admin && (
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '0 4px' }}>
+          <Link to="/manage/insights" className="btn-link">📊 Occupancy Insights</Link>
+        </div>
+      )}
+      {me.admin && (
         <ReminderPanel me={me} />
+      )}
+      {me.admin && (
+        <AdminConfigPanel me={me} />
+      )}
+      {me.admin && (
+        <DelegationsAdminPanel me={me} />
       )}
 
       <section className="panel">
@@ -224,5 +236,194 @@ function Stat({ label, value }) {
       <div className="label">{label}</div>
       <div className="value">{value}</div>
     </div>
+  );
+}
+
+function AdminConfigPanel({ me }) {
+  const [config, setConfig] = useState(null);
+  const [error, setError] = useState(null);
+  const [savedKey, setSavedKey] = useState(null);
+
+  const refresh = useCallback(async () => {
+    try {
+      setConfig(await api.config.get(me.id));
+    } catch (e) {
+      setError(e.message);
+    }
+  }, [me.id]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+
+  if (!config) return null;
+
+  async function save(key, value) {
+    setError(null);
+    try {
+      await api.config.set(key, me.id, value);
+      setSavedKey(key);
+      setTimeout(() => setSavedKey(null), 1500);
+      await refresh();
+    } catch (e) {
+      setError(e.message);
+    }
+  }
+
+  return (
+    <section className="panel">
+      <h2>Admin configuration</h2>
+      {error && <div className="error">{error}</div>}
+
+      <h3 style={{ fontSize: 14, marginTop: 12 }}>Auto-release policy</h3>
+      <p style={{ color: 'var(--muted)', fontSize: 12, margin: 0 }}>
+        Minutes after check-in window opens, before successive prompts and a final auto-release fire.
+      </p>
+      <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap', marginTop: 8 }}>
+        <NumberField
+          label="First warn (min)"
+          value={config.autoRelease.warn1Min}
+          onChange={(v) => save('autoRelease', { ...config.autoRelease, warn1Min: v })}
+        />
+        <NumberField
+          label="Second warn (min)"
+          value={config.autoRelease.warn2Min}
+          onChange={(v) => save('autoRelease', { ...config.autoRelease, warn2Min: v })}
+        />
+        <NumberField
+          label="Auto-release after (min)"
+          value={config.autoRelease.autoReleaseMin}
+          onChange={(v) => save('autoRelease', { ...config.autoRelease, autoReleaseMin: v })}
+        />
+        {savedKey === 'autoRelease' && <span style={{ color: 'var(--success)', fontSize: 12 }}>Saved</span>}
+      </div>
+
+      <h3 style={{ fontSize: 14, marginTop: 16 }}>Hot-desk fallback threshold</h3>
+      <p style={{ color: 'var(--muted)', fontSize: 12, margin: 0 }}>
+        Show hot-desk zone summary when the regular suggestion count is below this.
+      </p>
+      <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginTop: 8 }}>
+        <NumberField
+          label="Min suggestions"
+          value={config.hotDeskFallbackThreshold}
+          onChange={(v) => save('hotDeskFallbackThreshold', v)}
+        />
+        {savedKey === 'hotDeskFallbackThreshold' && <span style={{ color: 'var(--success)', fontSize: 12 }}>Saved</span>}
+      </div>
+
+      <h3 style={{ fontSize: 14, marginTop: 16 }}>Presence signal sources</h3>
+      <p style={{ color: 'var(--muted)', fontSize: 12, margin: 0 }}>
+        Which signals the presence simulator consumes. Real-world sources documented in <code>docs/presence-signals.md</code>.
+      </p>
+      <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 8 }}>
+        {Object.entries(config.presenceSignals).map(([k, v]) => (
+          <label key={k} style={{ display: 'inline-flex', gap: 4, alignItems: 'center' }}>
+            <input
+              type="checkbox"
+              checked={!!v}
+              onChange={(e) => save('presenceSignals', { ...config.presenceSignals, [k]: e.target.checked })}
+            />
+            {k}
+          </label>
+        ))}
+        {savedKey === 'presenceSignals' && <span style={{ color: 'var(--success)', fontSize: 12 }}>Saved</span>}
+      </div>
+    </section>
+  );
+}
+
+function NumberField({ label, value, onChange }) {
+  const [local, setLocal] = useState(value);
+  useEffect(() => { setLocal(value); }, [value]);
+  return (
+    <label style={{ display: 'inline-flex', flexDirection: 'column', gap: 2, fontSize: 12 }}>
+      <span style={{ color: 'var(--muted)' }}>{label}</span>
+      <input
+        type="number"
+        value={local}
+        onChange={(e) => setLocal(Number(e.target.value))}
+        onBlur={() => { if (local !== value) onChange(local); }}
+        style={{ width: 80 }}
+      />
+    </label>
+  );
+}
+
+function DelegationsAdminPanel({ me }) {
+  const [overrides, setOverrides] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [delegator, setDelegator] = useState('');
+  const [target, setTarget] = useState('');
+  const [error, setError] = useState(null);
+
+  const refresh = useCallback(async () => {
+    try {
+      const [d, u] = await Promise.all([api.admin.listDelegations(me.id), api.listUsers()]);
+      setOverrides(d);
+      setUsers(u);
+    } catch (e) {
+      setError(e.message);
+    }
+  }, [me.id]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+
+  async function add() {
+    setError(null);
+    if (!delegator || !target) { setError('Pick both users'); return; }
+    try {
+      await api.admin.addDelegation(me.id, delegator, target);
+      setDelegator(''); setTarget('');
+      await refresh();
+    } catch (e) {
+      setError(e.message);
+    }
+  }
+  async function remove(o) {
+    try {
+      await api.admin.removeDelegation(me.id, o.delegatorId, o.onBehalfOfId);
+      await refresh();
+    } catch (e) {
+      setError(e.message);
+    }
+  }
+
+  return (
+    <section className="panel">
+      <h2>Delegation overrides</h2>
+      <p style={{ color: 'var(--muted)', fontSize: 13, margin: '0 0 10px' }}>
+        Grant explicit "book on behalf of" rights beyond the default (self / line manager / admin) rules.
+      </p>
+      {error && <div className="error">{error}</div>}
+
+      <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+        <select value={delegator} onChange={(e) => setDelegator(e.target.value)}>
+          <option value="">— delegator (can book) —</option>
+          {users.map((u) => <option key={u.id} value={u.id}>{u.fullName}</option>)}
+        </select>
+        <span style={{ color: 'var(--muted)' }}>can book for</span>
+        <select value={target} onChange={(e) => setTarget(e.target.value)}>
+          <option value="">— target —</option>
+          {users.map((u) => <option key={u.id} value={u.id}>{u.fullName}</option>)}
+        </select>
+        <button className="primary" onClick={add}>Grant</button>
+      </div>
+
+      <table className="manage-table" style={{ marginTop: 12 }}>
+        <thead>
+          <tr><th>Delegator</th><th>On behalf of</th><th>Granted by</th><th>Granted at</th><th></th></tr>
+        </thead>
+        <tbody>
+          {overrides.length === 0 && <tr><td colSpan="5" style={{ color: 'var(--muted)' }}>No explicit overrides yet.</td></tr>}
+          {overrides.map((o) => (
+            <tr key={`${o.delegatorId}::${o.onBehalfOfId}`}>
+              <td>{o.delegatorName}</td>
+              <td>{o.onBehalfOfName}</td>
+              <td>{users.find((u) => u.id === o.grantedBy)?.fullName || o.grantedBy}</td>
+              <td style={{ fontSize: 12 }}>{new Date(o.grantedAt).toLocaleString()}</td>
+              <td><button onClick={() => remove(o)}>Remove</button></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
   );
 }

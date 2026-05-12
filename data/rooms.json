@@ -1,0 +1,10 @@
+[
+  { "id": "R-G-BOARD",    "label": "Ground Boardroom",       "floor": "ground", "capacity": 12, "av": ["Teams Room", "Whiteboard"], "x": 0.20, "y": 0.85 },
+  { "id": "R-G-HUDDLE-1", "label": "Ground Huddle 1",        "floor": "ground", "capacity": 4,  "av": ["Display"],                  "x": 0.40, "y": 0.85 },
+  { "id": "R-G-HUDDLE-2", "label": "Ground Huddle 2",        "floor": "ground", "capacity": 4,  "av": ["Display"],                  "x": 0.60, "y": 0.85 },
+  { "id": "R-G-FOCUS",    "label": "Ground Focus Room",      "floor": "ground", "capacity": 2,  "av": [],                           "x": 0.80, "y": 0.85 },
+  { "id": "R-1-BOARD",    "label": "First Floor Boardroom",  "floor": "first",  "capacity": 14, "av": ["Teams Room", "Camera"],     "x": 0.20, "y": 0.85 },
+  { "id": "R-1-HUDDLE-1", "label": "First Floor Huddle 1",   "floor": "first",  "capacity": 6,  "av": ["Display"],                  "x": 0.40, "y": 0.85 },
+  { "id": "R-1-HUDDLE-2", "label": "First Floor Huddle 2",   "floor": "first",  "capacity": 6,  "av": ["Display"],                  "x": 0.60, "y": 0.85 },
+  { "id": "R-1-FOCUS",    "label": "First Floor Focus Room", "floor": "first",  "capacity": 2,  "av": [],                           "x": 0.80, "y": 0.85 }
+]

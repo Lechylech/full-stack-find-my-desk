@@ -5,14 +5,15 @@
     "floor": "ground",
     "zone": "Windows",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.105,
     "y": 0.076,
     "attributes": {
       "dualMonitor": true,
       "nearWindow": true,
       "quietZone": true,
-      "heightAdjustable": true
+      "heightAdjustable": true,
+      "wheelchairAccess": true
     }
   },
   {
@@ -85,7 +86,7 @@
     "floor": "ground",
     "zone": "Windows",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.24,
     "y": 0.076,
     "attributes": {
@@ -165,7 +166,7 @@
     "floor": "ground",
     "zone": "Windows",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.105,
     "y": 0.174,
     "attributes": {
@@ -245,7 +246,7 @@
     "floor": "ground",
     "zone": "Windows",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.68,
     "y": 0.125,
     "attributes": {
@@ -284,7 +285,8 @@
       "dualMonitor": false,
       "nearWindow": false,
       "quietZone": false,
-      "heightAdjustable": false
+      "heightAdjustable": false,
+      "wheelchairAccess": true
     }
   },
   {
@@ -325,7 +327,7 @@
     "floor": "ground",
     "zone": "Windows",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.865,
     "y": 0.08,
     "attributes": {
@@ -405,7 +407,7 @@
     "floor": "ground",
     "zone": "Security",
     "platform": "Cyber Security",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.945,
     "y": 0.08,
     "attributes": {
@@ -485,7 +487,7 @@
     "floor": "ground",
     "zone": "Security",
     "platform": "Cyber Security",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.75,
     "y": 0.104,
     "attributes": {
@@ -556,7 +558,8 @@
       "dualMonitor": true,
       "nearWindow": true,
       "quietZone": false,
-      "heightAdjustable": false
+      "heightAdjustable": false,
+      "wheelchairAccess": true
     }
   },
   {
@@ -565,7 +568,7 @@
     "floor": "ground",
     "zone": "Security",
     "platform": "Cyber Security",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.89,
     "y": 0.104,
     "attributes": {
@@ -645,7 +648,7 @@
     "floor": "ground",
     "zone": "Security",
     "platform": "Cyber Security",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.75,
     "y": 0.146,
     "attributes": {
@@ -725,7 +728,7 @@
     "floor": "ground",
     "zone": "Security",
     "platform": "Cyber Security",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.68,
     "y": 0.425,
     "attributes": {
@@ -805,7 +808,7 @@
     "floor": "ground",
     "zone": "Security",
     "platform": "Cyber Security",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.865,
     "y": 0.38,
     "attributes": {
@@ -828,7 +831,8 @@
       "dualMonitor": false,
       "nearWindow": false,
       "quietZone": false,
-      "heightAdjustable": true
+      "heightAdjustable": true,
+      "wheelchairAccess": true
     }
   },
   {
@@ -885,7 +889,7 @@
     "floor": "ground",
     "zone": "Security",
     "platform": "Cyber Security",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.945,
     "y": 0.38,
     "attributes": {
@@ -965,7 +969,7 @@
     "floor": "ground",
     "zone": "Virtualisation",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.105,
     "y": 0.356,
     "attributes": {
@@ -1045,7 +1049,7 @@
     "floor": "ground",
     "zone": "Virtualisation",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.24,
     "y": 0.356,
     "attributes": {
@@ -1100,7 +1104,8 @@
       "dualMonitor": true,
       "nearWindow": false,
       "quietZone": true,
-      "heightAdjustable": true
+      "heightAdjustable": true,
+      "wheelchairAccess": true
     }
   },
   {
@@ -1125,7 +1130,7 @@
     "floor": "ground",
     "zone": "Virtualisation",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.105,
     "y": 0.464,
     "attributes": {
@@ -1205,7 +1210,7 @@
     "floor": "ground",
     "zone": "Virtualisation",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.24,
     "y": 0.464,
     "attributes": {
@@ -1285,7 +1290,7 @@
     "floor": "ground",
     "zone": "Virtualisation",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.22,
     "y": 0.516,
     "attributes": {
@@ -1365,14 +1370,15 @@
     "floor": "ground",
     "zone": "Support",
     "platform": "Operations",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.65,
     "y": 0.356,
     "attributes": {
       "dualMonitor": false,
       "nearWindow": false,
       "quietZone": false,
-      "heightAdjustable": false
+      "heightAdjustable": false,
+      "wheelchairAccess": true
     }
   },
   {
@@ -1445,7 +1451,7 @@
     "floor": "ground",
     "zone": "Support",
     "platform": "Operations",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.75,
     "y": 0.384,
     "attributes": {
@@ -1525,7 +1531,7 @@
     "floor": "ground",
     "zone": "Support",
     "platform": "Operations",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.89,
     "y": 0.384,
     "attributes": {
@@ -1605,7 +1611,7 @@
     "floor": "ground",
     "zone": "Support",
     "platform": "Operations",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.75,
     "y": 0.436,
     "attributes": {
@@ -1644,7 +1650,8 @@
       "dualMonitor": true,
       "nearWindow": false,
       "quietZone": false,
-      "heightAdjustable": false
+      "heightAdjustable": false,
+      "wheelchairAccess": true
     }
   },
   {
@@ -1685,7 +1692,7 @@
     "floor": "ground",
     "zone": "Support",
     "platform": "Operations",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.89,
     "y": 0.436,
     "attributes": {
@@ -1765,7 +1772,7 @@
     "floor": "ground",
     "zone": "Support",
     "platform": "Operations",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.63,
     "y": 0.574,
     "attributes": {
@@ -1845,7 +1852,7 @@
     "floor": "ground",
     "zone": "Support",
     "platform": "Operations",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.77,
     "y": 0.574,
     "attributes": {
@@ -1916,7 +1923,8 @@
       "dualMonitor": false,
       "nearWindow": false,
       "quietZone": false,
-      "heightAdjustable": true
+      "heightAdjustable": true,
+      "wheelchairAccess": true
     }
   },
   {
@@ -1925,7 +1933,7 @@
     "floor": "ground",
     "zone": "Support",
     "platform": "Operations",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.63,
     "y": 0.646,
     "attributes": {
@@ -2005,7 +2013,7 @@
     "floor": "ground",
     "zone": "Support",
     "platform": "Operations",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.77,
     "y": 0.646,
     "attributes": {
@@ -2085,7 +2093,7 @@
     "floor": "ground",
     "zone": "Support",
     "platform": "Operations",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.87,
     "y": 0.674,
     "attributes": {
@@ -2117,14 +2125,15 @@
     "floor": "first",
     "zone": "North-West Pods",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.095,
     "y": 0.066,
     "attributes": {
       "dualMonitor": true,
       "nearWindow": true,
       "quietZone": true,
-      "heightAdjustable": true
+      "heightAdjustable": true,
+      "wheelchairAccess": true
     }
   },
   {
@@ -2197,7 +2206,7 @@
     "floor": "first",
     "zone": "North-West Pods",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.23,
     "y": 0.066,
     "attributes": {
@@ -2277,7 +2286,7 @@
     "floor": "first",
     "zone": "North-West Pods",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.095,
     "y": 0.169,
     "attributes": {
@@ -2357,7 +2366,7 @@
     "floor": "first",
     "zone": "North-West Pods",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.23,
     "y": 0.169,
     "attributes": {
@@ -2396,7 +2405,8 @@
       "dualMonitor": false,
       "nearWindow": false,
       "quietZone": false,
-      "heightAdjustable": false
+      "heightAdjustable": false,
+      "wheelchairAccess": true
     }
   },
   {
@@ -2437,7 +2447,7 @@
     "floor": "first",
     "zone": "North-West Pods",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.21,
     "y": 0.216,
     "attributes": {
@@ -2517,7 +2527,7 @@
     "floor": "first",
     "zone": "North-East Pods",
     "platform": "Data",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.635,
     "y": 0.066,
     "attributes": {
@@ -2597,7 +2607,7 @@
     "floor": "first",
     "zone": "North-East Pods",
     "platform": "Data",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.735,
     "y": 0.094,
     "attributes": {
@@ -2668,7 +2678,8 @@
       "dualMonitor": true,
       "nearWindow": true,
       "quietZone": false,
-      "heightAdjustable": false
+      "heightAdjustable": false,
+      "wheelchairAccess": true
     }
   },
   {
@@ -2677,7 +2688,7 @@
     "floor": "first",
     "zone": "North-East Pods",
     "platform": "Data",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.875,
     "y": 0.094,
     "attributes": {
@@ -2757,7 +2768,7 @@
     "floor": "first",
     "zone": "North-East Pods",
     "platform": "Data",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.735,
     "y": 0.141,
     "attributes": {
@@ -2837,7 +2848,7 @@
     "floor": "first",
     "zone": "North-East Pods",
     "platform": "Data",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.875,
     "y": 0.141,
     "attributes": {
@@ -2917,7 +2928,7 @@
     "floor": "first",
     "zone": "North-East Pods",
     "platform": "Data",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.615,
     "y": 0.244,
     "attributes": {
@@ -2940,7 +2951,8 @@
       "dualMonitor": false,
       "nearWindow": false,
       "quietZone": false,
-      "heightAdjustable": true
+      "heightAdjustable": true,
+      "wheelchairAccess": true
     }
   },
   {
@@ -2997,7 +3009,7 @@
     "floor": "first",
     "zone": "North-East Pods",
     "platform": "Data",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.755,
     "y": 0.244,
     "attributes": {
@@ -3077,7 +3089,7 @@
     "floor": "first",
     "zone": "West Pods",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.095,
     "y": 0.386,
     "attributes": {
@@ -3157,7 +3169,7 @@
     "floor": "first",
     "zone": "West Pods",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.23,
     "y": 0.386,
     "attributes": {
@@ -3212,7 +3224,8 @@
       "dualMonitor": true,
       "nearWindow": false,
       "quietZone": true,
-      "heightAdjustable": true
+      "heightAdjustable": true,
+      "wheelchairAccess": true
     }
   },
   {
@@ -3237,7 +3250,7 @@
     "floor": "first",
     "zone": "West Pods",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.095,
     "y": 0.494,
     "attributes": {
@@ -3317,7 +3330,7 @@
     "floor": "first",
     "zone": "West Pods",
     "platform": "Engineering",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.23,
     "y": 0.494,
     "attributes": {
@@ -3397,7 +3410,7 @@
     "floor": "first",
     "zone": "East Pods",
     "platform": "Data",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.735,
     "y": 0.386,
     "attributes": {
@@ -3477,14 +3490,15 @@
     "floor": "first",
     "zone": "East Pods",
     "platform": "Data",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.875,
     "y": 0.386,
     "attributes": {
       "dualMonitor": false,
       "nearWindow": false,
       "quietZone": false,
-      "heightAdjustable": false
+      "heightAdjustable": false,
+      "wheelchairAccess": true
     }
   },
   {
@@ -3557,7 +3571,7 @@
     "floor": "first",
     "zone": "East Pods",
     "platform": "Data",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.615,
     "y": 0.494,
     "attributes": {
@@ -3637,7 +3651,7 @@
     "floor": "first",
     "zone": "East Pods",
     "platform": "Data",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.68,
     "y": 0.125,
     "attributes": {
@@ -3717,7 +3731,7 @@
     "floor": "first",
     "zone": "South-West Pods",
     "platform": "Product",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.865,
     "y": 0.08,
     "attributes": {
@@ -3756,7 +3770,8 @@
       "dualMonitor": true,
       "nearWindow": false,
       "quietZone": false,
-      "heightAdjustable": false
+      "heightAdjustable": false,
+      "wheelchairAccess": true
     }
   },
   {
@@ -3797,7 +3812,7 @@
     "floor": "first",
     "zone": "South-West Pods",
     "platform": "Product",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.945,
     "y": 0.08,
     "attributes": {
@@ -3877,7 +3892,7 @@
     "floor": "first",
     "zone": "South-West Pods",
     "platform": "Product",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.095,
     "y": 0.699,
     "attributes": {
@@ -3957,7 +3972,7 @@
     "floor": "first",
     "zone": "South-West Pods",
     "platform": "Product",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.23,
     "y": 0.699,
     "attributes": {
@@ -4028,7 +4043,8 @@
       "dualMonitor": false,
       "nearWindow": false,
       "quietZone": false,
-      "heightAdjustable": true
+      "heightAdjustable": true,
+      "wheelchairAccess": true
     }
   },
   {
@@ -4037,7 +4053,7 @@
     "floor": "first",
     "zone": "South-West Pods",
     "platform": "Product",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.21,
     "y": 0.751,
     "attributes": {
@@ -4117,7 +4133,7 @@
     "floor": "first",
     "zone": "South-East Pods",
     "platform": "Product",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.68,
     "y": 0.445,
     "attributes": {
@@ -4197,7 +4213,7 @@
     "floor": "first",
     "zone": "South-East Pods",
     "platform": "Product",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.865,
     "y": 0.4,
     "attributes": {
@@ -4277,7 +4293,7 @@
     "floor": "first",
     "zone": "South-East Pods",
     "platform": "Product",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.945,
     "y": 0.4,
     "attributes": {
@@ -4300,7 +4316,8 @@
       "dualMonitor": true,
       "nearWindow": false,
       "quietZone": true,
-      "heightAdjustable": true
+      "heightAdjustable": true,
+      "wheelchairAccess": true
     }
   },
   {
@@ -4357,7 +4374,7 @@
     "floor": "first",
     "zone": "South-East Pods",
     "platform": "Product",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.735,
     "y": 0.671,
     "attributes": {
@@ -4437,7 +4454,7 @@
     "floor": "first",
     "zone": "South-East Pods",
     "platform": "Product",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.875,
     "y": 0.671,
     "attributes": {
@@ -4517,7 +4534,7 @@
     "floor": "first",
     "zone": "South-East Pods",
     "platform": "Product",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.68,
     "y": 0.785,
     "attributes": {
@@ -4572,7 +4589,8 @@
       "dualMonitor": false,
       "nearWindow": false,
       "quietZone": false,
-      "heightAdjustable": false
+      "heightAdjustable": false,
+      "wheelchairAccess": true
     }
   },
   {
@@ -4597,7 +4615,7 @@
     "floor": "first",
     "zone": "South-East Pods",
     "platform": "Product",
-    "hotDesk": false,
+    "hotDesk": true,
     "x": 0.795,
     "y": 0.785,
     "attributes": {

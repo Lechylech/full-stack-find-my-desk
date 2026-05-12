@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useState, useCallback, useRef } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import { api } from '../api.js';
 import FloorPlan from '../components/FloorPlan.jsx';
 import BookingModal from '../components/BookingModal.jsx';
 import SuggestionsPanel from '../components/SuggestionsPanel.jsx';
 import MyBookings from '../components/MyBookings.jsx';
 import AutoReleaseManager from '../components/AutoReleaseManager.jsx';
+import DeskTable from '../components/DeskTable.jsx';
+import MeetingRoomsPanel from '../components/MeetingRoomsPanel.jsx';
 
 function todayIso() {
   return new Date().toISOString().slice(0, 10);
@@ -21,9 +23,12 @@ function addDays(iso, days) {
 export default function BookingPage({ me }) {
   const [date, setDate] = useState(todayIso());
   const [floor, setFloor] = useState('ground');
+  const [view, setView] = useState('map');
   const [desks, setDesks] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
+  const [hotDeskFallback, setHotDeskFallback] = useState([]);
+  const [highlightTeam, setHighlightTeam] = useState(false);
   const [selectedDesk, setSelectedDesk] = useState(null);
   const [bookingError, setBookingError] = useState(null);
   const [editMode, setEditMode] = useState(false);
@@ -38,7 +43,14 @@ export default function BookingPage({ me }) {
     ]);
     setDesks(d);
     setBookings(b);
-    setSuggestions(s);
+    if (Array.isArray(s)) {
+      // Backwards-compat: older server returned a plain array.
+      setSuggestions(s);
+      setHotDeskFallback([]);
+    } else {
+      setSuggestions(s.suggestions || []);
+      setHotDeskFallback(s.hotDeskFallback || []);
+    }
   }, [date, me.id]);
 
   useEffect(() => { refresh(); }, [refresh]);
@@ -53,10 +65,15 @@ export default function BookingPage({ me }) {
 
   const myActiveBooking = bookings.find((b) => b.status === 'active');
 
-  async function submitBooking({ deskId, startHour, endHour }) {
+  async function submitBooking({ deskId, startHour, endHour, userId }) {
     setBookingError(null);
     try {
-      await api.createBooking({ deskId, userId: me.id, date, startHour, endHour });
+      await api.createBooking({
+        deskId,
+        userId: userId || me.id,
+        actorId: me.id,
+        date, startHour, endHour,
+      });
       setSelectedDesk(null);
       await refresh();
     } catch (e) {
@@ -65,15 +82,15 @@ export default function BookingPage({ me }) {
   }
 
   async function handleCheckIn(bookingId) {
-    await api.checkIn(bookingId);
+    await api.checkIn(bookingId, me.id);
     await refresh();
   }
   async function handleRelease(bookingId) {
-    await api.release(bookingId);
+    await api.release(bookingId, me.id);
     await refresh();
   }
   async function handleCancel(bookingId) {
-    await api.cancel(bookingId);
+    await api.cancel(bookingId, me.id);
     await refresh();
   }
 
@@ -100,6 +117,22 @@ export default function BookingPage({ me }) {
     setSaveError(null);
   }
 
+  function pickHotZone(zoneSummary) {
+    setFloor(zoneSummary.floor);
+    setView('table');
+    // Pre-filter the table via a soft hint: select the first available hot-desk in that zone.
+    const next = desks.find((d) =>
+      d.floor === zoneSummary.floor &&
+      d.zone === zoneSummary.zone &&
+      d.hotDesk &&
+      d.state === 'available'
+    );
+    if (next) {
+      setSelectedDesk(next);
+      setBookingError(null);
+    }
+  }
+
   return (
     <main className="main">
       <section className="panel">
@@ -119,26 +152,51 @@ export default function BookingPage({ me }) {
               </span>
             )}
           </label>
-          <label>
-            Floor{' '}
-            <select value={floor} onChange={(e) => setFloor(e.target.value)}>
-              <option value="ground">Ground</option>
-              <option value="first">First</option>
-            </select>
-          </label>
-          <div className="legend">
-            <span><span className="legend-dot dot-available"/>Available</span>
-            <span><span className="legend-dot dot-booked"/>Booked</span>
-            <span><span className="legend-dot dot-active"/>Active</span>
+          {view === 'map' && (
+            <label>
+              Floor{' '}
+              <select value={floor} onChange={(e) => setFloor(e.target.value)}>
+                <option value="ground">Ground</option>
+                <option value="first">First</option>
+              </select>
+            </label>
+          )}
+          <div className="view-tabs">
+            <button
+              className={view === 'map' ? 'active' : ''}
+              onClick={() => setView('map')}
+            >Map</button>
+            <button
+              className={view === 'table' ? 'active' : ''}
+              onClick={() => setView('table')}
+            >Table</button>
           </div>
-          {me.admin && !editMode && (
+          {view === 'map' && (
+            <>
+              <label className="team-highlight-toggle">
+                <input
+                  type="checkbox"
+                  checked={highlightTeam}
+                  onChange={(e) => setHighlightTeam(e.target.checked)}
+                />
+                Highlight my team
+              </label>
+              <div className="legend">
+                <span><span className="legend-dot dot-available"/>Available</span>
+                <span><span className="legend-dot dot-booked"/>Booked</span>
+                <span><span className="legend-dot dot-active"/>Active</span>
+                {highlightTeam && <span><span className="legend-dot dot-teammate"/>Teammate</span>}
+              </div>
+            </>
+          )}
+          {me.admin && view === 'map' && !editMode && (
             <button onClick={() => setEditMode(true)} style={{ marginLeft: 'auto' }}>
               Edit desk positions
             </button>
           )}
         </div>
 
-        {editMode && (
+        {editMode && view === 'map' && (
           <div className="edit-mode-bar">
             <span>
               Drag desks to reposition.
@@ -160,30 +218,45 @@ export default function BookingPage({ me }) {
           </div>
         )}
 
-        <FloorPlan
-          floor={floor}
-          desks={floorDesks}
-          onPick={(desk) => {
-            if (editMode || desk.state !== 'available') return;
-            setSelectedDesk(desk);
-            setBookingError(null);
-          }}
-          selectedId={selectedDesk?.id}
-          editMode={editMode}
-          positionOverrides={positionOverrides}
-          onDeskMoved={handleDeskMoved}
-        />
+        {view === 'map' ? (
+          <FloorPlan
+            floor={floor}
+            desks={floorDesks}
+            onPick={(desk) => {
+              if (editMode || desk.state !== 'available') return;
+              setSelectedDesk(desk);
+              setBookingError(null);
+            }}
+            selectedId={selectedDesk?.id}
+            editMode={editMode}
+            positionOverrides={positionOverrides}
+            onDeskMoved={handleDeskMoved}
+            viewer={me}
+            highlightTeam={highlightTeam}
+          />
+        ) : (
+          <DeskTable
+            desks={desks}
+            onPick={(desk) => {
+              setSelectedDesk(desk);
+              setBookingError(null);
+            }}
+          />
+        )}
       </section>
 
       <aside>
         <SuggestionsPanel
           suggestions={suggestions}
+          hotDeskFallback={hotDeskFallback}
           onPick={(desk) => {
             setSelectedDesk(desk);
             setFloor(desk.floor);
             setBookingError(null);
           }}
+          onPickZone={pickHotZone}
         />
+        {hotDeskFallback.length > 0 && <MeetingRoomsPanel me={me} date={date} />}
         <MyBookings
           bookings={bookings}
           desks={desks}
@@ -200,6 +273,7 @@ export default function BookingPage({ me }) {
           onClose={() => setSelectedDesk(null)}
           onSubmit={submitBooking}
           error={bookingError}
+          me={me}
         />
       )}
 

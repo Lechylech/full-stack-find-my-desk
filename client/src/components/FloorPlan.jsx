@@ -5,7 +5,10 @@ const FLOOR_IMAGES = {
   first: '/first.png',
 };
 
-export default function FloorPlan({ floor, desks, onPick, selectedId, editMode, positionOverrides, onDeskMoved }) {
+export default function FloorPlan({
+  floor, desks, onPick, selectedId, editMode, positionOverrides, onDeskMoved,
+  viewer, highlightTeam = false,
+}) {
   const [hovered, setHovered] = useState(null);
   const [draggingId, setDraggingId] = useState(null);
   const wrapRef = useRef(null);
@@ -40,6 +43,18 @@ export default function FloorPlan({ floor, desks, onPick, selectedId, editMode, 
     return override || { x: d.x, y: d.y };
   }
 
+  function isTeamMate(desk) {
+    if (!highlightTeam || !viewer || !desk.occupant) return false;
+    const occ = desk.occupant;
+    if (!occ.team && !occ.lab && !occ.platform) return false;
+    if (occ.userId === viewer.id) return false;
+    return (
+      (viewer.team && occ.team === viewer.team) ||
+      (viewer.lab && occ.lab === viewer.lab) ||
+      (viewer.platform && occ.platform === viewer.platform)
+    );
+  }
+
   return (
     <div
       className={`floor-wrap${editMode ? ' edit-mode' : ''}`}
@@ -58,6 +73,8 @@ export default function FloorPlan({ floor, desks, onPick, selectedId, editMode, 
         const { x, y } = getDeskXY(d);
         const isMoved = !!positionOverrides?.[d.id];
         const isDragging = draggingId === d.id;
+        const teammate = isTeamMate(d);
+        const accessible = d.attributes?.wheelchairAccess;
         return (
           <button
             key={d.id}
@@ -67,6 +84,9 @@ export default function FloorPlan({ floor, desks, onPick, selectedId, editMode, 
               selectedId === d.id ? 'selected' : '',
               isMoved ? 'moved' : '',
               isDragging ? 'dragging' : '',
+              teammate ? 'teammate-ring' : '',
+              accessible ? 'accessible' : '',
+              d.hotDesk ? 'hot-desk' : '',
             ].filter(Boolean).join(' ')}
             style={{
               left: `${x * 100}%`,
@@ -99,6 +119,8 @@ function DeskTooltip({ desk }) {
         {attrs.nearWindow && <span>Window · </span>}
         {attrs.quietZone && <span>Quiet · </span>}
         {attrs.heightAdjustable && <span>Height-adj · </span>}
+        {attrs.wheelchairAccess && <span>♿ Wheelchair · </span>}
+        {desk.hotDesk && <span>Hot-desk · </span>}
       </div>
       <div style={{ marginTop: 4 }}>
         State: <strong>{desk.state}</strong>
@@ -106,6 +128,7 @@ function DeskTooltip({ desk }) {
       {desk.occupant && (
         <div className="tip-attr" style={{ marginTop: 4 }}>
           {desk.occupant.fullName} · {desk.occupant.startHour}:00–{desk.occupant.endHour}:00
+          {desk.occupant.team && <span> · {desk.occupant.team}</span>}
         </div>
       )}
     </div>
