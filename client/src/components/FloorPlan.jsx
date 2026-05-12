@@ -1,30 +1,88 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 const FLOOR_IMAGES = {
   ground: '/ground.png',
   first: '/first.png',
 };
 
-export default function FloorPlan({ floor, desks, onPick, selectedId }) {
+export default function FloorPlan({ floor, desks, onPick, selectedId, editMode, positionOverrides, onDeskMoved }) {
   const [hovered, setHovered] = useState(null);
+  const [draggingId, setDraggingId] = useState(null);
+  const wrapRef = useRef(null);
+
+  function getPosFromEvent(e) {
+    const rect = wrapRef.current.getBoundingClientRect();
+    return {
+      x: Math.round(Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width)) * 1000) / 1000,
+      y: Math.round(Math.min(1, Math.max(0, (e.clientY - rect.top) / rect.height)) * 1000) / 1000,
+    };
+  }
+
+  function handleMarkerMouseDown(e, desk) {
+    if (!editMode) return;
+    e.preventDefault();
+    e.stopPropagation();
+    setDraggingId(desk.id);
+    setHovered(null);
+  }
+
+  function handleMouseMove(e) {
+    if (!draggingId) return;
+    onDeskMoved(draggingId, getPosFromEvent(e));
+  }
+
+  function handleMouseUp() {
+    setDraggingId(null);
+  }
+
+  function getDeskXY(d) {
+    const override = positionOverrides?.[d.id];
+    return override || { x: d.x, y: d.y };
+  }
+
   return (
-    <div className="floor-wrap">
-      <img className="floor-img" src={FLOOR_IMAGES[floor]} alt={`${floor} floor plan`} draggable={false} />
-      {desks.map((d) => (
-        <button
-          key={d.id}
-          className={`desk-marker ${d.state}${selectedId === d.id ? ' selected' : ''}`}
-          style={{ left: `${d.x * 100}%`, top: `${d.y * 100}%` }}
-          onClick={() => onPick(d)}
-          onMouseEnter={() => setHovered(d)}
-          onMouseLeave={() => setHovered((h) => (h?.id === d.id ? null : h))}
-          title={`${d.label} — ${d.state}`}
-          aria-label={`Desk ${d.label}, ${d.state}`}
-        />
-      ))}
-      {hovered && (
-        <DeskTooltip desk={hovered} />
-      )}
+    <div
+      className={`floor-wrap${editMode ? ' edit-mode' : ''}`}
+      ref={wrapRef}
+      onMouseMove={editMode ? handleMouseMove : undefined}
+      onMouseUp={editMode ? handleMouseUp : undefined}
+      onMouseLeave={editMode ? handleMouseUp : undefined}
+    >
+      <img
+        className="floor-img"
+        src={FLOOR_IMAGES[floor]}
+        alt={`${floor} floor plan`}
+        draggable={false}
+      />
+      {desks.map((d) => {
+        const { x, y } = getDeskXY(d);
+        const isMoved = !!positionOverrides?.[d.id];
+        const isDragging = draggingId === d.id;
+        return (
+          <button
+            key={d.id}
+            className={[
+              'desk-marker',
+              editMode ? 'edit-marker' : d.state,
+              selectedId === d.id ? 'selected' : '',
+              isMoved ? 'moved' : '',
+              isDragging ? 'dragging' : '',
+            ].filter(Boolean).join(' ')}
+            style={{
+              left: `${x * 100}%`,
+              top: `${y * 100}%`,
+              cursor: editMode ? (isDragging ? 'grabbing' : 'grab') : 'pointer',
+            }}
+            onMouseDown={editMode ? (e) => handleMarkerMouseDown(e, d) : undefined}
+            onClick={!editMode ? () => onPick(d) : undefined}
+            onMouseEnter={!editMode ? () => setHovered(d) : undefined}
+            onMouseLeave={!editMode ? () => setHovered((h) => (h?.id === d.id ? null : h)) : undefined}
+            title={editMode ? `${d.label} — drag to reposition` : `${d.label} — ${d.state}`}
+            aria-label={`Desk ${d.label}${editMode ? ', drag to reposition' : `, ${d.state}`}`}
+          />
+        );
+      })}
+      {!editMode && hovered && <DeskTooltip desk={hovered} />}
     </div>
   );
 }

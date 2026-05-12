@@ -18,6 +18,7 @@ export const api = {
   listUsers: () => request('/users'),
   getUser: (id) => request(`/users/${id}`),
   setPrivacy: (id, privacy) => request(`/users/${id}/privacy`, { method: 'PATCH', body: JSON.stringify({ privacy }) }),
+  setPreferences: (id, deskPreferences) => request(`/users/${id}/preferences`, { method: 'PATCH', body: JSON.stringify({ deskPreferences }) }),
   listDesks: (date, viewerId) => request(`/desks?date=${date}${viewerId ? `&viewerId=${viewerId}` : ''}`),
   listBookings: ({ date, userId } = {}) => {
     const params = new URLSearchParams();
@@ -30,4 +31,6 @@ export const api = {
   release: (id) => request(`/bookings/${id}/release`, { method: 'POST' }),
   cancel: (id) => request(`/bookings/${id}`, { method: 'DELETE' }),
   getSuggestions: (userId, date) => request(`/suggestions?userId=${userId}&date=${date}`),
+  savePositions: (userId, updates) => request('/desks/positions', { method: 'PATCH', body: JSON.stringify({ userId, updates }) }),
+  sendReminder: (userId, date) => request('/reminders/send', { method: 'POST', body: JSON.stringify({ userId, date }) }),
 };

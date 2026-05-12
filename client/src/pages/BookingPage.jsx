@@ -10,6 +10,14 @@ function todayIso() {
   return new Date().toISOString().slice(0, 10);
 }
 
+const MAX_ADVANCE_DAYS = 14;
+
+function addDays(iso, days) {
+  const d = new Date(iso + 'T00:00:00');
+  d.setDate(d.getDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
 export default function BookingPage({ me }) {
   const [date, setDate] = useState(todayIso());
   const [floor, setFloor] = useState('ground');
@@ -18,6 +26,9 @@ export default function BookingPage({ me }) {
   const [suggestions, setSuggestions] = useState([]);
   const [selectedDesk, setSelectedDesk] = useState(null);
   const [bookingError, setBookingError] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [positionOverrides, setPositionOverrides] = useState({});
+  const [saveError, setSaveError] = useState(null);
 
   const refresh = useCallback(async () => {
     const [d, b, s] = await Promise.all([
@@ -66,13 +77,47 @@ export default function BookingPage({ me }) {
     await refresh();
   }
 
+  function handleDeskMoved(id, pos) {
+    setPositionOverrides((prev) => ({ ...prev, [id]: pos }));
+  }
+
+  async function savePositions() {
+    setSaveError(null);
+    try {
+      const updates = Object.entries(positionOverrides).map(([id, pos]) => ({ id, ...pos }));
+      await api.savePositions(me.id, updates);
+      setPositionOverrides({});
+      setEditMode(false);
+      await refresh();
+    } catch (e) {
+      setSaveError(e.message);
+    }
+  }
+
+  function cancelEdit() {
+    setPositionOverrides({});
+    setEditMode(false);
+    setSaveError(null);
+  }
+
   return (
     <main className="main">
       <section className="panel">
         <div className="floor-controls">
           <label>
             Date{' '}
-            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+            <input
+              type="date"
+              value={date}
+              min={todayIso()}
+              max={me.admin ? undefined : addDays(todayIso(), MAX_ADVANCE_DAYS)}
+              onChange={(e) => setDate(e.target.value)}
+            />
+            {!me.admin && (
+              <span style={{ color: 'var(--muted)', fontSize: 12, marginLeft: 8 }}>
+                (up to {MAX_ADVANCE_DAYS} days ahead)
+              </span>
+            )}
           </label>
           <label>
             Floor{' '}
@@ -86,16 +131,47 @@ export default function BookingPage({ me }) {
             <span><span className="legend-dot dot-booked"/>Booked</span>
             <span><span className="legend-dot dot-active"/>Active</span>
           </div>
+          {me.admin && !editMode && (
+            <button onClick={() => setEditMode(true)} style={{ marginLeft: 'auto' }}>
+              Edit desk positions
+            </button>
+          )}
         </div>
+
+        {editMode && (
+          <div className="edit-mode-bar">
+            <span>
+              Drag desks to reposition.
+              {Object.keys(positionOverrides).length > 0 && (
+                <strong> {Object.keys(positionOverrides).length} desk{Object.keys(positionOverrides).length > 1 ? 's' : ''} moved.</strong>
+              )}
+            </span>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              {saveError && <span className="error">{saveError}</span>}
+              <button onClick={cancelEdit}>Cancel</button>
+              <button
+                className="primary"
+                onClick={savePositions}
+                disabled={Object.keys(positionOverrides).length === 0}
+              >
+                Save positions
+              </button>
+            </div>
+          </div>
+        )}
+
         <FloorPlan
           floor={floor}
           desks={floorDesks}
           onPick={(desk) => {
-            if (desk.state !== 'available') return;
+            if (editMode || desk.state !== 'available') return;
             setSelectedDesk(desk);
             setBookingError(null);
           }}
           selectedId={selectedDesk?.id}
+          editMode={editMode}
+          positionOverrides={positionOverrides}
+          onDeskMoved={handleDeskMoved}
         />
       </section>
 
