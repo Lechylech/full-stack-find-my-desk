@@ -91,7 +91,22 @@ function Header({ me, users, onChangeUser, onTogglePrivacy }) {
   const location = useLocation();
   return (
     <header className="header">
-      <h1>Find My Desk</h1>
+      <div className="brand">
+        <svg width="28" height="32" viewBox="0 0 28 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="spacio-grad" x1="14" y1="0" x2="14" y2="32" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#1a9fff"/>
+              <stop offset="100%" stopColor="#00e5cc"/>
+            </linearGradient>
+          </defs>
+          <path d="M21 6C21 6 7 6 7 12C7 16 11 17.5 14 17.5C17 17.5 21 19 21 24C21 28 14 26 7 26"
+                stroke="url(#spacio-grad)" strokeWidth="7" strokeLinecap="round" fill="none"/>
+        </svg>
+        <div>
+          <span className="brand-name">Spacio</span>
+          <span className="brand-tagline">Book Space Smarter</span>
+        </div>
+      </div>
       <nav>
         <NavLink to="/" className={location.pathname === '/' ? 'active' : ''}>Book</NavLink>
         <NavLink to="/profile" className={location.pathname === '/profile' ? 'active' : ''}>Profile</NavLink>

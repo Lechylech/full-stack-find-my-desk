@@ -10,6 +10,7 @@ const DATA_DIR = resolve(__dirname, '../../data');
 const USERS_PATH = resolve(DATA_DIR, 'users.json');
 const DESKS_PATH = resolve(DATA_DIR, 'desks.json');
 const BOOKINGS_PATH = resolve(DATA_DIR, 'bookings.json');
+const POSITIONS_PATH = resolve(DATA_DIR, 'desk-positions.json');
 const PORT = process.env.PORT || 4000;
 
 function readJson(path) {
@@ -22,6 +23,13 @@ const users = readJson(USERS_PATH);
 // during a session takes effect on next page refresh — no server restart needed.
 let desks = readJson(DESKS_PATH);
 function reloadDesks() { desks = readJson(DESKS_PATH); }
+
+// Position overrides — persisted to desk-positions.json, applied on top of desks.json
+const positionOverrides = new Map(
+  existsSync(POSITIONS_PATH)
+    ? JSON.parse(readFileSync(POSITIONS_PATH, 'utf8')).map((p) => [p.id, p])
+    : []
+);
 
 // User privacy + admin flags live in-memory only (not persisted to users.json)
 const userPrefs = new Map(users.map((u) => [u.id, { privacy: false, admin: false }]));
@@ -139,7 +147,23 @@ app.get('/api/desks', (req, res) => {
   reloadDesks();
   const date = req.query.date || new Date().toISOString().slice(0, 10);
   const viewerId = req.query.viewerId || currentUserId;
-  res.json(desks.map((d) => deskWithStatus(d, date, viewerId)));
+  res.json(desks.map((d) => {
+    const override = positionOverrides.get(d.id);
+    return deskWithStatus(override ? { ...d, ...override } : d, date, viewerId);
+  }));
+});
+
+app.patch('/api/desks/positions', (req, res) => {
+  const { userId, updates } = req.body || {};
+  const prefs = userPrefs.get(userId);
+  if (!prefs?.admin) return res.status(403).json({ error: 'Admin only' });
+  if (!Array.isArray(updates) || updates.length === 0) return res.status(400).json({ error: 'updates must be a non-empty array' });
+
+  updates.forEach(({ id, x, y }) => {
+    if (desks.find((d) => d.id === id)) positionOverrides.set(id, { id, x, y });
+  });
+  writeFileSync(POSITIONS_PATH, JSON.stringify([...positionOverrides.values()], null, 2));
+  res.json({ saved: updates.length });
 });
 
 // ---------- Bookings ----------
@@ -326,9 +350,78 @@ function scoreByPrefs(desk, prefs) {
   return score;
 }
 
+// ---------- Reminders ----------
+app.post('/api/reminders/send', async (req, res) => {
+  const { userId, date } = req.body || {};
+  const prefs = userPrefs.get(userId);
+  if (!prefs?.admin) return res.status(403).json({ error: 'Admin only' });
+  if (!date) return res.status(400).json({ error: 'date is required' });
+
+  const webhookUrl = process.env.TEAMS_WEBHOOK_URL;
+  if (!webhookUrl) return res.status(503).json({ error: 'TEAMS_WEBHOOK_URL is not set. Add it to your .env file.' });
+
+  const bookedUserIds = new Set(
+    bookings
+      .filter((b) => b.date === date && b.status !== 'cancelled' && b.status !== 'released')
+      .map((b) => b.userId)
+  );
+  const bookedCount = bookedUserIds.size;
+  const unbookedCount = users.length - bookedCount;
+
+  const formatted = new Date(`${date}T12:00:00Z`).toLocaleDateString('en-GB', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+  });
+
+  const appUrl = process.env.APP_URL || 'http://localhost:5173';
+
+  const summary = {
+    date,
+    formatted_date: formatted,
+    total_users: users.length,
+    already_booked: bookedCount,
+    reminder_sent_to: unbookedCount,
+    booking_url: appUrl,
+  };
+
+  // Teams Incoming Webhook uses the MessageCard format
+  const teamsPayload = {
+    '@type': 'MessageCard',
+    '@context': 'http://schema.org/extensions',
+    themeColor: '00c4b0',
+    summary: `Desk booking reminder — ${formatted}`,
+    sections: [{
+      activityTitle: `📅 Book your desk for ${formatted}`,
+      activitySubtitle: 'Spacio — Book Space Smarter',
+      facts: [
+        { name: 'Total staff',    value: String(users.length) },
+        { name: 'Already booked', value: String(bookedCount) },
+        { name: 'Yet to book',    value: String(unbookedCount) },
+      ],
+      markdown: true,
+    }],
+    potentialAction: [{
+      '@type': 'OpenUri',
+      name: 'Book your desk →',
+      targets: [{ os: 'default', uri: `${appUrl}?date=${date}` }],
+    }],
+  };
+
+  try {
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(teamsPayload),
+    });
+    if (!response.ok) throw new Error(`Webhook returned ${response.status}`);
+    res.json({ ...summary, ok: true });
+  } catch (e) {
+    res.status(502).json({ error: `Webhook call failed: ${e.message}` });
+  }
+});
+
 // ---------- Health ----------
 app.get('/api/health', (_req, res) => res.json({ ok: true, users: users.length, desks: desks.length, bookings: bookings.length }));
 
 app.listen(PORT, () => {
-  console.log(`Find My Desk server listening on http://localhost:${PORT}`);
+  console.log(`Spacio server listening on http://localhost:${PORT}`);
 });
