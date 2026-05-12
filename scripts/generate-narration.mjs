@@ -34,7 +34,7 @@ const voice = args.voice || DEFAULT_VOICE;
 // valid SSML. Sticking to plain text with punctuation-driven prosody
 // keeps the request inside the supported envelope. The neural voice
 // handles pacing naturally from commas, periods, and paragraph breaks.
-const body = `Welcome to Spacio. What you are seeing is a live operational view of a two-floor office, fused from three data sources. Cisco Spaces wi-fi presence. ThousandEyes network telemetry. And Wellness Internet of Things sensors.
+const body = `Welcome to the sentient workplace. What you are seeing is a live operational view of a two-floor office, fused from three data sources. Cisco Spaces wi-fi presence. ThousandEyes network telemetry. And Wellness Internet of Things sensors.
 
 It is eight in the morning. The lobby is the only zone with any meaningful traffic. Three early arrivals across the building. Everything else reads green, and quiet.
 
@@ -64,7 +64,7 @@ Four o'clock. Occupancy is starting to taper. But not uniformly. The Data pods o
 
 Six in the evening. The building is at eight percent occupancy. The last notification of the day is a polite reminder to the three remaining users with active bookings. Badge out. Or the system will release the desk for tomorrow's first arrivals.
 
-That, is a workday on Spacio. Cisco Spaces gave us the presence signal. ThousandEyes gave us the network signal. The Wellness Internet of Things layer gave us the human signal. The desk booking app stitched them into a single operational view, and the people working in the building, barely noticed it was there.`;
+That, is a day in the sentient workplace. Cisco Spaces gave us the presence signal. ThousandEyes gave us the network signal. The Wellness Internet of Things layer gave us the human signal. The desk booking app stitched them into a single operational view, and the people working in the building, barely noticed it was there.`;
 
 if (!existsSync(dirname(OUT_PATH))) {
   mkdirSync(dirname(OUT_PATH), { recursive: true });

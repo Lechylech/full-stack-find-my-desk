@@ -27,7 +27,7 @@ $ssml = @'
 <voice xml:lang="en-GB">
 <prosody rate="-15%" pitch="-2st">
 
-Welcome to Spacio.
+Welcome to the sentient workplace.
 <break time="600ms"/>
 What you are seeing is a live operational view of a two floor office, fused from three data sources.
 <break time="400ms"/>
@@ -87,7 +87,7 @@ Six in the evening. The building is at eight percent occupancy.
 <break time="500ms"/>
 The last notification of the day is a polite reminder to the three remaining users with active bookings. Badge out, or the system will release the desk for tomorrow's first arrivals.
 <break time="800ms"/>
-That, is a workday on Spacio.
+That, is a day in the sentient workplace.
 <break time="500ms"/>
 Cisco Spaces gave us the presence signal. ThousandEyes gave us the network signal. The Wellness IoT layer gave us the human signal. The desk booking app stitched them into a single operational view, and the people working in the building barely noticed it was there.
 <break time="2s"/>

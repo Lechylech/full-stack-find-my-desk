@@ -234,8 +234,8 @@ CMD ["node", "server/src/index.js"]
 Build and run:
 
 ```bash
-docker build -t spacio .
-docker run -p 4000:4000 spacio
+docker build -t sentient-workplace .
+docker run -p 4000:4000 sentient-workplace
 ```
 
 Open <http://localhost:4000/sentient>. Best for shared infra or CI.

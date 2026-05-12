@@ -46,7 +46,7 @@ drop the timeline to **10×** or **30×**.
 
 ### 0:00 — 08:00 · Doors open
 
-> Welcome to Spacio. What you're seeing is a live operational view of a
+> Welcome to the sentient workplace. What you're seeing is a live operational view of a
 > two-floor office, fused from three data sources: Cisco Spaces wifi
 > presence, ThousandEyes network telemetry, and Wellness IoT sensors.
 >
@@ -141,7 +141,7 @@ drop the timeline to **10×** or **30×**.
 > users with active bookings — badge out, or the system will release
 > the desk for tomorrow's first arrivals.
 >
-> That's a workday on Spacio. Cisco Spaces gave us the presence
+> That's a day in the sentient workplace. Cisco Spaces gave us the presence
 > signal. ThousandEyes gave us the network signal. The Wellness IoT
 > layer gave us the human signal. The desk-booking app stitched them
 > into a single operational view, and the people working in the
