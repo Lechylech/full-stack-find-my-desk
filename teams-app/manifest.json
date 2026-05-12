@@ -1,0 +1,48 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.17/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.17",
+  "version": "1.0.0",
+  "id": "a3f8c2d1-4e7b-4a9f-b6d2-8c1e5f3a9b7d",
+  "developer": {
+    "name": "Spacio",
+    "websiteUrl": "https://github.com/Lechylech/full-stack-find-my-desk",
+    "privacyUrl": "https://github.com/Lechylech/full-stack-find-my-desk",
+    "termsOfUseUrl": "https://github.com/Lechylech/full-stack-find-my-desk"
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "name": {
+    "short": "Spacio",
+    "full": "Spacio — Book Space Smarter"
+  },
+  "description": {
+    "short": "Book your desk smarter",
+    "full": "Spacio is an intelligent desk booking platform that keeps your team together, your workspace optimised, and your day free from the friction of finding a seat."
+  },
+  "accentColor": "#00c4b0",
+  "staticTabs": [
+    {
+      "entityId": "spacio-book",
+      "name": "Book a Desk",
+      "contentUrl": "https://harper-calgary-routes-phd.trycloudflare.com",
+      "websiteUrl": "https://harper-calgary-routes-phd.trycloudflare.com",
+      "scopes": ["personal"]
+    },
+    {
+      "entityId": "spacio-manage",
+      "name": "Manage",
+      "contentUrl": "https://harper-calgary-routes-phd.trycloudflare.com/manage",
+      "websiteUrl": "https://harper-calgary-routes-phd.trycloudflare.com/manage",
+      "scopes": ["personal"]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    "harper-calgary-routes-phd.trycloudflare.com"
+  ]
+}

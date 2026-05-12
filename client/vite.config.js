@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
+    allowedHosts: ['harper-calgary-routes-phd.trycloudflare.com'],
     proxy: {
       '/api': 'http://localhost:4000',
     },
