@@ -39,8 +39,14 @@ const positionOverrides = new Map(
 
 // User privacy + admin flags live in-memory only (not persisted to users.json)
 const userPrefs = new Map(users.map((u) => [u.id, { privacy: false, admin: false }]));
-// First three users are admins so the demo has something to play with on /manage.
-users.slice(0, 3).forEach((u) => { userPrefs.get(u.id).admin = true; });
+// Admins follow the org hierarchy: CEO + Platform Leads have admin rights so
+// they can delegate / force-release across the org. If no such roles exist
+// (e.g. a fresh demo without the hierarchy applied), fall back to the first
+// three users so /manage is never locked out.
+const ADMIN_ROLES = new Set(['CEO', 'Platform Lead']);
+const adminsByRole = users.filter((u) => ADMIN_ROLES.has(u.role));
+const adminTargets = adminsByRole.length > 0 ? adminsByRole : users.slice(0, 3);
+adminTargets.forEach((u) => { userPrefs.get(u.id).admin = true; });
 
 // Current user is a simple in-memory pointer the frontend can change.
 let currentUserId = users[0].id;
