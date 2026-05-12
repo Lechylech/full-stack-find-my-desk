@@ -151,22 +151,38 @@ needs room to breathe.
 
 ## Production notes
 
-- The accompanying audio file `ideas/sentient-demo-narration.wav` was
-  generated with the Windows SAPI voice (System.Speech.Synthesis). It
-  is intentionally a deterministic, regenerable artefact — re-run the
-  PowerShell snippet below after any script changes:
+The accompanying audio file `ideas/sentient-demo-narration.wav` is a
+deterministic, regenerable artefact. Re-run after any script edit:
 
 ```powershell
-Add-Type -AssemblyName System.Speech
-$synth = New-Object System.Speech.Synthesis.SpeechSynthesizer
-$synth.SelectVoice("Microsoft Hazel Desktop")  # or any installed voice
-$synth.Rate = 0
-$synth.SetOutputToWaveFile("ideas/sentient-demo-narration.wav")
-$synth.Speak((Get-Content "Prompt/SentientDemo-Narration-Script.txt" -Raw))
-$synth.Dispose()
+powershell -ExecutionPolicy Bypass -File scripts/generate-narration.ps1
 ```
 
-- Replace SAPI with a production voice (ElevenLabs / Azure Neural TTS)
-  for any external-facing demo. Keep the timing cues unchanged.
-- If the narration runs short, lengthen the silent pauses rather than
-  padding the script — silence keeps attention on the visual.
+### Voice ladder (lowest → highest quality)
+
+The generator (`scripts/generate-narration.ps1`) tries voices in
+preference order and uses whichever is installed first. To upgrade,
+install a higher-tier voice — no code change needed.
+
+| Tier | Voice                          | Install                                                                                      | Quality                                  |
+| ---- | ------------------------------ | -------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| 1    | Microsoft Hazel Desktop (SAPI) | ships with Windows                                                                           | classic, robotic                         |
+| 2    | **Microsoft George (OneCore)** | ships with Windows 10/11                                                                     | mid-range, en-GB male — current default  |
+| 3    | **Ryan / Sonia (Natural)**     | Settings → Accessibility → Narrator → Add natural voices → "Ryan" (en-GB) or "Sonia" (en-GB) | neural, near-human, offline once present |
+| 4    | Azure Neural / ElevenLabs      | swap the generator to call a cloud TTS API with a key                                        | broadcast quality                        |
+
+Once a Tier 3 natural voice is installed, the script auto-selects it
+because `Ryan` is first in `VOICE_PREFERENCE` inside the script.
+
+### Avoid impersonating real people
+
+For an external-facing demo, swap in a generic "RP British, deep,
+theatrical narrator" voice. Do not clone or imitate a named living
+person — the right-of-publicity / consent risk far outweighs any demo
+polish gain.
+
+### Pacing
+
+If the narration runs short, lengthen the `<break>` durations in the
+SSML rather than padding sentences — silence keeps attention on the
+visual.

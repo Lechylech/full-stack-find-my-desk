@@ -66,8 +66,24 @@ Either:
 After editing the script, regenerate the WAV with:
 
 ```powershell
-powershell -File scripts/generate-narration.ps1
+powershell -ExecutionPolicy Bypass -File scripts/generate-narration.ps1
 ```
 
-Uses Windows SAPI (Microsoft Hazel voice). For an external demo, swap
-in a neural TTS — the SSML in the script is portable.
+The generator reaches the OneCore voice store via WinRT and picks the
+best installed voice automatically (`Ryan` → `George` → `Hazel`
+fallback). Currently uses **Microsoft George (en-GB male)**.
+
+### Want a more natural voice?
+
+Install one of the Windows 11 Natural Voices — they're free, work
+offline once installed, and sound far closer to a human narrator:
+
+1. Open **Settings → Accessibility → Narrator**.
+2. Scroll to **"Add natural voices"** → **Add**.
+3. Choose **Ryan (English UK)** or **Sonia (English UK)** and let it
+   download (~120 MB).
+4. Re-run `scripts/generate-narration.ps1` — it will auto-pick Ryan.
+
+For a broadcast-quality voice, swap the WinRT call inside the
+generator for an Azure Neural TTS or ElevenLabs API call (needs an
+API key). The SSML in the script is portable to either.
