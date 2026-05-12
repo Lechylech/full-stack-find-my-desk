@@ -1,16 +1,18 @@
-# Generates ideas/sentient-demo-narration.wav from inline SSML.
+# OFFLINE FALLBACK for ideas/sentient-demo-narration.wav.
+#
+# The primary generator is scripts/generate-narration.mjs (Node), which
+# uses the en-GB-RyanNeural voice via Microsoft Edge's Read-Aloud
+# endpoint and produces a far more natural MP3. This script exists for
+# machines without internet access.
 #
 # Uses the Windows Runtime (WinRT) SpeechSynthesizer so it can reach the
-# OneCore voice store (e.g. Microsoft George, en-GB male), which the
-# legacy System.Speech (SAPI) API cannot see by default.
+# OneCore voice store (Microsoft George, en-GB male). NOTE: WinRT
+# SpeechSynthesizer cannot see Windows 11 "Natural Voices" (Ryan, Sonia
+# etc.) — those are appx packages exposed only to Narrator. Best
+# available here is George.
 #
 # Run from the repo root:
-#   powershell -ExecutionPolicy Bypass -File scripts/generate-narration.ps1
-#
-# Voice preference order (first available wins). Edit VOICE_PREFERENCE
-# to bias toward an installed Windows Natural Voice (e.g. "Ryan",
-# "Sonia") once you have installed one via:
-#   Settings -> Accessibility -> Narrator -> Add natural voices
+#   powershell -ExecutionPolicy Bypass -File scripts/generate-narration-offline.ps1
 $VOICE_PREFERENCE = @(
     "Ryan",        # en-GB-RyanNeural (Natural) — best if installed
     "Thomas",      # en-GB neural male (rare)

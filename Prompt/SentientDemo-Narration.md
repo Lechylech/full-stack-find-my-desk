@@ -9,7 +9,7 @@ takes ten real minutes to play through; this script targets that window.
 1. Open `http://localhost:5173/sentient`.
 2. Set the speed selector to **60×** and click the **08:00** tick to seek
    to the start.
-3. Press play on the narration audio (`ideas/sentient-demo-narration.wav`)
+3. Press play on the narration audio (`ideas/sentient-demo-narration.mp3`)
    and immediately let the timeline run — the first line lands at the
    start of the day.
 4. Re-seek the timeline tick to the matching beat if you drift; each
@@ -31,9 +31,11 @@ start, and the cue the narrator should land near.
 | 16:00     | 480                 | Wind-down             |
 | 18:00     | 600                 | End of day            |
 
-Total runtime budget: ~10 minutes. The script below is paced for ~7
-minutes of speech, leaving deliberate silent space where the visual
-needs room to breathe.
+Total runtime budget: ~10 minutes. The current MP3 runs ~4 minutes of
+continuous speech — the audio finishes before the visual does, which
+is intentional: the closing 16:00 / 18:00 beats play silently so
+viewers can absorb the end-of-day state. If you want a tighter sync,
+drop the timeline to **10×** or **30×**.
 
 ---
 
@@ -151,38 +153,47 @@ needs room to breathe.
 
 ## Production notes
 
-The accompanying audio file `ideas/sentient-demo-narration.wav` is a
+The accompanying audio file `ideas/sentient-demo-narration.mp3` is a
 deterministic, regenerable artefact. Re-run after any script edit:
 
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/generate-narration.ps1
+```bash
+node scripts/generate-narration.mjs
 ```
+
+This uses the `msedge-tts` package (already in `devDependencies`) to
+call Microsoft Edge's public Read-Aloud TTS endpoint. The current
+voice is **en-GB-RyanNeural**. Internet required.
 
 ### Voice ladder (lowest → highest quality)
 
-The generator (`scripts/generate-narration.ps1`) tries voices in
-preference order and uses whichever is installed first. To upgrade,
-install a higher-tier voice — no code change needed.
+| Tier | Voice                          | How to use                                                                                       | Quality                                |
+| ---- | ------------------------------ | ------------------------------------------------------------------------------------------------ | -------------------------------------- |
+| 1    | Microsoft Hazel Desktop (SAPI) | offline fallback only                                                                            | classic, robotic                       |
+| 2    | Microsoft George (OneCore)     | `scripts/generate-narration-offline.ps1` (WAV)                                                   | mid-range, en-GB male, fully offline   |
+| 3    | **en-GB-RyanNeural (Edge)**    | `node scripts/generate-narration.mjs` — **default**                                              | neural, near-human, no API key         |
+| 4    | Azure Neural / ElevenLabs      | swap the `msedge-tts` call in the script for an Azure / ElevenLabs API call                      | broadcast quality                      |
 
-| Tier | Voice                          | Install                                                                                      | Quality                                  |
-| ---- | ------------------------------ | -------------------------------------------------------------------------------------------- | ---------------------------------------- |
-| 1    | Microsoft Hazel Desktop (SAPI) | ships with Windows                                                                           | classic, robotic                         |
-| 2    | **Microsoft George (OneCore)** | ships with Windows 10/11                                                                     | mid-range, en-GB male — current default  |
-| 3    | **Ryan / Sonia (Natural)**     | Settings → Accessibility → Narrator → Add natural voices → "Ryan" (en-GB) or "Sonia" (en-GB) | neural, near-human, offline once present |
-| 4    | Azure Neural / ElevenLabs      | swap the generator to call a cloud TTS API with a key                                        | broadcast quality                        |
+Try another Edge neural voice with `--voice=`:
 
-Once a Tier 3 natural voice is installed, the script auto-selects it
-because `Ryan` is first in `VOICE_PREFERENCE` inside the script.
+```bash
+node scripts/generate-narration.mjs --voice=en-GB-SoniaNeural
+node scripts/generate-narration.mjs --voice=en-GB-ThomasNeural
+node scripts/generate-narration.mjs --voice=en-US-GuyNeural
+```
 
 ### Avoid impersonating real people
 
-For an external-facing demo, swap in a generic "RP British, deep,
+For an external-facing demo, stay with a generic "RP British, deep,
 theatrical narrator" voice. Do not clone or imitate a named living
 person — the right-of-publicity / consent risk far outweighs any demo
 polish gain.
 
 ### Pacing
 
-If the narration runs short, lengthen the `<break>` durations in the
-SSML rather than padding sentences — silence keeps attention on the
-visual.
+The Edge TTS endpoint silently rejects payloads that contain SSML
+elements like `<break/>` or `<say-as/>`, even though they're valid
+SSML. The current generator uses plain text and lets the neural voice
+handle prosody from punctuation. If you want longer pauses between
+beats, use sentence breaks and ellipses in the body rather than
+`<break>` tags — or generate per-beat MP3s and concatenate with
+silent gaps in post.
