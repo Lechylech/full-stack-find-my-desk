@@ -5,6 +5,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
 import { createSentientRouter } from './sentient.js';
+import { createChatRouter } from './chat.js';
 import { bookingsDb, auditDb, delegationsDb, configDb } from './db.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -728,6 +729,9 @@ app.patch('/api/config/:key', (req, res) => {
 
 // ---------- Sentient Workplace mockup ----------
 app.use('/api/sentient', createSentientRouter({ users }));
+
+// ---------- AI chat agent ----------
+app.use('/api/chat', createChatRouter({ port: PORT }));
 
 // ---------- Reminders ----------
 app.post('/api/reminders/send', async (req, res) => {

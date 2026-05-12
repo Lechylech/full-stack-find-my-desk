@@ -7,6 +7,7 @@ import ProfilePage from './pages/ProfilePage.jsx';
 import InsightsPage from './pages/InsightsPage.jsx';
 import MyTeamPage from './pages/MyTeamPage.jsx';
 import SentientPage from './pages/sentient/SentientPage.jsx';
+import ChatWidget from './components/ChatWidget.jsx';
 
 export default function App() {
   const [me, setMe] = useState(null);
@@ -81,6 +82,7 @@ export default function App() {
         <Route path="/sentient" element={<SentientPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      {me && <ChatWidget me={me} />}
     </div>
   );
 }

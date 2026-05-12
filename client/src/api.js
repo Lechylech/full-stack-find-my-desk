@@ -49,6 +49,10 @@ export const api = {
     get: (actorId) => request(`/config?actorId=${actorId}`),
     set: (key, actorId, value) => request(`/config/${key}`, { method: 'PATCH', body: JSON.stringify({ actorId, value }) }),
   },
+  chat: {
+    health: () => request('/chat/health'),
+    send: (payload) => request('/chat', { method: 'POST', body: JSON.stringify(payload) }),
+  },
   sentient: {
     getScenario: (name) => request(`/sentient/scenarios/${name}`),
     getZones: () => request('/sentient/zones'),
