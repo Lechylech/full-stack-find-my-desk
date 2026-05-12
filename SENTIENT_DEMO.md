@@ -28,18 +28,21 @@ the bottom of the floor panel.
 
 ## 3. Run the narrated demo
 
-1. Open `ideas/sentient-demo-narration.wav` in your media player but
+1. Open `ideas/sentient-demo-narration.mp3` in your media player but
    **don't press play yet**.
 2. On the page, click the **`08:00`** tick on the timeline bar.
 3. Click the **`60×`** speed button.
-4. Hit play on the WAV at the same moment the timeline starts moving.
+4. Hit play on the MP3 at the same moment the timeline starts moving.
 
-The narration is paced for 60× — 10 real minutes covers a full
-simulated workday (08:00 → 18:00). Beat-by-beat cues are in
-[`Prompt/SentientDemo-Narration.md`](./Prompt/SentientDemo-Narration.md).
+The MP3 is a continuous ~4-minute narration covering every beat from
+doors-open through end-of-day. The 60× timeline runs for ~10 minutes,
+so the audio will finish before the visual does — that's intentional,
+the closing shots run silently to let viewers absorb the end-of-day
+state. If you'd like to keep them in sync, drop the timeline to **10×**
+or **30×**.
 
-If you drift out of sync, click the matching tick (`09:00`, `11:00`,
-…) to re-anchor.
+Voice: **Microsoft Ryan Neural (en-GB)**, served via the same public
+Edge Read-Aloud endpoint Microsoft Edge itself uses — no API key.
 
 ## 4. Things to point out during the demo
 
@@ -63,27 +66,203 @@ Either:
 
 ## 6. Regenerate the narration
 
-After editing the script, regenerate the WAV with:
+After editing the script body, regenerate the MP3:
 
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/generate-narration.ps1
+```bash
+node scripts/generate-narration.mjs
 ```
 
-The generator reaches the OneCore voice store via WinRT and picks the
-best installed voice automatically (`Ryan` → `George` → `Hazel`
-fallback). Currently uses **Microsoft George (en-GB male)**.
+Uses the `msedge-tts` package (already in `devDependencies`) to call
+the public Edge Read-Aloud endpoint. Internet required. Try a
+different voice with `--voice=en-GB-SoniaNeural` (female, UK), or any
+other neural shortname.
 
-### Want a more natural voice?
+### Offline fallback
 
-Install one of the Windows 11 Natural Voices — they're free, work
-offline once installed, and sound far closer to a human narrator:
+If you're on a network without internet, run the legacy SAPI script
+which uses local Windows voices:
 
-1. Open **Settings → Accessibility → Narrator**.
-2. Scroll to **"Add natural voices"** → **Add**.
-3. Choose **Ryan (English UK)** or **Sonia (English UK)** and let it
-   download (~120 MB).
-4. Re-run `scripts/generate-narration.ps1` — it will auto-pick Ryan.
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/generate-narration-offline.ps1
+```
 
-For a broadcast-quality voice, swap the WinRT call inside the
-generator for an Azure Neural TTS or ElevenLabs API call (needs an
-API key). The SSML in the script is portable to either.
+It writes a WAV (not MP3) using Microsoft George — noticeably less
+natural than Ryan-Neural, but works fully offline.
+
+---
+
+## What's behind `/sentient`
+
+Everything you see is local. There is no real Cisco Spaces feed, no
+real ThousandEyes account, no real IoT sensor. The page is a
+clock-driven projection of mock JSON files over the existing floor
+plan.
+
+### Architecture at a glance
+
+```
+[ React client (Vite, :5173) ]            [ Express server (:4000) ]
+  /sentient route                            /api/sentient/*
+    SentientPage.jsx                           ├── /scenarios
+      useSentientClock.js  ──drives──┐         ├── /scenarios/:name
+      HeatmapOverlay                 │         ├── /zones
+      PresenceLayer                  │         ├── /network
+      NetworkZonesLayer              │         ├── /wellness
+      WellnessChips                  │         ├── /bookings
+      NotificationFeed     ──reads──>│ JSON ──>├── /release
+      ColleagueRouteLayer            │         └── /reset-releases
+      GhostBookingPanel              │
+      TimelineControls               │
+                                     │
+                                     └── data/sentient/{
+                                            timeline.json
+                                            zones.json
+                                            network-quality.json
+                                            wellness.json
+                                            bookings.json
+                                          }
+```
+
+### What each piece does
+
+| Piece                                | Job                                                                                                |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| `useSentientClock` hook              | Ticks a simulated clock 08:00 → 18:00 at 1× / 10× / 60× / 300× / pause                              |
+| `data/sentient/timeline.json`        | 7 scripted steps with per-zone occupancy %, present-desk IDs, and notification events              |
+| `data/sentient/zones.json`           | Floor regions (x/y/w/h in 0..1 space) used by every overlay layer                                   |
+| `data/sentient/network-quality.json` | Per-zone Mbps / jitter / loss — drives the ThousandEyes-style bands                                 |
+| `data/sentient/wellness.json`        | Per-zone CO₂ / temp / humidity / air-quality snapshots at 09:00 / 11:00 / 13:00 / 15:00 / 17:00     |
+| `data/sentient/bookings.json`        | 20 synthetic bookings, 3 flagged `ghost: true` to demo auto-release                                 |
+| `server/src/sentient.js`             | Express router that serves the JSON and tracks in-memory release state                              |
+| `HeatmapOverlay`                     | Renders zone rectangles, colours them by interpolated occupancy                                     |
+| `PresenceLayer`                      | Renders one dot per desk (sensed / ghost / walk-up / idle states)                                   |
+| `NetworkZonesLayer`                  | Network-quality pill per zone                                                                       |
+| `WellnessChips`                      | CO₂ / air-quality chip row under the map                                                            |
+| `NotificationFeed`                   | Toast-like stack of events from the current and previous scenario step                              |
+| `ColleagueRouteLayer`                | SVG polyline from the lobby anchor to a selected colleague's desk                                   |
+| `GhostBookingPanel`                  | Lists `ghost: true` bookings past their start-hour by ≥ 60 sim-minutes, with a Release button       |
+| `TimelineControls`                   | Pause / 1× / 10× / 60× / 300× and step-seek                                                         |
+
+### Why it looks "live"
+
+The clock hook runs on `requestAnimationFrame`. Every frame it
+advances a simulated-minutes cursor by `(dtSec × speed) / 60`. The
+heatmap and presence layers re-read the current step's occupancy and
+linearly interpolate toward the next step's values, so the colours
+morph smoothly between scripted moments. **Nothing on the server is
+ticking** — the server only serves static JSON plus a tiny in-memory
+release set.
+
+This means the demo is **completely deterministic**: clicking 08:00
+and pressing 60× gives the same visual every time. Great for reliable
+recordings; not what you'd want if you needed "real" telemetry.
+
+---
+
+## Making it portable
+
+"Portable" covers four common needs, ranked by effort:
+
+### Level 1 — share the repo (lowest effort)
+
+Anyone with Node 18+ and the repo can run:
+
+```bash
+git clone https://github.com/Lechylech/full-stack-find-my-desk
+cd full-stack-find-my-desk
+git checkout feat/sentient-and-fast-followers
+npm run install:all
+npm run dev
+```
+
+…and open <http://localhost:5173/sentient>. No databases, no API
+keys, no `.env`. The narration MP3 is already in `ideas/`. Best path
+for showing a colleague at their own machine.
+
+### Level 2 — single-folder distribution
+
+Build the client and have the server serve it as static files:
+
+```bash
+npm run build         # produces client/dist/
+```
+
+Then add a small tweak to `server/src/index.js`:
+
+```js
+import express from 'express';
+import { resolve } from 'node:path';
+// ...
+app.use(express.static(resolve(__dirname, '../../client/dist')));
+app.get('*', (_req, res) =>
+  res.sendFile(resolve(__dirname, '../../client/dist/index.html'))
+);
+```
+
+Zip up these directories:
+
+```
+server/                    Node + express
+client/dist/               Built React bundle
+data/                      JSON files (sentient/, desks.json, users.json)
+floorplans/                PNGs
+ideas/sentient-demo-narration.mp3
+package.json + package-lock.json
+```
+
+Drop the folder on any Windows / Mac / Linux box with Node 18+ and
+run `node server/src/index.js`. One port (4000), one process. Hand
+this to a stakeholder.
+
+### Level 3 — Docker image
+
+Add a `Dockerfile` at the repo root:
+
+```dockerfile
+FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+COPY server/package*.json ./server/
+COPY client/package*.json ./client/
+RUN npm run install:all
+COPY . .
+RUN npm run build
+EXPOSE 4000
+CMD ["node", "server/src/index.js"]
+```
+
+Build and run:
+
+```bash
+docker build -t spacio .
+docker run -p 4000:4000 spacio
+```
+
+Open <http://localhost:4000/sentient>. Best for shared infra or CI.
+
+### Level 4 — public URL
+
+| Host                          | Notes                                                                                       |
+| ----------------------------- | ------------------------------------------------------------------------------------------- |
+| **Render / Railway / Fly.io** | Push the repo, point at the Dockerfile, set port to 4000. ~10 min, free tiers.              |
+| **Azure App Service**         | Node 20 stack. Microsoft-aligned. `npm start` → `node server/src/index.js`.                 |
+| **Vercel / Netlify**          | Frontend-only — would need to split the server into serverless functions. More work.        |
+
+For a Microsoft / Teams-aligned demo, Azure App Service is the
+shortest path. Once deployed, the public URL can be wrapped in a
+Teams tab manifest (see `Prompt/FastFollower-AdditionalFeatures.md`
+item 18) and the same `/sentient` page runs inside Teams.
+
+### Gotchas
+
+- In Levels 2-4, copy `ideas/sentient-demo-narration.mp3` alongside
+  the bundle and serve it from `/ideas/...` if you want it reachable
+  from the deployed page. Otherwise just play it from a local media
+  player as steps 1-3 above describe.
+- `data/bookings.json` is created on first booking by the original
+  Find My Desk flow — the sentient mockup doesn't write to it. Safe
+  to omit from the bundle if you only need `/sentient`.
+- In-memory ghost-release state resets when the server restarts. The
+  demo always boots clean — intentional.
+- No environment variables required by `/sentient`. The main app may
+  consume `TEAMS_WEBHOOK_URL` on other branches; this one does not.
