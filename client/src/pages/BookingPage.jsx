@@ -10,6 +10,14 @@ function todayIso() {
   return new Date().toISOString().slice(0, 10);
 }
 
+const MAX_ADVANCE_DAYS = 14;
+
+function addDays(iso, days) {
+  const d = new Date(iso + 'T00:00:00');
+  d.setDate(d.getDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
 export default function BookingPage({ me }) {
   const [date, setDate] = useState(todayIso());
   const [floor, setFloor] = useState('ground');
@@ -98,7 +106,18 @@ export default function BookingPage({ me }) {
         <div className="floor-controls">
           <label>
             Date{' '}
-            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+            <input
+              type="date"
+              value={date}
+              min={todayIso()}
+              max={me.admin ? undefined : addDays(todayIso(), MAX_ADVANCE_DAYS)}
+              onChange={(e) => setDate(e.target.value)}
+            />
+            {!me.admin && (
+              <span style={{ color: 'var(--muted)', fontSize: 12, marginLeft: 8 }}>
+                (up to {MAX_ADVANCE_DAYS} days ahead)
+              </span>
+            )}
           </label>
           <label>
             Floor{' '}
