@@ -6,3 +6,7 @@ dist/
 ~$*
 .env
 data/bookings.json
+
+# Claude Code local/per-user settings (do not sync)
+.claude/settings.local.json
+.claude/*.local.json
