@@ -1,111 +1,192 @@
-# Find My Desk — MVP
+# Find My Desk
 
-Desk-booking skeleton for a Microsoft-first team. React + Vite frontend, Express backend, JSON-file persistence. Built to demonstrate the core booking journey end-to-end, with mocked services in place of real Teams / Graph / sensor integrations.
+A desk-booking web app for a Microsoft-first team. Pick a floor, click an available desk, confirm a time slot, and you're booked. Built as a hackathon MVP — the skeleton is in place for future Teams embedding, Microsoft Graph integration, and real device telemetry, but those layers are mocked here.
 
-## Stack
+## Quick start
 
-- **Frontend:** React 18 + Vite + react-router (`client/`)
-- **Backend:** Node + Express (`server/`)
-- **Data:** `data/users.json` (150 mock users) + `data/desks.json` (156 desks across 2 floors) + `data/bookings.json` (created at runtime, gitignored)
-- **Floor plans:** PNGs in `floorplans/`, served by Vite at `/ground.png` and `/first.png`
-
-## Setup
+You need Node 18+ and npm 9+.
 
 ```bash
-npm install
-npm install --prefix server
-npm install --prefix client
-```
-
-Or in one shot:
-
-```bash
+# 1. Install dependencies for root, server, and client
 npm run install:all
-```
 
-## Run
-
-```bash
+# 2. Start the server and frontend together
 npm run dev
 ```
 
-This starts:
-- Server on http://localhost:4000
-- Vite dev server on http://localhost:5173 (proxies `/api/*` to the server)
+When it's up:
+- **App** → http://localhost:5173
+- **API** → http://localhost:4000
 
-Open http://localhost:5173 in a browser.
+Vite proxies `/api/*` from the frontend to the backend, so you only ever load the app URL in your browser.
 
-To run them separately:
+If port 5173 is busy (e.g. a previous dev session left a process running), Vite will pick the next free port and tell you in the terminal — open that URL instead.
+
+### Running the server and client separately
 
 ```bash
-npm run dev:server
-npm run dev:client
+npm run dev:server   # http://localhost:4000
+npm run dev:client   # http://localhost:5173
 ```
 
-## Features
+## How to use the app
 
-### Booking flow
-1. Pick a date (defaults to today) and floor (Ground / First).
-2. Click an available (green) desk on the floor plan.
-3. Choose start/end hours (minimum 1 hour, maximum whole day, 7–22 range).
-4. Confirm. Desk turns yellow ("booked"). Check in to turn it blue ("active").
+### 1. Pick who you are
 
-### Simulated auto-release
-Once you're checked in (active), the demo timer kicks off:
-- **30s idle** → first "still here?" prompt
-- **15s no response** → second prompt with **10s countdown**
-- **No confirmation** → desk auto-released back to available
+The MVP has no real login. The top-right **"You are:"** dropdown lets you switch between any of the 150 mock users. Your choice persists to `localStorage` so a refresh keeps you signed in as that person.
 
-Real-world timings would be 90/20/10 minutes; compressed for live demos. Constants live in `client/src/components/AutoReleaseManager.jsx`.
+The first three users in `data/users.json` are flagged as **admins** — they see the Manage page and can override privacy on other users' bookings.
 
-### Team-nearby suggestions
-For the chosen date, the side panel surfaces up to 3 available desks closest (by floor + coordinates) to a teammate who has already booked that day. "Teammate" means same `team`, `lab`, or `platform`. If no teammates are booked yet, falls back to top desks matching your `deskPreferences`.
+### 2. Set your desk preferences (optional)
 
-### Privacy toggle
-In the header. When enabled, other non-admin users see your booking as "Private booking" with the user hidden. Admins (first three users in `users.json`) always see full info.
+Click **Profile** in the header. Tick any combination of:
+- Dual monitor
+- Near window
+- Quiet zone
+- Height adjustable / DSE
 
-### Current-user simulator
-Top-right dropdown switches the active user — no real auth in MVP. Setting persists to localStorage.
+Click **Save preferences**. These boost the score for matching desks in the "Team-nearby suggestions" panel when no teammates are booked yet.
 
-### Manage page
-`/manage` lists every booking for the chosen date with a force-release action, plus occupancy summary cards per floor. Lightweight admin view, intentionally placeholder.
+> Preferences are kept in server memory and reset when the server restarts.
+
+### 3. Book a desk
+
+On the **Book** page:
+1. Pick a date.
+   - Standard users can only book up to **14 days** in advance.
+   - Admins can pick any future date.
+2. Switch floor (Ground / First) using the dropdown.
+3. Click any **green** desk on the floor plan.
+4. In the modal, pick a start and end hour (minimum 1 hour, maximum whole day, 7:00–22:00 range).
+5. Confirm.
+
+The desk turns **yellow ("booked")**. From the side panel **My bookings**, click **Check in** to flip it **blue ("active")**, **Release** to free it, or **Cancel** to drop the reservation.
+
+**One desk per user, per time slot.** You can't book a second desk that overlaps a slot you already hold.
+
+### 4. Auto-release (demo timer)
+
+Once you're checked in (active), the demo simulates the real-world "did you leave without releasing?" flow with compressed timers:
+
+| Stage | Trigger |
+|-------|---------|
+| 30 s idle | First prompt: "Still at your desk?" |
+| 15 s no response | Second prompt with 10 s countdown |
+| Countdown expires | Desk auto-released back to **available** |
+
+Click **I'm still here** at any prompt to reset the idle timer.
+
+Real-world timings would be 90 / 20 / 10 minutes — compressed for live demos. Constants live in `client/src/components/AutoReleaseManager.jsx`.
+
+### 5. Privacy
+
+Toggle **Hide my bookings** in the header. With privacy on:
+- Other **standard** users see your desk as "Private booking" with no name.
+- **Admins** (and you yourself) always see your full booking info.
+
+### 6. Team-nearby suggestions
+
+The side panel surfaces up to 3 available desks that are closest (by floor + Euclidean distance on desk coordinates) to a colleague already booked on the chosen date. "Colleague" = same `team`, `lab`, or `platform`. If no colleagues are booked yet, falls back to your saved desk preferences.
+
+### 7. Manage page (admins only)
+
+Admin users see a **Manage** link in the header. The page lists every booking for the selected date, with occupancy cards per floor and a **Force release** action. Non-admins navigating to `/manage` directly get an "Admins only" screen.
+
+> The admin gate is UI-only courtesy gating, not real auth — a determined user can still hit the underlying API. Real enforcement belongs at the API layer once a proper auth provider is in place.
+
+## Project layout
+
+```
+.
+├── client/                   React + Vite frontend
+│   ├── src/
+│   │   ├── App.jsx           Router + header
+│   │   ├── api.js            Fetch helpers for /api/*
+│   │   ├── components/       FloorPlan, BookingModal, AutoReleaseManager, etc.
+│   │   ├── pages/            BookingPage, ManagePage, ProfilePage
+│   │   └── styles.css
+│   └── vite.config.js        Dev server + /api proxy + publicDir → /floorplans
+├── server/                   Express backend
+│   ├── src/index.js          All routes + booking lifecycle
+│   └── scripts/
+│       └── generate-desks.js Regenerates data/desks.json from pod definitions
+├── data/
+│   ├── users.json            150 mock users (committed)
+│   ├── desks.json            292 desks across 2 floors (regenerated by script)
+│   └── bookings.json         Runtime-created, gitignored
+├── floorplans/
+│   ├── ground.png            1448 × 1086 floor plan, served at /ground.png
+│   └── first.png             1448 × 1086 floor plan, served at /first.png
+└── package.json              Concurrently-driven dev script
+```
 
 ## Backend API
 
-| Method | Path                              | Notes                                                   |
-|--------|-----------------------------------|---------------------------------------------------------|
-| GET    | `/api/health`                     | Sanity check + counts                                   |
-| GET    | `/api/users`                      | All users (public projection)                           |
-| GET    | `/api/users/:id`                  | One user                                                |
-| PATCH  | `/api/users/:id/privacy`          | `{ privacy: bool }`                                     |
-| GET    | `/api/me`                         | Current simulated user                                  |
-| POST   | `/api/me`                         | `{ id }` — switch user                                  |
-| GET    | `/api/desks?date=YYYY-MM-DD`      | Desks + computed state for the date                     |
-| GET    | `/api/bookings?date=&userId=`     | Filtered bookings                                       |
-| POST   | `/api/bookings`                   | Create booking                                          |
-| POST   | `/api/bookings/:id/checkin`       | Mark active                                             |
-| POST   | `/api/bookings/:id/release`       | Release                                                 |
-| DELETE | `/api/bookings/:id`               | Cancel                                                  |
-| GET    | `/api/suggestions?userId=&date=`  | Team-nearby suggestions                                 |
+All routes are JSON in / JSON out.
+
+| Method | Path                              | Notes                                                            |
+|--------|-----------------------------------|------------------------------------------------------------------|
+| GET    | `/api/health`                     | Sanity check + counts.                                           |
+| GET    | `/api/users`                      | All users (public projection — no line manager / pattern data).  |
+| GET    | `/api/users/:id`                  | One user.                                                        |
+| PATCH  | `/api/users/:id/privacy`          | `{ privacy: bool }`                                              |
+| PATCH  | `/api/users/:id/preferences`      | `{ deskPreferences: ["dual-monitor", ...] }`                     |
+| GET    | `/api/me`                         | Current simulated user.                                          |
+| POST   | `/api/me`                         | `{ id }` — switch the simulated current user.                    |
+| GET    | `/api/desks?date=YYYY-MM-DD`      | Desks + computed state for that date.                            |
+| GET    | `/api/bookings?date=&userId=`     | Filtered list of bookings.                                       |
+| POST   | `/api/bookings`                   | Create. Enforces desk overlap, user overlap, 14-day cap for non-admins. |
+| POST   | `/api/bookings/:id/checkin`       | Mark active.                                                     |
+| POST   | `/api/bookings/:id/release`       | Release.                                                         |
+| DELETE | `/api/bookings/:id`               | Cancel.                                                          |
+| GET    | `/api/suggestions?userId=&date=`  | Team-nearby suggestions.                                         |
 
 ## Regenerating desks.json
+
+Pod placement is defined in `server/scripts/generate-desks.js` as a list of pod centres (`cx`, `cy`, `rows`, `cols`) per floor. To tweak the layout:
 
 ```bash
 node server/scripts/generate-desks.js
 ```
 
-Desk positions are normalised (0..1) over each floor PNG. Edit the zone tables at the top of that script to change layout, attribute mix, or pod size.
+The server reloads `desks.json` on every `GET /api/desks` request, so a browser refresh picks up the new layout without restarting anything.
 
-## Out of scope (per the MVP prompt)
+> The pod centres are hand-measured from the floor plan PNGs and still need a calibration pass to fully line up with the desk icons on the plan. If you want pixel-precise placement, consider building a one-shot picker tool (a `/admin/place-desks` route that lets you click each icon and export coordinates).
+
+## Building for production
+
+```bash
+npm run build
+```
+
+Outputs to `client/dist/`. The server can be deployed standalone with `npm start --prefix server` (defaults to port 4000, override with `PORT=...`).
+
+You'll need to serve `client/dist/` from your own static host and point its `/api/*` calls at the server URL (today they assume the Vite proxy).
+
+## What's deliberately *not* in this MVP
 
 - Real Microsoft Teams packaging / store deployment
 - Real Microsoft Graph integration
 - Real telemetry (ThousandEyes / Bluetooth / Intune / monitor events)
 - Full enterprise admin suite, analytics pipeline, advanced approval workflows
 - AI agent orchestration beyond the mocked nearby-suggestion logic
+- A real auth provider — the admin gate is UI courtesy only
 
-## Notes
+## Caveats / things to know
 
-- Admins are the first three records in `users.json`. They can see private bookings and have access to "Force release" in the Manage view.
-- Privacy and admin flags are kept in server memory (intentionally not persisted to `users.json` so the seed data stays clean). Restarting the server resets them.
-- The data folder is intentionally left at 150 users — even though the MVP prompt asks for 100 more, that ask was overridden during scoping.
+- **Persistence:** Bookings survive a server restart (written to `data/bookings.json`). Privacy and desk preferences are server-memory only — they reset on restart.
+- **Admins:** The first three records in `users.json` are flagged as admin in memory. There's no UI to promote/demote.
+- **User dataset:** Stayed at 150 (the prompt mentioned adding 100 more — that was overridden during scoping).
+- **Floor plan calibration:** Desk markers cluster in the right zones but don't yet sit perfectly on top of the desk icons on the PNG. See note above about the picker tool.
+- **`find-my-desk-server` self-reference:** During local `npm install`, npm on this machine adds a self-file-reference into the package being installed. It's harmless after the first install but will surface if you wipe `node_modules` repeatedly.
+
+## Troubleshooting
+
+**"Port 5173 is in use" / app opens on 5176**
+Earlier dev sessions left Vite processes running. Either use the new port Vite printed, or kill the stragglers (Task Manager → `node.exe`).
+
+**`SyntaxError: Unexpected token '﻿'` when starting the server**
+`users.json` has a UTF-8 BOM (Windows artifact). The server strips it on load. If you see this, check you didn't accidentally introduce a BOM into `desks.json` or `bookings.json` with an editor like Notepad.
+
+**Desk markers don't move after regenerating `desks.json`**
+Refresh the browser tab — the server re-reads the file per request but the client only fetches `/api/desks` on date/floor changes and a 4-second poll.

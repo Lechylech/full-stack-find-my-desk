@@ -5,6 +5,12 @@ function todayIso() {
   return new Date().toISOString().slice(0, 10);
 }
 
+function twoWeeksIso() {
+  const d = new Date();
+  d.setDate(d.getDate() + 14);
+  return d.toISOString().slice(0, 10);
+}
+
 export default function ManagePage({ me }) {
   const [date, setDate] = useState(todayIso());
   const [bookings, setBookings] = useState([]);
@@ -41,6 +47,10 @@ export default function ManagePage({ me }) {
 
   return (
     <main className="main" style={{ gridTemplateColumns: '1fr' }}>
+      {me.admin && (
+        <ReminderPanel me={me} />
+      )}
+
       <section className="panel">
         <div className="floor-controls">
           <label>
@@ -99,6 +109,112 @@ export default function ManagePage({ me }) {
         </table>
       </section>
     </main>
+  );
+}
+
+function ReminderPanel({ me }) {
+  const [reminderDate, setReminderDate] = useState(twoWeeksIso());
+  const [sending, setSending] = useState(false);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
+
+  async function send() {
+    setSending(true);
+    setResult(null);
+    setError(null);
+    try {
+      const r = await api.sendReminder(me.id, reminderDate);
+      setResult(r);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setSending(false);
+    }
+  }
+
+  return (
+    <section className="panel reminder-panel-section">
+      <h2>Booking Reminders</h2>
+      <p style={{ color: 'var(--muted)', fontSize: 13, margin: '0 0 14px' }}>
+        Send a message to the Teams channel asking staff to book a desk for a chosen date.
+        Defaults to 2 weeks from today.
+      </p>
+
+      <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
+        <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          Reminder date
+          <input
+            type="date"
+            value={reminderDate}
+            min={todayIso()}
+            onChange={(e) => { setReminderDate(e.target.value); setResult(null); setError(null); }}
+          />
+        </label>
+        <button className="primary" onClick={send} disabled={sending}>
+          {sending ? 'Sending…' : 'Send reminder to Teams'}
+        </button>
+      </div>
+
+      {error && (
+        <div className="reminder-error">
+          {error}
+        </div>
+      )}
+
+      {result && <TeamsCardPreview result={result} />}
+    </section>
+  );
+}
+
+function TeamsCardPreview({ result }) {
+  const formatted = new Date(`${result.date}T12:00:00Z`).toLocaleDateString('en-GB', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+  });
+
+  return (
+    <div className="teams-preview-wrap">
+      <div style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 8 }}>
+        Reminder sent — Teams channel preview:
+      </div>
+      <div className="teams-card">
+        <div className="teams-card-header">
+          <div className="teams-card-logo">S</div>
+          <div>
+            <div className="teams-card-app">Spacio</div>
+            <div className="teams-card-subtitle">Desk Booking Reminder</div>
+          </div>
+        </div>
+        <div className="teams-card-title">
+          Book your desk for {formatted}
+        </div>
+        <div className="teams-card-body">
+          {result.reminder_sent_to} of your colleagues haven't booked a desk yet.
+          Secure your spot now — spaces are limited.
+        </div>
+        <div className="teams-card-stats">
+          <div className="teams-stat">
+            <span className="teams-stat-value">{result.total_users}</span>
+            <span className="teams-stat-label">Total staff</span>
+          </div>
+          <div className="teams-stat">
+            <span className="teams-stat-value" style={{ color: 'var(--available)' }}>{result.already_booked}</span>
+            <span className="teams-stat-label">Already booked</span>
+          </div>
+          <div className="teams-stat">
+            <span className="teams-stat-value" style={{ color: 'var(--warning)' }}>{result.reminder_sent_to}</span>
+            <span className="teams-stat-label">Yet to book</span>
+          </div>
+        </div>
+        <a
+          className="teams-card-cta"
+          href={`${result.booking_url}?date=${result.date}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Book your desk →
+        </a>
+      </div>
+    </div>
   );
 }
 
