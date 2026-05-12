@@ -6,6 +6,12 @@
       "runtimeExecutable": "node",
       "runtimeArgs": ["node_modules/.bin/vite"],
       "port": 5173
+    },
+    {
+      "name": "spacio-presentation",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3030", "--directory", "presentation"],
+      "port": 3030
     }
   ]
 }
