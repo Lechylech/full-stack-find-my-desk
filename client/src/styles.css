@@ -1,4 +1,4 @@
-:root {
+:root, :root[data-theme="dark"] {
   --bg: #0c1526;
   --panel: #121e30;
   --header-bg: #0e1929;
@@ -15,6 +15,7 @@
   --available: #00c4b0;
   --shadow: 0 1px 4px rgba(0,0,0,0.4), 0 4px 20px rgba(0,0,0,0.3);
   --input-bg: #0a1422;
+  --focus-ring: 0 0 0 2px rgba(59,158,255,0.6);
   /* Sentient Workplace tokens */
   --sentient-accent: #6d28d9;
   --sentient-accent-soft: #ede9fe;
@@ -32,6 +33,66 @@
   --presence-present: #1976d2;
   --presence-ghost: #c4423a;
   --presence-walkup: #6d28d9;
+}
+
+:root[data-theme="light"] {
+  --bg: #f4f6fb;
+  --panel: #ffffff;
+  --header-bg: #ffffff;
+  --border: #d6dde9;
+  --text: #1a2333;
+  --muted: #5a6a80;
+  --primary: #0aa092;
+  --primary-hover: #088a7e;
+  --success: #2aa56a;
+  --warning: #d4881a;
+  --danger: #c4423a;
+  --active: #1976d2;
+  --booked: #d4881a;
+  --available: #2aa56a;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(20,30,60,0.06);
+  --input-bg: #ffffff;
+  --focus-ring: 0 0 0 2px rgba(25,118,210,0.45);
+  --sentient-accent-soft: #ede9fe;
+}
+
+/* High-contrast palette — pure black/white with vivid signal colours. Aims
+   for WCAG AAA on body text and a thicker, always-visible focus ring. */
+:root[data-theme="high-contrast"] {
+  --bg: #000000;
+  --panel: #0a0a0a;
+  --header-bg: #000000;
+  --border: #ffffff;
+  --text: #ffffff;
+  --muted: #d0d0d0;
+  --primary: #00f5d8;
+  --primary-hover: #00d9c0;
+  --success: #00ff8c;
+  --warning: #ffcc00;
+  --danger: #ff5555;
+  --active: #66c8ff;
+  --booked: #ffcc00;
+  --available: #00ff8c;
+  --shadow: none;
+  --input-bg: #000000;
+  --focus-ring: 0 0 0 3px #ffff00;
+  --sentient-accent-soft: #1a0a3a;
+}
+:root[data-theme="high-contrast"] *:focus-visible {
+  outline: 3px solid #ffff00 !important;
+  outline-offset: 2px !important;
+}
+:root[data-theme="high-contrast"] button,
+:root[data-theme="high-contrast"] input,
+:root[data-theme="high-contrast"] select {
+  border-width: 2px;
+}
+:root[data-theme="high-contrast"] .desk-marker { border: 2px solid #fff; }
+
+/* Apply the focus token globally so themes flow through naturally */
+*:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
 }
 
 * { box-sizing: border-box; }
@@ -798,6 +859,40 @@ select option { background: var(--panel); color: var(--text); }
 /* v1.x fast-follower features                                         */
 /* ------------------------------------------------------------------ */
 
+/* Theme picker cards */
+.theme-cards { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+.theme-card {
+  flex: 1 1 200px;
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.theme-card.active { border-color: var(--primary); }
+.theme-card input[type="radio"] { margin: 0; }
+.theme-swatch {
+  position: relative;
+  width: 44px; height: 32px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.theme-swatch .sw-bg { position: absolute; inset: 0; }
+.theme-swatch .sw-fg { position: absolute; left: 4px; top: 5px; width: 22px; height: 3px; border-radius: 1px; }
+.theme-swatch .sw-accent { position: absolute; right: 4px; bottom: 5px; width: 12px; height: 6px; border-radius: 2px; }
+.theme-swatch-dark .sw-bg { background: #0c1526; }
+.theme-swatch-dark .sw-fg { background: #dde4f0; }
+.theme-swatch-dark .sw-accent { background: #00c4b0; }
+.theme-swatch-light .sw-bg { background: #f4f6fb; }
+.theme-swatch-light .sw-fg { background: #1a2333; }
+.theme-swatch-light .sw-accent { background: #0aa092; }
+.theme-swatch-high-contrast .sw-bg { background: #000000; }
+.theme-swatch-high-contrast .sw-fg { background: #ffffff; }
+.theme-swatch-high-contrast .sw-accent { background: #ffff00; }
+
 /* Map / Table view tabs */
 .view-tabs { display: inline-flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
 .view-tabs button { background: transparent; border: 0; padding: 6px 12px; color: var(--muted); border-radius: 0; }
@@ -807,14 +902,14 @@ select option { background: var(--panel); color: var(--text); }
 .team-highlight-toggle { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
 
 /* Teammate ring on map */
-:root { --teammate-ring: #3b9eff; }
+:root { --teammate-ring: #e0413f; }
 .desk-marker.teammate-ring::after {
   content: '';
   position: absolute; inset: -4px;
   border: 2px solid var(--teammate-ring);
   border-radius: 50%;
   pointer-events: none;
-  box-shadow: 0 0 0 2px rgba(59,158,255,0.18);
+  box-shadow: 0 0 0 2px rgba(224,65,63,0.22);
 }
 .desk-marker.accessible::before {
   content: '♿';

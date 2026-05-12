@@ -3,7 +3,7 @@ export default function SuggestionsPanel({ suggestions, hotDeskFallback, onPick,
   const fallback = Array.isArray(hotDeskFallback) ? hotDeskFallback : [];
   return (
     <div className="panel">
-      <h2>Team-nearby suggestions</h2>
+      <h2>Suggestions</h2>
       {list.length === 0 && (
         <div style={{ color: 'var(--muted)', fontSize: 13 }}>
           No teammates booked yet for this date.

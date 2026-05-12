@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api.js';
+import { useTheme } from '../useTheme.js';
+
+const THEME_OPTIONS = [
+  { key: 'dark',           label: 'Dark',           help: 'Default. Reduced glare for long sessions.' },
+  { key: 'light',          label: 'Light',          help: 'High brightness; good for daylit rooms.' },
+  { key: 'high-contrast',  label: 'High contrast',  help: 'WCAG-leaning palette with a thick yellow focus ring. Best for low-vision or strong lighting.' },
+];
 
 const PREF_OPTIONS = [
   { key: 'dual-monitor',  label: 'Dual monitor',           help: 'Boost suggestion score for desks with dual-monitor setup.' },
@@ -26,6 +33,7 @@ function asArray(needs) {
 export default function ProfilePage({ me, onSaved }) {
   const [selected, setSelected] = useState(me.deskPreferences || []);
   const [needs, setNeeds] = useState(asArray(me.accessibilityNeeds));
+  const [theme, setTheme] = useTheme();
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState(null);
   const [error, setError] = useState(null);
@@ -93,6 +101,32 @@ export default function ProfilePage({ me, onSaved }) {
             </div>
           </label>
         ))}
+
+        <h3 style={{ marginTop: 24 }}>Appearance</h3>
+        <p style={{ color: 'var(--muted)', marginTop: 0, fontSize: 13 }}>
+          Choose a theme. Stored on this device; applies instantly.
+        </p>
+        <div className="theme-cards">
+          {THEME_OPTIONS.map((opt) => (
+            <label key={opt.key} className={`theme-card${theme === opt.key ? ' active' : ''}`}>
+              <input
+                type="radio"
+                name="theme"
+                checked={theme === opt.key}
+                onChange={() => setTheme(opt.key)}
+              />
+              <div className={`theme-swatch theme-swatch-${opt.key}`} aria-hidden="true">
+                <span className="sw-bg" />
+                <span className="sw-fg" />
+                <span className="sw-accent" />
+              </div>
+              <div>
+                <div style={{ fontWeight: 500 }}>{opt.label}</div>
+                <div style={{ color: 'var(--muted)', fontSize: 12 }}>{opt.help}</div>
+              </div>
+            </label>
+          ))}
+        </div>
 
         <h3 style={{ marginTop: 24 }}>Accessibility needs</h3>
         <p style={{ color: 'var(--muted)', marginTop: 0, fontSize: 13 }}>

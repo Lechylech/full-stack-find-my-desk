@@ -771,199 +771,6 @@
     }
   },
   {
-    "id": "G-049",
-    "label": "G049",
-    "floor": "ground",
-    "zone": "Security",
-    "platform": "Cyber Security",
-    "hotDesk": false,
-    "x": 0.795,
-    "y": 0.38,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": true,
-      "heightAdjustable": true
-    }
-  },
-  {
-    "id": "G-050",
-    "label": "G050",
-    "floor": "ground",
-    "zone": "Security",
-    "platform": "Cyber Security",
-    "hotDesk": false,
-    "x": 0.83,
-    "y": 0.38,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-051",
-    "label": "G051",
-    "floor": "ground",
-    "zone": "Security",
-    "platform": "Cyber Security",
-    "hotDesk": true,
-    "x": 0.865,
-    "y": 0.38,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-052",
-    "label": "G052",
-    "floor": "ground",
-    "zone": "Security",
-    "platform": "Cyber Security",
-    "hotDesk": false,
-    "x": 0.795,
-    "y": 0.425,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": true,
-      "wheelchairAccess": true
-    }
-  },
-  {
-    "id": "G-053",
-    "label": "G053",
-    "floor": "ground",
-    "zone": "Security",
-    "platform": "Cyber Security",
-    "hotDesk": false,
-    "x": 0.83,
-    "y": 0.425,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": true,
-      "heightAdjustable": true
-    }
-  },
-  {
-    "id": "G-054",
-    "label": "G054",
-    "floor": "ground",
-    "zone": "Security",
-    "platform": "Cyber Security",
-    "hotDesk": false,
-    "x": 0.865,
-    "y": 0.425,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-055",
-    "label": "G055",
-    "floor": "ground",
-    "zone": "Security",
-    "platform": "Cyber Security",
-    "hotDesk": false,
-    "x": 0.91,
-    "y": 0.38,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-056",
-    "label": "G056",
-    "floor": "ground",
-    "zone": "Security",
-    "platform": "Cyber Security",
-    "hotDesk": true,
-    "x": 0.945,
-    "y": 0.38,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": true
-    }
-  },
-  {
-    "id": "G-057",
-    "label": "G057",
-    "floor": "ground",
-    "zone": "Security",
-    "platform": "Cyber Security",
-    "hotDesk": false,
-    "x": 0.98,
-    "y": 0.38,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": true,
-      "heightAdjustable": true
-    }
-  },
-  {
-    "id": "G-058",
-    "label": "G058",
-    "floor": "ground",
-    "zone": "Security",
-    "platform": "Cyber Security",
-    "hotDesk": false,
-    "x": 0.91,
-    "y": 0.425,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-059",
-    "label": "G059",
-    "floor": "ground",
-    "zone": "Security",
-    "platform": "Cyber Security",
-    "hotDesk": false,
-    "x": 0.945,
-    "y": 0.425,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-060",
-    "label": "G060",
-    "floor": "ground",
-    "zone": "Security",
-    "platform": "Cyber Security",
-    "hotDesk": false,
-    "x": 0.98,
-    "y": 0.425,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": true
-    }
-  },
-  {
     "id": "G-061",
     "label": "G061",
     "floor": "ground",
@@ -1727,391 +1534,6 @@
     "hotDesk": false,
     "x": 0.89,
     "y": 0.464,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": true
-    }
-  },
-  {
-    "id": "G-109",
-    "label": "G109",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.63,
-    "y": 0.546,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": true,
-      "heightAdjustable": true
-    }
-  },
-  {
-    "id": "G-110",
-    "label": "G110",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.65,
-    "y": 0.546,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-111",
-    "label": "G111",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": true,
-    "x": 0.63,
-    "y": 0.574,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-112",
-    "label": "G112",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.65,
-    "y": 0.574,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": true
-    }
-  },
-  {
-    "id": "G-113",
-    "label": "G113",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.75,
-    "y": 0.546,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": true,
-      "heightAdjustable": true
-    }
-  },
-  {
-    "id": "G-114",
-    "label": "G114",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.77,
-    "y": 0.546,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-115",
-    "label": "G115",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.75,
-    "y": 0.574,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-116",
-    "label": "G116",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": true,
-    "x": 0.77,
-    "y": 0.574,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": true
-    }
-  },
-  {
-    "id": "G-117",
-    "label": "G117",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.87,
-    "y": 0.546,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": true,
-      "heightAdjustable": true
-    }
-  },
-  {
-    "id": "G-118",
-    "label": "G118",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.89,
-    "y": 0.546,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-119",
-    "label": "G119",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.87,
-    "y": 0.574,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-120",
-    "label": "G120",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.89,
-    "y": 0.574,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": true,
-      "wheelchairAccess": true
-    }
-  },
-  {
-    "id": "G-121",
-    "label": "G121",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": true,
-    "x": 0.63,
-    "y": 0.646,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": true,
-      "heightAdjustable": true
-    }
-  },
-  {
-    "id": "G-122",
-    "label": "G122",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.65,
-    "y": 0.646,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-123",
-    "label": "G123",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.63,
-    "y": 0.674,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-124",
-    "label": "G124",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.65,
-    "y": 0.674,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": true
-    }
-  },
-  {
-    "id": "G-125",
-    "label": "G125",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.75,
-    "y": 0.646,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": true,
-      "heightAdjustable": true
-    }
-  },
-  {
-    "id": "G-126",
-    "label": "G126",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": true,
-    "x": 0.77,
-    "y": 0.646,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-127",
-    "label": "G127",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.75,
-    "y": 0.674,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-128",
-    "label": "G128",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.77,
-    "y": 0.674,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": true
-    }
-  },
-  {
-    "id": "G-129",
-    "label": "G129",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.87,
-    "y": 0.646,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": true,
-      "heightAdjustable": true
-    }
-  },
-  {
-    "id": "G-130",
-    "label": "G130",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.89,
-    "y": 0.646,
-    "attributes": {
-      "dualMonitor": false,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-131",
-    "label": "G131",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": true,
-    "x": 0.87,
-    "y": 0.674,
-    "attributes": {
-      "dualMonitor": true,
-      "nearWindow": false,
-      "quietZone": false,
-      "heightAdjustable": false
-    }
-  },
-  {
-    "id": "G-132",
-    "label": "G132",
-    "floor": "ground",
-    "zone": "Support",
-    "platform": "Operations",
-    "hotDesk": false,
-    "x": 0.89,
-    "y": 0.674,
     "attributes": {
       "dualMonitor": false,
       "nearWindow": false,
@@ -4686,6 +4108,70 @@
       "dualMonitor": false,
       "nearWindow": false,
       "quietZone": false,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-109",
+    "label": "G109",
+    "floor": "ground",
+    "zone": "Virtualisation",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.275,
+    "y": 0.516,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-110",
+    "label": "G110",
+    "floor": "ground",
+    "zone": "Virtualisation",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.295,
+    "y": 0.516,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-111",
+    "label": "G111",
+    "floor": "ground",
+    "zone": "Virtualisation",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.275,
+    "y": 0.544,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
+      "heightAdjustable": true
+    }
+  },
+  {
+    "id": "G-112",
+    "label": "G112",
+    "floor": "ground",
+    "zone": "Virtualisation",
+    "platform": "Engineering",
+    "hotDesk": false,
+    "x": 0.295,
+    "y": 0.544,
+    "attributes": {
+      "dualMonitor": true,
+      "nearWindow": false,
+      "quietZone": true,
       "heightAdjustable": true
     }
   }
